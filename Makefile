@@ -12,7 +12,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-MLXFLAGS = -lmlx -lX11 -lXext
+MLXFLAGS = -lmlx -lX11 -lXext -lm
 NAME = so_long
 NAME_SO_LONG_LIB = libsolong.a
 LIBFT_DIR = libft
@@ -61,5 +61,22 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+runtest: all
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/empty_map_2.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/empty_map.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/false_map.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/map.txt
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/no_collectible.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/no_player.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/no_exit.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/not_rect_map.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/open_map_2.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/open_map.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/two_exit.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/two_player.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/unreachable_ex.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/unreachable_col.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/small_map.ber
+	-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME) maps/map.ber
 
+.PHONY: all clean fclean re
