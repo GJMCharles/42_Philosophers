@@ -31,11 +31,14 @@ OBJECTS_DIR := .objects
 
 RM := rm -f
 
-SOURCES_MANDATORY :=
+SOURCES_MANDATORY := main.c
 
 SOURCES_BONUS :=
 
-OBJECTS_MANDATORY := $(patsubst %.c, $(OBJECTS_DIR)/%.o, $(SOURCES_MANDATORY))
+OBJECTS_MANDATORY := $(patsubst %.c,\
+	$(OBJECTS_DIR)/%.o,\
+	$(addprefix philo/, $(SOURCES_MANDATORY))\
+)
 OBJECTS_BONUS := $(patsubst %.c,$(OBJECTS_DIR)/%.o,$(SOURCES_BONUS))
 
 DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
@@ -65,8 +68,8 @@ clean:
 	$(RM) -r $(OBJECTS_DIR)
 
 fclean: clean
-	$(RM) -v $(NAME)
-	$(RM) -v $(NAME_BONUS)
+# 	$(RM) -v $(NAME)
+# 	$(RM) -v $(NAME_BONUS)
 
 re: fclean all
 
