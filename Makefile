@@ -39,7 +39,10 @@ OBJECTS_MANDATORY := $(patsubst %.c,\
 	$(OBJECTS_DIR)/%.o,\
 	$(addprefix philo/, $(SOURCES_MANDATORY))\
 )
-OBJECTS_BONUS := $(patsubst %.c,$(OBJECTS_DIR)/%.o,$(SOURCES_BONUS))
+OBJECTS_BONUS := $(patsubst %.c,\
+	$(OBJECTS_DIR)/%.o,\
+	$(SOURCES_BONUS)\
+)
 
 DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
 DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
@@ -53,10 +56,8 @@ $(OBJECTS_DIR)/%.o: %.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ $(LDLIBS)
 
 $(NAME): $(OBJECTS_MANDATORY)
-	$(AR) rs $@ $^
 
 $(NAME_BONUS): $(OBJECTS_BONUS)
-	$(AR) rs $@ $^
 
 all: $(NAME)
 
