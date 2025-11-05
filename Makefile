@@ -51,6 +51,8 @@ DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 
 $(OBJECTS_DIR):
 	mkdir -p $@
+	mkdir -p $@/$(NAME)
+	mkdir -p $@/$(NAME_BONUS)
 
 $(OBJECTS_DIR)/%.o: %.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ $(LDLIBS)
@@ -89,6 +91,6 @@ norm:
 
 .PRECIOUS: $(OBJECTS_DIR)
 
-.SILENT:
+# .SILENT:
 
 .PHONY: all clean fclean re bonus
