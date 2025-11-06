@@ -6,7 +6,7 @@
 #    By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 11:55:25 by grcharle          #+#    #+#              #
-#    Updated: 2025/08/28 06:53:08 by grcharle         ###   ########.fr        #
+#    Updated: 2025/11/06 19:47:15 by grcharle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,6 @@ norm:
 
 .PRECIOUS: $(OBJECTS_DIR)
 
-# .SILENT:
+.SILENT:
 
 .PHONY: all clean fclean re bonus
