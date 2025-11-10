@@ -10,87 +10,84 @@
 #                                                                              #
 # **************************************************************************** #
 
-.DEFAULT_GOAL := all
+# .DEFAULT_GOAL := all
 
-CC := cc
-CFLAGS := -Wall -Wextra -Werror -pedantic
-CPPFLAGS := -I.
+# CC := cc
+# CFLAGS := -Wall -Wextra -Werror -pedantic
+# CPPFLAGS := -I.
 
-# Specifies options for the linker:
-# example: -L/usr/local/lib
-LDFLAGS :=
+# # Specifies options for the linker:
+# # example: -L/usr/local/lib
+# LDFLAGS :=
 
-# Lists libraries to link with:
-# example: -lm -lpthread
-LDLIBS :=
+# # Lists libraries to link with:
+# # example: -lm -lpthread
+# LDLIBS :=
 
-NAME := philo
-NAME_BONUS := philo_bonus
+# NAME := philo
+# NAME_BONUS := philo_bonus
 
-OBJECTS_DIR := .objects
+# OBJECTS_DIR := .objects
 
-RM := rm -f
+# RM := rm -f
 
-SOURCES_MANDATORY := main.c
+# SOURCES_MANDATORY := main.c
 
-SOURCES_BONUS :=
+# SOURCES_BONUS :=
 
-OBJECTS_MANDATORY := $(patsubst %.c,\
-	$(OBJECTS_DIR)/%.o,\
-	$(addprefix philo/, $(SOURCES_MANDATORY))\
-)
-OBJECTS_BONUS := $(patsubst %.c,\
-	$(OBJECTS_DIR)/%.o,\
-	$(SOURCES_BONUS)\
-)
+# OBJECTS_MANDATORY := $(patsubst %.c,\
+# 	$(OBJECTS_DIR)/%.o,\
+# 	$(addprefix philo/, $(SOURCES_MANDATORY))\
+# )
+# OBJECTS_BONUS := $(patsubst %.c,\
+# 	$(OBJECTS_DIR)/%.o,\
+# 	$(SOURCES_BONUS)\
+# )
 
-DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
-DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
+# DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
+# DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 
--include $(DEPS_MANDATORY) $(DEPS_BONUS)
+# -include $(DEPS_MANDATORY) $(DEPS_BONUS)
 
-$(OBJECTS_DIR):
-	mkdir -p $@
-	mkdir -p $@/$(NAME)
-	mkdir -p $@/$(NAME_BONUS)
+# $(OBJECTS_DIR): mkdir -p $@/$(NAME)
 
-$(OBJECTS_DIR)/%.o: %.c | $(OBJECTS_DIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ $(LDLIBS)
+# $(OBJECTS_DIR)/%.o: %.c | $(OBJECTS_DIR)
+# 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ $(LDLIBS)
 
-$(NAME): $(OBJECTS_MANDATORY)
+# $(NAME): $(OBJECTS_MANDATORY)
 
-$(NAME_BONUS): $(OBJECTS_BONUS)
+# $(NAME_BONUS): $(OBJECTS_BONUS)
 
-all: $(NAME)
+# all: $(NAME)
 
-bonus: $(NAME_BONUS)
+# bonus: $(NAME_BONUS)
 
-clean:
-	$(RM) $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
-	$(RM) $(DEPS_MANDATORY) $(DEPS_BONUS)
-	$(RM) -r $(OBJECTS_DIR)
+# clean:
+# 	$(RM) $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
+# 	$(RM) $(DEPS_MANDATORY) $(DEPS_BONUS)
+# 	$(RM) -r $(OBJECTS_DIR)
 
-fclean: clean
-# 	$(RM) -v $(NAME)
-# 	$(RM) -v $(NAME_BONUS)
+# fclean: clean
+# # 	$(RM) -v $(NAME)
+# # 	$(RM) -v $(NAME_BONUS)
 
-re: fclean all
+# re: fclean all
 
-info:
-	echo -e "Mandatory objects: $(OBJECTS_MANDATORY)"
-	echo -e "Bonus objects: $(OBJECTS_BONUS)"
-	echo -e "Mandatory dependencies: $(DEPS_MANDATORY)"
-	echo -e "Bonus dependencies: $(DEPS_BONUS)"
- 	echo -e "CFLAGS: $(CFLAGS)"
-	echo -e "CPPFLAGS: $(CPPFLAGS)"
+# info:
+# 	echo -e "Mandatory objects: $(OBJECTS_MANDATORY)"
+# 	echo -e "Bonus objects: $(OBJECTS_BONUS)"
+# 	echo -e "Mandatory dependencies: $(DEPS_MANDATORY)"
+# 	echo -e "Bonus dependencies: $(DEPS_BONUS)"
+#  	echo -e "CFLAGS: $(CFLAGS)"
+# 	echo -e "CPPFLAGS: $(CPPFLAGS)"
 
-norm:
-	norminette -R .
+# norm:
+# 	norminette -R .
 
-.SECONDARY: $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
+# .SECONDARY: $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
 
-.PRECIOUS: $(OBJECTS_DIR)
+# .PRECIOUS: $(OBJECTS_DIR)
 
-.SILENT:
+# # .SILENT:
 
-.PHONY: all clean fclean re bonus
+# # .PHONY: all clean fclean re bonus
