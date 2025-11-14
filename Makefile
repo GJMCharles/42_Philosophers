@@ -56,8 +56,8 @@ DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 -include $(DEPS_MANDATORY) $(DEPS_BONUS)
 
 $(OBJECTS_DIR):
-	mkdir -p $@/.$(DIR_MANDATORY)/
-	mkdir -p $@/.$(DIR_BONUS)/
+	mkdir -p $@/.$(DIR_MANDATORY)
+	mkdir -p $@/.$(DIR_BONUS)
 
 $(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o: $(DIR_MANDATORY)/%.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
@@ -82,12 +82,12 @@ clean:
 fclean: clean
 	@$(RM) $(OBJECTS_DIR)/$(NAME)
 	@$(RM) $(OBJECTS_DIR)/$(NAME_BONUS)
-	@if [ -d $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
-		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
-	fi
-	@if [ -d $(OBJECTS_DIR)/.$(DIR_BONUS) ]; then \
-		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_BONUS); \
-	fi
+# 	@if [ -d $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
+# 		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
+# 	fi
+# 	@if [ -d $(OBJECTS_DIR)/.$(DIR_BONUS) ]; then \
+# 		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_BONUS); \
+# 	fi
 
 re: fclean all
 
