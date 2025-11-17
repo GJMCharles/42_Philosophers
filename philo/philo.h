@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/11 12:06:06 by grcharle          #+#    #+#             */
-/*   Updated: 2025/11/11 12:06:50 by grcharle         ###   ########.fr       */
+/*   Created: 2025/11/17 23:53:58 by grcharle          #+#    #+#             */
+/*   Updated: 2025/11/17 23:53:59 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef PHILO_H
+# define PHILO_H
 
-int	main(int argc, char *argv[])
-{
-	// if (argc > 3 || argc )
-	return (0);
-}
+# include <pthread.h>
+# include "libft.h"
+
+
+#endif // PHILO_H
