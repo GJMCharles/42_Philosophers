@@ -12,8 +12,20 @@
 
 #include "philo.h"
 
+// number_of_philosophers
+// time_to_die
+// time_to_eat
+// time_to_sleep
+// number_of_times_each_philosopher_must_eat
 int	main(int argc, char *argv[])
 {
-	// if (argc > 3 || argc )
+	int nb_philos;
+	int t_die;
+	int t_eat;
+	int t_sleep;
+	int nb_t_eat;
+
+	if (argc < 5 || argc > 6)
+		return (1);
 	return (0);
 }
