@@ -17,15 +17,42 @@
 // time_to_eat
 // time_to_sleep
 // number_of_times_each_philosopher_must_eat
+
+int	verify_arguments(int nb_args, char *args[])
+{
+	(void) *args;
+	if (nb_args == 6)
+	{
+		//
+	}
+	return (1);
+}
+
+void	initiate_thread(t_data *data)
+{
+	//
+}
+
+void	exit_thread(t_data *data)
+{
+	//
+}
+
 int	main(int argc, char *argv[])
 {
-	int nb_philos;
-	int t_die;
-	int t_eat;
-	int t_sleep;
-	int nb_t_eat;
+	t_data	philo;
 
 	if (argc < 5 || argc > 6)
 		return (1);
+	if (!verify_arguments(argc, argv))
+		return (1);
+	philo.nb_philos = argv[1];
+	philo.t_die = argv[2];
+	philo.t_eat = argv[3];
+	philo.t_sleep = argv[4];
+	if (argc == 6)
+		philo.nb_t_eat = argv[5];
+	initiate_thread(&philo);
+	exit_thread(&philo);
 	return (0);
 }
