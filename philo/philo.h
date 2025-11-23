@@ -17,5 +17,13 @@
 # include <stdio.h>
 # include "libft.h"
 
+typedef struct s_data
+{
+	int nb_philos;
+	int t_die;
+	int t_eat;
+	int t_sleep;
+	int nb_t_eat;
+}   t_data;
 
 #endif // PHILO_H
