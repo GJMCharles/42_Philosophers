@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int	verify_arguments(int nb_args, char *args[])
+int	verify_data(int nb_args, char *args[])
 {
 	(void) *args;
 	if (nb_args == 6)
@@ -32,13 +32,22 @@ void	exit_thread(t_data *data)
 	//
 }
 
+int	assign_data_list(t_data *philo, char *argv[])
+{
+	(void) philo;
+	(void) *argv;
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	philo;
 
 	if (argc < 5 || argc > 6)
 		return (1);
-	if (!verify_arguments(argc, argv))
+	if (!verify_data(argc, argv))
+		return (1);
+	if (assign_data_list(&philo, argv))
 		return (1);
 	philo.nb_philos = argv[1];
 	philo.t_die = argv[2];

@@ -14,7 +14,6 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <stdio.h>
 # include "libft.h"
 
 typedef struct s_data
