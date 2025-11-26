@@ -14,7 +14,10 @@
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -pedantic
-CPPFLAGS := -I.
+CPPFLAGS :=
+RM := rm -f
+
+LIBFT := libft
 
 # Specifies options for the linker:
 # example: -L/usr/local/lib
@@ -22,13 +25,15 @@ LDFLAGS :=
 
 # Lists libraries to link with:
 # example: -lm -lpthread
-LDLIBS :=
+LDLIBS := \
+	-I ./philo \
+	-I ./philo/$(LIBFT)
 
 NAME := philo
-NAME_BONUS := philo_bonus
+# NAME_BONUS := philo_bonus
 
 DIR_MANDATORY := $(NAME)
-DIR_BONUS := $(NAME_BONUS)
+# DIR_BONUS := $(NAME_BONUS)
 
 OBJECTS_DIR := .objects
 
@@ -38,50 +43,57 @@ RM_DIR := rmdir -v
 SOURCES_MANDATORY := \
 main.c
 
-SOURCES_BONUS := \
-main.c
+# SOURCES_BONUS := \
+# main.c
 
 OBJECTS_MANDATORY := $(patsubst \
 	$(DIR_MANDATORY)/%.c,$(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o,\
 	$(addprefix $(DIR_MANDATORY)/, $(SOURCES_MANDATORY))\
 )
-OBJECTS_BONUS := $(patsubst \
-	$(DIR_BONUS)/%.c,$(OBJECTS_DIR)/.$(DIR_BONUS)/%.o,\
-	$(addprefix $(DIR_BONUS)/, $(SOURCES_BONUS))\
-)
+# OBJECTS_BONUS := $(patsubst \
+# 	$(DIR_BONUS)/%.c,$(OBJECTS_DIR)/.$(DIR_BONUS)/%.o,\
+# 	$(addprefix $(DIR_BONUS)/, $(SOURCES_BONUS))\
+# )
 
 DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
-DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
+# DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 
--include $(DEPS_MANDATORY) $(DEPS_BONUS)
+-include $(DEPS_MANDATORY) # $(DEPS_BONUS)
+
+$(LIBS):
+	$(MAKE) -C ./philo/$(LIBFT)
 
 $(OBJECTS_DIR):
 	mkdir -p $@/.$(DIR_MANDATORY)
-	mkdir -p $@/.$(DIR_BONUS)
+# 	mkdir -p $@/.$(DIR_BONUS)
 
 $(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o: $(DIR_MANDATORY)/%.c | $(OBJECTS_DIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) -c $< -o $@
 
-$(OBJECTS_DIR)/.$(DIR_BONUS)/%.o: $(DIR_BONUS)/%.c | $(OBJECTS_DIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+# $(OBJECTS_DIR)/.$(DIR_BONUS)/%.o: $(DIR_BONUS)/%.c | $(OBJECTS_DIR)
+# 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(NAME): $(OBJECTS_MANDATORY)
+$(NAME): $(LIBS) $(OBJECTS_MANDATORY)
 	$(CC) $(CFLAGS) $< -o $(OBJECTS_DIR)/$@ $(LDFLAGS) $(LDLIBS)
 
-$(NAME_BONUS): $(OBJECTS_BONUS)
-	$(CC) $(CFLAGS) $< -o $(OBJECTS_DIR)/$@ $(LDFLAGS) $(LDLIBS)
+# $(NAME_BONUS): $(OBJECTS_BONUS)
+# 	$(CC) $(CFLAGS) $< -o $(OBJECTS_DIR)/$@ $(LDFLAGS) $(LDLIBS)
 
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
+# bonus: $(NAME_BONUS)
 
 clean:
-	@$(RM) $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
-	@$(RM) $(DEPS_MANDATORY) $(DEPS_BONUS)
+	$(MAKE) -C ./philo/$(LIBFT) clean
+	@$(RM) $(OBJECTS_MANDATORY)
+	@$(RM) $(DEPS_MANDATORY)
+# 	@$(RM) $(OBJECTS_BONUS)
+# 	@$(RM) $(DEPS_BONUS)
 
 fclean: clean
-	@$(RM) $(OBJECTS_DIR)/$(NAME)
-	@$(RM) $(OBJECTS_DIR)/$(NAME_BONUS)
+	$(MAKE) -C ./philo/$(LIBFT) fclean
+	@$(RM) -r $(OBJECTS_DIR)/$(NAME)
+# 	@$(RM) $(OBJECTS_DIR)/$(NAME_BONUS)
 # 	@if [ -d $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
 # 		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
 # 	fi
@@ -92,7 +104,8 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette -R $(DIR_MANDATORY) $(DIR_BONUS)
+	norminette -R $(DIR_MANDATORY)
+	norminette -R $(DIR_BONUS)
 
 # .SECONDARY: $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
 
