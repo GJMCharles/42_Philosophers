@@ -3,114 +3,99 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+         #
+#    By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/29 11:55:25 by grcharle          #+#    #+#              #
-#    Updated: 2025/11/06 19:47:15 by grcharle         ###   ########.fr        #
+#    Created: 2025/11/27 00:10:14 by grcharle          #+#    #+#              #
+#    Updated: 2025/11/27 00:10:17 by grcharle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Force default rule as : 'all'
 .DEFAULT_GOAL := all
+
+# Hide message 'Entering directory' & 'Leaving directory'
+MAKEFLAGS += --no-print-directory
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -pedantic
-CPPFLAGS :=
-RM := rm -f
 
+# Delete files & empty directories
+RM := rm -f -v
+RM_DIR := rmdir -v
+
+# Project Libft (+GetNextLine/+FtPrintF)
 LIBFT := libft
+
+CPPFLAGS := \
+-I ./ \
+-I ./includes/$(LIBFT)
 
 # Specifies options for the linker:
 # example: -L/usr/local/lib
-LDFLAGS :=
+LDFLAGS := \
+-L./includes/$(LIBFT)
 
 # Lists libraries to link with:
 # example: -lm -lpthread
 LDLIBS := \
-	-I ./philo \
-	-I ./philo/$(LIBFT)
+-lft \
+-lpthread
 
 NAME := philo
-# NAME_BONUS := philo_bonus
 
 DIR_MANDATORY := $(NAME)
-# DIR_BONUS := $(NAME_BONUS)
 
 OBJECTS_DIR := .objects
-
-RM := rm -f -v
-RM_DIR := rmdir -v
 
 SOURCES_MANDATORY := \
 main.c
 
-# SOURCES_BONUS := \
-# main.c
-
-OBJECTS_MANDATORY := $(patsubst \
-	$(DIR_MANDATORY)/%.c,$(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o,\
+OBJECTS_MANDATORY := \
+$(patsubst \
+	$(DIR_MANDATORY)/%.c,\
+	$(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o,\
 	$(addprefix $(DIR_MANDATORY)/, $(SOURCES_MANDATORY))\
 )
-# OBJECTS_BONUS := $(patsubst \
-# 	$(DIR_BONUS)/%.c,$(OBJECTS_DIR)/.$(DIR_BONUS)/%.o,\
-# 	$(addprefix $(DIR_BONUS)/, $(SOURCES_BONUS))\
-# )
 
 DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
-# DEPS_BONUS := $(OBJECTS_BONUS:.o=.d)
 
--include $(DEPS_MANDATORY) # $(DEPS_BONUS)
-
-$(LIBS):
-	$(MAKE) -C ./philo/$(LIBFT)
+-include $(DEPS_MANDATORY)
 
 $(OBJECTS_DIR):
 	mkdir -p $@/.$(DIR_MANDATORY)
-# 	mkdir -p $@/.$(DIR_BONUS)
 
 $(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o: $(DIR_MANDATORY)/%.c | $(OBJECTS_DIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-# $(OBJECTS_DIR)/.$(DIR_BONUS)/%.o: $(DIR_BONUS)/%.c | $(OBJECTS_DIR)
-# 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+$(NAME): LIBS $(OBJECTS_MANDATORY)
 
-$(NAME): $(LIBS) $(OBJECTS_MANDATORY)
-	$(CC) $(CFLAGS) $< -o $(OBJECTS_DIR)/$@ $(LDFLAGS) $(LDLIBS)
-
-# $(NAME_BONUS): $(OBJECTS_BONUS)
-# 	$(CC) $(CFLAGS) $< -o $(OBJECTS_DIR)/$@ $(LDFLAGS) $(LDLIBS)
+LIBS:
+	$(MAKE) -C ./includes/$(LIBFT)
 
 all: $(NAME)
-
-# bonus: $(NAME_BONUS)
+	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o philo.out $(LDFLAGS) $(LDLIBS)
 
 clean:
-	$(MAKE) -C ./philo/$(LIBFT) clean
+	@$(MAKE) -C ./includes/$(LIBFT) clean
 	@$(RM) $(OBJECTS_MANDATORY)
 	@$(RM) $(DEPS_MANDATORY)
-# 	@$(RM) $(OBJECTS_BONUS)
-# 	@$(RM) $(DEPS_BONUS)
+	@if [ -d  $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
+		$(RM_DIR) -p $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
+	fi
 
 fclean: clean
-	$(MAKE) -C ./philo/$(LIBFT) fclean
-	@$(RM) -r $(OBJECTS_DIR)/$(NAME)
-# 	@$(RM) $(OBJECTS_DIR)/$(NAME_BONUS)
-# 	@if [ -d $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
-# 		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
-# 	fi
-# 	@if [ -d $(OBJECTS_DIR)/.$(DIR_BONUS) ]; then \
-# 		$(RM_DIR) $(OBJECTS_DIR)/.$(DIR_BONUS); \
-# 	fi
+	@$(MAKE) -C ./includes/$(LIBFT) fclean
+	@$(RM) $(NAME).out
 
 re: fclean all
 
 norm:
 	norminette -R $(DIR_MANDATORY)
-	norminette -R $(DIR_BONUS)
 
-# .SECONDARY: $(OBJECTS_MANDATORY) $(OBJECTS_BONUS)
+.SECONDARY: $(OBJECTS_MANDATORY)
 
-# .PRECIOUS: $(OBJECTS_DIR)
+.PRECIOUS: $(OBJECTS_DIR)
 
 # .SILENT:
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
