@@ -73,7 +73,8 @@ LIBS:
 	$(MAKE) -C ./includes/$(LIBFT)
 
 all: $(NAME)
-	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o philo.out $(LDFLAGS) $(LDLIBS)
+	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o ./$^/$^ $(LDFLAGS) $(LDLIBS)
+	echo -e "Generated executable: ./$^/$^"
 
 clean:
 	@$(MAKE) -C ./includes/$(LIBFT) clean
@@ -85,7 +86,7 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C ./includes/$(LIBFT) fclean
-	@$(RM) $(NAME).out
+	@$(RM) ./$(NAME)/$(NAME)
 
 re: fclean all
 
@@ -96,6 +97,6 @@ norm:
 
 .PRECIOUS: $(OBJECTS_DIR)
 
-# .SILENT:
+.SILENT:
 
 .PHONY: all clean fclean re
