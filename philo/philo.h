@@ -17,13 +17,22 @@
 # include <stdio.h>
 # include "libft.h"
 
-typedef struct s_data
+typedef struct	s_params
 {
 	int nb_philos;
 	int t_die;
 	int t_eat;
 	int t_sleep;
-	int nb_t_eat;
-}   t_data;
+	int nb_times_must_eat;
+}   t_params;
+
+typedef struct	s_data
+{
+	unsigned int	id;
+	unsigned int	count;
+	int				status;
+	pthread_t		thread;
+	struct s_data	*next;
+}	t_data;
 
 #endif // PHILO_H
