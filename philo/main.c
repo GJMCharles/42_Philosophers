@@ -36,7 +36,7 @@ void	exit_thread(t_params *data)
 
 void	*process_data(void *data)
 {
-	// printf("{%s}", (t_data *)data.id);
+	printf("{%d}", ((t_data *) data)->id);
 	return (NULL);
 }
 
@@ -74,13 +74,13 @@ int	build_structure(t_params params, t_data **list)
 	t_data	*temp;
 
 	index = 0;
-	while (index++ < params.nb_philos)
-	{		
+	while (index++ <= params.nb_philos)
+	{
 		node = (t_data *) malloc(sizeof(t_data));
 		if (!node)
 			return (0);
 		node->id = index;
-		if (pthread_create(&(node->thread), NULL, process_data, &params) == -1)
+		if (pthread_create(&(node->thread), NULL, process_data, &(*node)) == -1)
 			return (free(node), 0);
 		node->next = (struct s_data *) NULL;
 		temp = *list;
