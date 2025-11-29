@@ -93,6 +93,13 @@ re: fclean all
 norm:
 	norminette -R $(DIR_MANDATORY)
 
+runtest: all
+	-valgrind \
+	--leak-check=full \
+	--show-leak-kinds=all \
+	--track-origins=yes \
+	-s ./$(NAME)/$(NAME) 5 3 3 3
+
 .SECONDARY: $(OBJECTS_MANDATORY)
 
 .PRECIOUS: $(OBJECTS_DIR)
