@@ -50,7 +50,8 @@ OBJECTS_DIR := .objects
 SOURCES_MANDATORY := \
 main.c \
 utils.c \
-thread.c
+thread.c \
+actions.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \
