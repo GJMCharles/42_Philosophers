@@ -35,9 +35,9 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
-t_params	assign_data(char *argv[]);
 void		*process_data(void *data);
 void		clear_data(t_data **list);
+t_params	assign_data(char *argv[]);
 int			build_list(t_params params, t_data **list);
 int			verify_data(int argc, char **argv);
 
