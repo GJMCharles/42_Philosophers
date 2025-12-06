@@ -16,6 +16,7 @@ int	main(int argc, char *argv[])
 {
 	t_data	*data;
 
+	
 	if (!verify_data(argc, argv) || !build_list(assign_data(argv), &data))
 		return (clear_data(&data), EXIT_FAILURE);
 	return (clear_data(&data), EXIT_SUCCESS);
