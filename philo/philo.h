@@ -14,8 +14,8 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <stdio.h>
 # include "libft.h"
+# include <stdio.h>
 
 typedef struct s_params
 {
