@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+         #
+#    By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/27 00:10:14 by grcharle          #+#    #+#              #
-#    Updated: 2025/11/27 00:10:17 by grcharle         ###   ########.fr        #
+#    Created: 2025/12/12 00:18:47 by grcharle          #+#    #+#              #
+#    Updated: 2025/12/12 00:18:49 by grcharle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ RM_DIR := rmdir -v
 LIBFT := libft
 
 CPPFLAGS := \
--I ./ \
+-I ./includes \
 -I ./includes/$(LIBFT)
 
 # Specifies options for the linker:
@@ -36,7 +36,6 @@ LDFLAGS := \
 -L./includes/$(LIBFT)
 
 # Lists libraries to link with:
-# example: -lm -lpthread
 LDLIBS := \
 -lft \
 -lpthread
@@ -77,7 +76,7 @@ LIBS:
 
 all: $(NAME)
 	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o ./$^/$^ $(LDFLAGS) $(LDLIBS)
-	echo -e "Generated executable: ./$^/$^"
+	echo -n "Generated executable: ./$^/$^\n"
 
 clean:
 	@$(MAKE) -C ./includes/$(LIBFT) clean

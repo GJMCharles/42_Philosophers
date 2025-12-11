@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/17 23:53:58 by grcharle          #+#    #+#             */
-/*   Updated: 2025/11/17 23:53:59 by grcharle         ###   ########.fr       */
+/*   Created: 2025/12/12 00:20:15 by grcharle          #+#    #+#             */
+/*   Updated: 2025/12/12 00:20:17 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>
 # include "libft.h"
+# include <pthread.h>
 # include <stdio.h>
 
 typedef struct s_params
