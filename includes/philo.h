@@ -15,30 +15,24 @@
 
 # include "libft.h"
 # include <pthread.h>
+# include <stdlib.h>
 # include <stdio.h>
+
+typedef struct s_philo
+{
+	char			fork_used;
+	int				status;
+	struct s_philo	*prev;
+	struct s_philo	*next;
+}	t_philo;
 
 typedef struct s_params
 {
-	int	nb_philos;
-	int	t_die;
-	int	t_eat;
-	int	t_sleep;
-	int	nb_times_must_eat;
+	unsigned int	nb_philos;
+	unsigned int	time_die;
+	unsigned int	time_eat;
+	unsigned int	time_sleep;
+	unsigned int	nb_time_eat;
 }	t_params;
-
-typedef struct s_data
-{
-	unsigned int	id;
-	unsigned int	count;
-	int				status;
-	pthread_t		thread;
-	struct s_data	*next;
-}	t_data;
-
-void		*process_data(void *data);
-void		clear_data(t_data **list);
-t_params	assign_data(char *argv[]);
-int			build_list(t_params params, t_data **list);
-int			verify_data(int argc, char **argv);
 
 #endif // PHILO_H
