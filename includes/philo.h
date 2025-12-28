@@ -37,14 +37,18 @@ typedef struct s_philo
 
 typedef struct s_param
 {
-	int	num_philos;
+	unsigned int	nb_philos;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	unsigned int	time_to_eat_count;
-	int				death_encountered;
+	unsigned int	death_encountered;
 }	t_param;
 
-int	initiate_data(t_data *data, int argc, char *argv[]);
+int		initialize_philosophers(t_data *data);
+int		initialize_parameters(t_data *data, int argc, char *argv[]);
+void	clear_data(t_data *data);
+int		validate_parameters(int argc, char *argv[]);
+int		set_data(t_data *data, int argc, char *argv[]);
 
 #endif // PHILO_H
