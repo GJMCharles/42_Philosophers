@@ -29,9 +29,12 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	unsigned int		id;
-	unsigned short int	is_dead;
-	pthread_t			thread;
+	unsigned int	id;
+	pthread_t		start_mutex;
+	pthread_t		meal_thomas;
+	pthread_t		death_mutex;
+	struct s_philo	*prev;
+	struct s_philo	*next;
 }	t_philo;
 
 typedef struct s_param
@@ -40,15 +43,22 @@ typedef struct s_param
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	time_to_eat_count;
+	unsigned int	count_eating_limits;
 	unsigned int	death_encountered;
+	unsigned int	total_satisfaction;
 }	t_param;
 
-void	*philosopher_actions(void *arg);
-void	clear_data(t_data *data);
+// void	*philosopher_actions(void *arg);
+// void	clear_data(t_data *data);
+// int		initialize_philosophers(t_data *data);
+// int		initialize_parameters(t_data *data, int argc, char **argv);
+
+void	add_back_philo_list(t_philo **list, t_philo *back_node);
+void	clear_philo_list(t_philo **list);
+void	flush_data(t_data *data);
 int		initialize_philosophers(t_data *data);
-int		initialize_parameters(t_data *data, int argc, char **argv);
-int		set_data(t_data *data, int argc, char **argv);
+int		initialize_parameters(int argc, char **argv, t_data *data);
+int		set_data(int argc, char **argv, t_data *data);
 int		validate_parameters(int argc, char **argv);
 
 #endif // PHILO_H

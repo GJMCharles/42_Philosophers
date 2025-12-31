@@ -47,10 +47,11 @@ DIR_MANDATORY := $(NAME)
 OBJECTS_DIR := .objects
 
 SOURCES_MANDATORY := \
-main.c \
-utils.c \
-thread.c \
-actions.c
+check.c \
+clear.c \
+init.c \
+list.c \
+main.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \
