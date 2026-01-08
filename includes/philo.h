@@ -13,29 +13,27 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft.h"
 # include <pthread.h>
+# include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "libft.h"
 
-# define TRUE 1
-# define FALSE 0
+# ifndef TRUE
+#  define TRUE 1
+# endif
 
-typedef struct s_data
-{
-	struct s_param	*param;
-	struct s_philo	*philo;
-}	t_data;
+# ifndef FALSE
+#  define FALSE 0
+# endif
 
-typedef struct s_philo
-{
-	unsigned int	id;
-	pthread_t		start_mutex;
-	pthread_t		meal_thomas;
-	pthread_t		death_mutex;
-	struct s_philo	*prev;
-	struct s_philo	*next;
-}	t_philo;
+typedef enum e_status {
+	IDLE,
+	THINKING,
+	EATING,
+	SLEEPING,
+	DEAD
+} StatusCodes;
 
 typedef struct s_param
 {
@@ -43,22 +41,23 @@ typedef struct s_param
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	unsigned int	count_eating_limits;
-	unsigned int	death_encountered;
-	unsigned int	total_satisfaction;
+	int				eating_limit;
 }	t_param;
 
-// void	*philosopher_actions(void *arg);
-// void	clear_data(t_data *data);
-// int		initialize_philosophers(t_data *data);
-// int		initialize_parameters(t_data *data, int argc, char **argv);
+typedef struct s_philo
+{
+	unsigned int	id;
+	int				eat_counter;
+	struct s_philo	*prev;
+	struct s_philo	*next;
+}	t_philo;
 
-void	add_back_philo_list(t_philo **list, t_philo *back_node);
-void	clear_philo_list(t_philo **list);
-void	flush_data(t_data *data);
-int		initialize_philosophers(t_data *data);
-int		initialize_parameters(int argc, char **argv, t_data *data);
-int		set_data(int argc, char **argv, t_data *data);
-int		validate_parameters(int argc, char **argv);
+typedef struct s_data
+{
+	struct s_param		*param;
+	struct s_philo		*philo;
+	unsigned short int	dead_encountered;
+	unsigned short int	huger_fulfilled;
+}	t_data;
 
 #endif // PHILO_H
