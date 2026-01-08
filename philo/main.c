@@ -39,10 +39,18 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
+<<<<<<< HEAD
 	if (!validate_parameters(argc, argv) || \
 		!set_data(argc, argv, &data))
 		return (EXIT_FAILURE);
 	display_philos(&data);
 	flush_data(&data);
 	return (EXIT_SUCCESS);
+=======
+	if (!initialise_data(&data, argc, argv))
+		return (free_all(&data), EXIT_FAILURE);
+	if (!initialise_thread(&data))
+		return (free_all(&data), EXIT_FAILURE);
+	return (free_all(&data), EXIT_SUCCESS);
+>>>>>>> 77c1e8e (update)
 }
