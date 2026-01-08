@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/08 09:08:51 by grcharle          #+#    #+#             */
+/*   Updated: 2026/01/08 09:09:00 by grcharle         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+void	add_philosopher(t_philo *new_philo, t_philo **list)
+{
+	t_philo	*temp;
+	t_philo	*first;
+	t_philo	*prev;
+
+	if (!new_philo)
+		return ;
+	if (!(*list))
+	{
+		*list = new_philo;
+		return ;
+	}
+	temp = *list;
+	first = *list;
+	prev = (t_philo *) NULL;
+	while (temp->next && temp->next != first)
+	{
+		if (prev && !temp->prev)
+			temp->prev = prev;
+		prev = temp;
+		temp = temp->next;
+	}
+	new_philo->next = first;
+	temp->next = new_philo;
+	first->prev = new_philo;
+}
+
+void	clear_philosophers(t_philo **list)
+{
+	t_philo	*temp;
+	t_philo	*next;
+
+	if (!(*list))
+		return ;
+	temp = *list;
+	while (temp)
+	{
+		next = temp->next;
+		free(temp);
+		temp = (t_philo *) NULL;
+		temp = next;
+	}
+}
+
+t_philo	*new_philosopher(unsigned int index)
+{
+	t_philo	*new_philo;
+
+	new_philo = (t_philo *) malloc(sizeof(t_philo));
+	if (!new_philo)
+		return ((t_philo *) NULL);
+	new_philo->id = index;
+	new_philo->eat_counter = 0;
+	new_philo->prev = (t_philo *) NULL;
+	new_philo->next = (t_philo *) NULL;
+	return (new_philo);
+}

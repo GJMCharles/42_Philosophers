@@ -48,8 +48,9 @@ OBJECTS_DIR := .objects
 
 SOURCES_MANDATORY := \
 main.c \
-initialisation.c \
+init.c \
 utils.c \
+list.c \
 thread.c
 
 OBJECTS_MANDATORY := \

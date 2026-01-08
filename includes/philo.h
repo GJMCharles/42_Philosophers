@@ -41,7 +41,7 @@ typedef struct s_param
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
-	int				eating_limit;
+	int				eating_limits;
 }	t_param;
 
 typedef struct s_philo
@@ -56,8 +56,17 @@ typedef struct s_data
 {
 	struct s_param		*param;
 	struct s_philo		*philo;
-	unsigned short int	dead_encountered;
+	unsigned short int	death_encountered;
 	unsigned short int	huger_fulfilled;
 }	t_data;
+
+void		add_philosopher(t_philo *new_philo, t_philo **list);
+void		clear_philosophers(t_philo **list);
+t_philo		*new_philosopher(unsigned int index);
+void		free_all(t_data *data);
+t_philo		*initialise_philosophers(t_param *param);
+t_param		*initialise_parameters(int argc, char *argv[]);
+int			verify_data(int argc, char *argv[]);
+int			initiate_data(t_data *data, int argc, char *argv[]);
 
 #endif // PHILO_H
