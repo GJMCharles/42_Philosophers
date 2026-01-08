@@ -7,6 +7,8 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 01:30:04 by grcharle          #+#    #+#             */
 /*   Updated: 2025/12/30 01:30:21 by grcharle         ###   ########.fr       */
+/*   Created: 2025/11/11 12:06:06 by grcharle          #+#    #+#             */
+/*   Updated: 2026/01/08 05:26:10 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +41,9 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-<<<<<<< HEAD
-	if (!validate_parameters(argc, argv) || \
-		!set_data(argc, argv, &data))
-		return (EXIT_FAILURE);
-	display_philos(&data);
-	flush_data(&data);
-	return (EXIT_SUCCESS);
-=======
 	if (!initialise_data(&data, argc, argv))
 		return (free_all(&data), EXIT_FAILURE);
 	if (!initialise_thread(&data))
 		return (free_all(&data), EXIT_FAILURE);
 	return (free_all(&data), EXIT_SUCCESS);
->>>>>>> 77c1e8e (update)
 }
