@@ -60,6 +60,7 @@ typedef struct s_data
 	unsigned short int	huger_fulfilled;
 }	t_data;
 
+void		display_philosophers(t_data *data);
 void		add_philosopher(t_philo *new_philo, t_philo **list);
 void		clear_philosophers(t_philo **list);
 t_philo		*new_philosopher(unsigned int index);
@@ -67,6 +68,6 @@ void		free_all(t_data *data);
 t_philo		*initialise_philosophers(t_param *param);
 t_param		*initialise_parameters(int argc, char *argv[]);
 int			verify_data(int argc, char *argv[]);
-int			initiate_data(t_data *data, int argc, char *argv[]);
+int			initialise_data(t_data *data, int argc, char *argv[]);
 
 #endif // PHILO_H

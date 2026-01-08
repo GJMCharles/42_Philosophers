@@ -12,11 +12,34 @@
 
 #include "philo.h"
 
+void	display_philosophers(t_data *data)
+{
+	t_philo			*temp;
+	unsigned int	index;
+
+	index = 0;
+	temp = data->philo;
+	while (temp && index < 15)
+	{
+		printf("ID [%u]: || ", temp->id);
+		if (temp->prev)
+			printf("(prev ID) [%u]: || ", temp->prev->id);
+		else
+			printf("(prev ID) [X]: || ");
+		if (temp->next)
+			printf("(next ID) [%u]: \n", temp->next->id);
+		else
+			printf("(next ID) [X]: \n");
+		temp = temp->next;
+		index += 1;
+	}
+}
+
 void	add_philosopher(t_philo *new_philo, t_philo **list)
 {
 	t_philo	*temp;
 	t_philo	*first;
-	t_philo	*prev;
+	// t_philo	*prev;
 
 	if (!new_philo)
 		return ;
@@ -27,17 +50,18 @@ void	add_philosopher(t_philo *new_philo, t_philo **list)
 	}
 	temp = *list;
 	first = *list;
-	prev = (t_philo *) NULL;
+	// prev = (t_philo *) NULL;
 	while (temp->next && temp->next != first)
 	{
-		if (prev && !temp->prev)
-			temp->prev = prev;
-		prev = temp;
+		// if (prev)
+		// 	temp->prev = prev;
+		// prev = temp;
 		temp = temp->next;
 	}
+	// new_philo->prev = prev;
 	new_philo->next = first;
 	temp->next = new_philo;
-	first->prev = new_philo;
+	// first->prev = new_philo;
 }
 
 void	clear_philosophers(t_philo **list)

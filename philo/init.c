@@ -74,7 +74,7 @@ int		verify_data(int argc, char *argv[])
 	return (1);
 }
 
-int	initiate_data(t_data *data, int argc, char *argv[])
+int	initialise_data(t_data *data, int argc, char *argv[])
 {
 	data->death_encountered = 0;
 	data->huger_fulfilled = 0;
