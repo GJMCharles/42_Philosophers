@@ -26,15 +26,30 @@
 // 	data->starting_time = (unsigned long int) timestamp;	
 // }
 
-int		initialise_mutex(t_data *data)
-{
-	if (pthread_mutex_init(&(data->start_mutex), NULL) != 0)
-		return (0);
-	return (1);
-}
+// int		initialise_mutex(t_data *data)
+// {
+// 	t_philo			*philo;
+// 	unsigned int	index;
+// 	unsigned int	limit;
 
-int		destroy_mutex(t_data *data)
-{
-	(void) pthread_mutex_destroy(&(data->start_mutex));
-	return (1);
-}
+// 	philo = data->philo;
+// 	index = 0;
+// 	limit = data->param->nb_philos;
+// 	while (index < limit)
+// 	{
+// 		if (pthread_mutex_init(&(philo->fork), NULL) != 0)
+// 		{
+// 			philo = philo->prev;
+// 			while (--index)
+// 			{
+// 				pthread_mutex_destroy(&(philo->fork));
+// 				philo = philo->prev;
+// 			}
+// 			return (0);
+// 		}
+// 		philo = philo->next;
+// 		index += 1;
+// 	}
+// 	return (1);
+// }
+

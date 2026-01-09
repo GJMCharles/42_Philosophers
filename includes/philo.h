@@ -52,7 +52,7 @@ typedef struct s_philo
 	pthread_t			thread;
 	pthread_mutex_t		fork;
 	// unsigned long int	time_start;
-	// struct s_param		*param;
+	struct s_param		*param;
 	struct s_philo		*prev;
 	struct s_philo		*next;
 }	t_philo;
@@ -61,10 +61,11 @@ typedef struct s_data
 {
 	struct s_param		*param;
 	struct s_philo		*philo;
-	pthread_mutex_t		start_mutex;
-	unsigned long int	starting_time;
-	unsigned short int	death_encountered;
-	unsigned short int	huger_fulfilled;
+	// pthread_mutex_t		start_mutex;
+	// pthread_mutex_t		start_mutex;
+	// unsigned long int	starting_time;
+	// unsigned short int	death_encountered;
+	// unsigned short int	huger_fulfilled;
 }	t_data;
 
 void		*philosopher_actions(void *arg);
@@ -72,12 +73,12 @@ long int	get_elapsed_time(void);
 int			join_threads(t_data *data);
 int			create_threads(t_data *data);
 int			manage_threads(t_data *data);
-
 void		display_philosophers(t_data *data);
 
 // void		start_mutex(t_data *data);
-int			destroy_mutex(t_data *data);
-int			initialise_mutex(t_data *data);
+// int			destroy_mutex(t_data *data);
+// int			initialise_mutex_fork(t_philo **philo);
+// int			initialise_mutex(t_data *data);
 
 void		add_philosopher(t_philo *new_philo, t_philo **list);
 void		clear_philosophers(t_philo **list);

@@ -25,6 +25,11 @@ t_philo		*initialise_philosophers(t_param *param)
 		new_philo = new_philosopher(index);
 		if (!new_philo)
 			return (clear_philosophers(&list), (t_philo *) NULL);
+		new_philo->param = param;
+		if (pthread_mutex_init(&(new_philo->fork), NULL) != 0)
+			return (free(new_philo), clear_philosophers(&list),\
+				(t_philo *) NULL\
+			);
 		add_philosopher(new_philo, &list);
 	}
 	return (list);
@@ -76,8 +81,6 @@ int		verify_data(int argc, char *argv[])
 
 int	initialise_data(t_data *data, int argc, char *argv[])
 {
-	data->death_encountered = 0;
-	data->huger_fulfilled = 0;
 	data->param = (t_param *) NULL;
 	data->philo = (t_philo *) NULL;
 	if(!verify_data(argc, argv))

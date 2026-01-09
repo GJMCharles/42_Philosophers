@@ -68,10 +68,12 @@ void	clear_philosophers(t_philo **list)
 	while (temp)
 	{
 		next = temp->next;
+		pthread_mutex_destroy(&(temp->fork));
 		free(temp);
 		temp = (t_philo *) NULL;
 		temp = next;
 	}
+	*list = (t_philo *) NULL;
 }
 
 t_philo	*new_philosopher(unsigned int index)
@@ -84,7 +86,7 @@ t_philo	*new_philosopher(unsigned int index)
 	new_philo->id = index;
 	new_philo->eat_counter = 0;
 	new_philo->status = IDLE;
-	new_philo->thread = (pthread_t) 0;
+	new_philo->thread = (pthread_t) NULL;
 	new_philo->prev = (t_philo *) NULL;
 	new_philo->next = (t_philo *) NULL;
 	return (new_philo);

@@ -18,12 +18,8 @@ int	main(int argc, char *argv[])
 
 	if (!initialise_data(&data, argc, argv))
 		return (free_all(&data), EXIT_FAILURE);
-	if (!initialise_mutex(&data))
-		return (free_all(&data), EXIT_FAILURE);
-	if (!manage_threads(&data))
-		return (free_all(&data), EXIT_FAILURE);
-	if (!destroy_mutex(&data))
-		return (free_all(&data), EXIT_FAILURE);
+	// if (!manage_threads(&data))
+	// 	return (free_all(&data), EXIT_FAILURE);
 	// if (!initialise_thread(&data))
 	// 	return (free_all(&data), EXIT_FAILURE);
 	// if (!execute_thread(&data))

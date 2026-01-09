@@ -14,46 +14,47 @@
 
 int			join_threads(t_data *data)
 {
-	t_philo		*first;
-	t_philo		*philo;
+	t_philo			*philo;
+	unsigned int	index;
+	unsigned int	limit;
 
-	first = (t_philo *) NULL;
 	philo = data->philo;
-	while (philo != (t_philo *) NULL && philo != first)
+	index = 0;
+	limit = data->param->nb_philos;
+	while (index < limit)
 	{
-		if (!first)
-			first = philo;
-		if (pthread_join(philo->thread, NULL) != 0)
-			return (0);
+		pthread_join(philo->thread, NULL);
 		philo = philo->next;
+		index += 1;
 	}
 	return (1);
 }
 
 int			create_threads(t_data *data)
 {
-	t_philo		*first;
-	t_philo		*philo;
+	t_philo			*philo;
+	unsigned int	index;
+	unsigned int	limit;
 
-	first = (t_philo *) NULL;
 	philo = data->philo;
-	while (philo != (t_philo *) NULL && philo != first)
+	index = 0;
+	limit = data->param->nb_philos;
+	while (index < limit)
 	{
-		if (!first)
-			first = philo;
 		if (pthread_create(&(philo->thread), NULL, \
 			philosopher_actions, (void *) philo) != 0)
 		{
-			while (philo != first)
+			philo = philo->prev;
+			while (--index)
 			{
 				pthread_join(philo->thread, NULL);
 				philo = philo->prev;
 			}
-			pthread_join(philo->thread, NULL);
 			return (0);
 		}
 		usleep(100);
 		philo = philo->next;
+		index += 1;
 	}
 	return (1);
 }

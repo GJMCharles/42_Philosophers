@@ -14,24 +14,15 @@
 
 void	free_all(t_data *data)
 {
-	t_param			*param;
-	t_philo			*philo;
-	t_philo			*next;
-	unsigned int	index;
+	t_param		*param;
+	t_philo		*philo;
 
 	if (!data)
 		return ;
 	param = data->param;
-	philo = data->philo;
-	index = 0;
-	while (param && index < param->nb_philos)
-	{
-		next = philo->next;
-		free(philo);
-		philo = (t_philo *) NULL;
-		philo = next;
-		index += 1;
-	}
 	if (param)
 		free(param);
+	philo = data->philo;
+	if (philo)
+		clear_philosophers(&philo);
 }
