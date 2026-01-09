@@ -51,7 +51,10 @@ main.c \
 init.c \
 utils.c \
 list.c \
-thread.c
+thread.c \
+time.c \
+action.c \
+mutex.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \

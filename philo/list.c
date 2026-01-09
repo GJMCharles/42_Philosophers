@@ -83,6 +83,8 @@ t_philo	*new_philosopher(unsigned int index)
 		return ((t_philo *) NULL);
 	new_philo->id = index;
 	new_philo->eat_counter = 0;
+	new_philo->status = IDLE;
+	new_philo->thread = (pthread_t) 0;
 	new_philo->prev = (t_philo *) NULL;
 	new_philo->next = (t_philo *) NULL;
 	return (new_philo);
