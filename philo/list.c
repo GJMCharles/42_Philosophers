@@ -39,7 +39,6 @@ void	add_philosopher(t_philo *new_philo, t_philo **list)
 {
 	t_philo	*temp;
 	t_philo	*first;
-	// t_philo	*prev;
 
 	if (!new_philo)
 		return ;
@@ -50,18 +49,12 @@ void	add_philosopher(t_philo *new_philo, t_philo **list)
 	}
 	temp = *list;
 	first = *list;
-	// prev = (t_philo *) NULL;
-	while (temp->next && temp->next != first)
-	{
-		// if (prev)
-		// 	temp->prev = prev;
-		// prev = temp;
+	while (temp->next != (t_philo *) NULL && temp->next != first)
 		temp = temp->next;
-	}
-	// new_philo->prev = prev;
-	new_philo->next = first;
 	temp->next = new_philo;
-	// first->prev = new_philo;
+	first->prev = new_philo;
+	new_philo->prev = temp;
+	new_philo->next = first;
 }
 
 void	clear_philosophers(t_philo **list)
