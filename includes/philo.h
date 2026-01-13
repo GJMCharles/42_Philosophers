@@ -59,6 +59,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
+	pthread_mutex_t		start_mutex;
 	struct s_param		*param;
 	struct s_philo		*philo;
 	// pthread_mutex_t		start_mutex;
@@ -68,26 +69,13 @@ typedef struct s_data
 	// unsigned short int	huger_fulfilled;
 }	t_data;
 
-void		*philosopher_actions(void *arg);
-long int	get_elapsed_time(void);
-int			join_threads(t_data *data);
-int			create_threads(t_data *data);
-int			manage_threads(t_data *data);
-void		display_philosophers(t_data *data);
-
-// void		start_mutex(t_data *data);
-// int			destroy_mutex(t_data *data);
-// int			initialise_mutex_fork(t_philo **philo);
-// int			initialise_mutex(t_data *data);
-
-void		add_philosopher(t_philo *new_philo, t_philo **list);
+void		display_philosophers(t_philo *data);
 void		clear_philosophers(t_philo **list);
+void		append_philosopher(t_philo *new_philo, t_philo **list);
 t_philo		*new_philosopher(unsigned int index);
-
-void		free_all(t_data *data);
-t_philo		*initialise_philosophers(t_param *param);
-t_param		*initialise_parameters(int argc, char *argv[]);
-int			verify_data(int argc, char *argv[]);
-int			initialise_data(t_data *data, int argc, char *argv[]);
+void		free_all(t_data **data);
+void		display_error(char *message);
+int			initialise_data(int argc, char *argv[], t_data **data);
+int			verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H

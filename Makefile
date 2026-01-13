@@ -49,12 +49,8 @@ OBJECTS_DIR := .objects
 SOURCES_MANDATORY := \
 main.c \
 init.c \
-utils.c \
-list.c \
-thread.c \
-time.c \
-action.c \
-mutex.c
+util.c \
+list.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \
