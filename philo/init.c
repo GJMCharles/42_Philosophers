@@ -36,10 +36,8 @@ t_param	*initialise_parameters(int argc, char *argv[])
 	return (param);
 }
 
-int		initialise_data(int argc, char *argv[], t_data **data)
+int	initialise_data(int argc, char *argv[], t_data **data)
 {
-	(void) argc;
-	(void) argv;
 	t_data	*new_data;
 
 	new_data = (t_data *) malloc(sizeof(t_data));

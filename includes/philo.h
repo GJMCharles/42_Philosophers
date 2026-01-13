@@ -27,13 +27,14 @@
 #  define FALSE 0
 # endif
 
-typedef enum e_status {
+typedef enum e_status
+{
 	IDLE,
 	THINKING,
 	EATING,
 	SLEEPING,
 	DEAD
-} ActionCode;
+}	t_action_code;
 
 typedef struct s_param
 {
@@ -48,10 +49,9 @@ typedef struct s_philo
 {
 	unsigned int		id;
 	int					eat_counter;
-	ActionCode			status;
+	t_action_code		status;
 	pthread_t			thread;
 	pthread_mutex_t		fork;
-	// unsigned long int	time_start;
 	struct s_param		*param;
 	struct s_philo		*prev;
 	struct s_philo		*next;
@@ -59,14 +59,9 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pthread_mutex_t		start_mutex;
+	pthread_mutex_t		mutex_start;
 	struct s_param		*param;
 	struct s_philo		*philo;
-	// pthread_mutex_t		start_mutex;
-	// pthread_mutex_t		start_mutex;
-	// unsigned long int	starting_time;
-	// unsigned short int	death_encountered;
-	// unsigned short int	huger_fulfilled;
 }	t_data;
 
 void		display_philosophers(t_philo *data);

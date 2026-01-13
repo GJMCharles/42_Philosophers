@@ -14,9 +14,9 @@
 
 int	verify_arguments(int argc, char *argv[])
 {
-	int	argi;
-	int	i;
-	int value;
+	int		argi;
+	int		i;
+	int		value;
 
 	if (argc < 5 || argc > 6)
 		return (0);
