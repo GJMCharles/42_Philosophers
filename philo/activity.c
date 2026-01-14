@@ -44,6 +44,7 @@ void	philosophers_activities(t_data **data)
 			break ;
 	}
 	philo = temp->philo;
+	temp->param->start_time = get_timestamp_ms();
 	while (philo != (t_philo *) NULL)
 	{
 		pthread_join(philo->thread, (void **) NULL);

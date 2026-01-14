@@ -43,6 +43,7 @@ typedef struct s_param
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					eating_limits;
+	unsigned long int	start_time;
 }	t_param;
 
 typedef struct s_philo
@@ -69,23 +70,24 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-void		action_eat(t_philo *philo);
-void		action_think(t_philo *philo);
-void		action_sleep(t_philo *philo);
-void		*activities(void *arg);
-void		philosophers_activities(t_data **data);
-void		destroy_thread_mutex(t_data **data);
-void		init_thread_mutex(t_data **data);
-void		clear_philosophers(t_philo **list);
-void		append_philosopher(t_philo *node, t_philo **list);
-void		free_all(t_data **data);
-t_philo		*new_philosopher(unsigned int index);
-t_philo		*init_philosophers(t_param *param);
-t_param		*init_parameters(int argc, char *argv[]);
-int			init_data(int argc, char *argv[], t_data **data);
-void		display_error(char *message);
-int			verify_arguments(int argc, char *argv[]);
+unsigned long int	get_timestamp_ms(void);
+void				action_eat(t_philo *philo);
+void				action_think(t_philo *philo);
+void				action_sleep(t_philo *philo);
+void				*activities(void *arg);
+void				philosophers_activities(t_data **data);
+void				destroy_thread_mutex(t_data **data);
+void				init_thread_mutex(t_data **data);
+void				clear_philosophers(t_philo **list);
+void				append_philosopher(t_philo *node, t_philo **list);
+void				free_all(t_data **data);
+t_philo				*new_philosopher(unsigned int index);
+t_philo				*init_philosophers(t_param *param);
+t_param				*init_parameters(int argc, char *argv[]);
+int					init_data(int argc, char *argv[], t_data **data);
+void				display_error(char *message);
+int					verify_arguments(int argc, char *argv[]);
 
-void		display_philosophers(t_philo *philo);
+void				display_philosophers(t_philo *philo);
 
 #endif // PHILO_H

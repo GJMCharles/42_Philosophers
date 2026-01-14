@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+unsigned long int	get_timestamp_ms(void)
+{
+	struct timeval		time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
 void	free_all(t_data **data)
 {
 	t_data	*temp;

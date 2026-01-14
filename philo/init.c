@@ -47,6 +47,7 @@ t_param	*init_parameters(int argc, char *argv[])
 		param->eating_limits = ft_atoi(argv[5]);
 	else
 		param->eating_limits = -1;
+	param->start_time = 0;
 	return (param);
 }
 
