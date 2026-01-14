@@ -50,7 +50,7 @@ SOURCES_MANDATORY := \
 main.c \
 init.c \
 util.c \
-list.c
+node.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \

@@ -14,8 +14,21 @@
 
 t_philo	*initialise_philosophers(t_param *param)
 {
-	(void) param;
-	return ((t_philo *) NULL);
+	unsigned int	i;
+	t_philo			*philo_list;
+	t_philo			*philo_node;
+
+	i = 0;
+	philo_list = (t_philo *) NULL;
+	while (i < param->nb_philos)
+	{
+		philo_node = new_philosopher(i + 1);
+		if (!philo_node)
+			return ((t_philo *) NULL);
+		append_philosopher(philo_node, &philo_list);
+		i += 1;
+	}
+	return (philo_list);
 }
 
 t_param	*initialise_parameters(int argc, char *argv[])

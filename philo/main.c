@@ -47,6 +47,7 @@ int	main(int argc, char *argv[])
 		return (display_error("Error: Invalid arguments."), EXIT_FAILURE);
 	if (!initialise_data(argc, argv, &data))
 		return (display_error("Error: Failed initialisation."), EXIT_FAILURE);
+	display_philosophers(data->philo);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }

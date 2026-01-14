@@ -64,13 +64,15 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-void		display_philosophers(t_philo *data);
+void		display_philosophers(t_philo *philo);
 void		clear_philosophers(t_philo **list);
-void		append_philosopher(t_philo *new_philo, t_philo **list);
+void		append_philosopher(t_philo *node, t_philo **list);
 t_philo		*new_philosopher(unsigned int index);
+t_philo		*initialise_philosophers(t_param *param);
 void		free_all(t_data **data);
-void		display_error(char *message);
+t_param		*initialise_parameters(int argc, char *argv[]);
 int			initialise_data(int argc, char *argv[], t_data **data);
+void		display_error(char *message);
 int			verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H

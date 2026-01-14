@@ -19,11 +19,9 @@ void	free_all(t_data **data)
 	if (!(*data))
 		return ;
 	temp = *data;
-	if (!!temp->philo && temp->philo != (t_philo *) NULL)
-	{
-		free(temp->philo);
-	}
-	if (!!temp->param && temp->param != (t_param *) NULL)
+	if (temp->philo != (t_philo *) NULL)
+		clear_philosophers(&(temp->philo));
+	if (temp->param != (t_param *) NULL)
 	{
 		free(temp->param);
 		temp->param = (t_param *) NULL;
