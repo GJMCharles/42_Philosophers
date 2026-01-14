@@ -12,29 +12,38 @@
 
 #include "philo.h"
 
+int	take_forks(pthread_mutex_t *left, pthread_mutex_t *right)
+{
+	if (left != (pthread_mutex_t *) NULL)
+		pthread_mutex_lock(left);
+	if (right != (pthread_mutex_t *) NULL)
+		pthread_mutex_lock(right);
+	return (1);
+}
+
+int	return_forks(pthread_mutex_t *left, pthread_mutex_t *right)
+{
+	if (left != (pthread_mutex_t *) NULL)
+		pthread_mutex_unlock(left);
+	if (right != (pthread_mutex_t *) NULL)
+		pthread_mutex_unlock(right);
+	return (1);
+}
+
 void	action_eat(t_philo *philo)
 {
-	unsigned int	handle_count;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 
 	left_fork = &philo->fork;
-
-	pthread_mutex_lock(left_fork);
-	handle_count = 0;
-	right_fork = (pthread_mutex_t *) NULL;
-
-	if (philo->next != (t_philo *) NULL)
-		right_fork = &philo->next->fork;		
-	handle_count += 1;
-	if (right_fork != (pthread_mutex_t *) NULL)
-	{
-		pthread_mutex_lock(right_fork);
-		handle_count += 1;
-		pthread_mutex_unlock(right_fork);
-	}
-	usleep(philo->param->time_to_eat);
-	pthread_mutex_unlock(left_fork);
+	if (philo->next)
+		right_fork = &philo->next->fork;
+	else
+		right_fork = (pthread_mutex_t *) NULL;
+	take_forks(left_fork, right_fork);
+	
+	usleep(philo->param->time_to_eat * 1000);
+	return_forks(left_fork, right_fork);
 }
 
 /*
