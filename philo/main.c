@@ -14,9 +14,9 @@
 
 int	verify_arguments(int argc, char *argv[])
 {
-	int		argi;
-	int		i;
-	int		value;
+	int	argi;
+	int	i;
+	int	value;
 
 	if (argc < 5 || argc > 6)
 		return (0);
@@ -45,9 +45,12 @@ int	main(int argc, char *argv[])
 	data = (t_data *) NULL;
 	if (!verify_arguments(argc, argv))
 		return (display_error("Error: Invalid arguments."), EXIT_FAILURE);
-	if (!initialise_data(argc, argv, &data))
+	if (!init_data(argc, argv, &data))
 		return (display_error("Error: Failed initialisation."), EXIT_FAILURE);
 	display_philosophers(data->philo);
+	init_thread_mutex(&data);
+	init_philosophers_activities(&data);
+	destroy_thread_mutex(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }

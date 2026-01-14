@@ -50,7 +50,12 @@ SOURCES_MANDATORY := \
 main.c \
 init.c \
 util.c \
-node.c
+node.c \
+mutex.c \
+activity.c \
+activity_eat.c \
+activity_sleep.c \
+activity_think.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \

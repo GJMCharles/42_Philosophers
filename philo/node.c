@@ -14,7 +14,7 @@
 
 void	display_philosophers(t_philo *philo)
 {
-	t_philo			*first;
+	t_philo		*first;
 
 	first = philo;
 	while (philo != (t_philo *) NULL)
@@ -36,9 +36,9 @@ void	display_philosophers(t_philo *philo)
 
 void	clear_philosophers(t_philo **list)
 {
-	t_philo	*first;
-	t_philo	*temp;
-	t_philo	*next;
+	t_philo		*first;
+	t_philo		*temp;
+	t_philo		*next;
 
 	if (!list || !(*list))
 		return ;
@@ -58,8 +58,8 @@ void	clear_philosophers(t_philo **list)
 
 void	append_philosopher(t_philo *node, t_philo **list)
 {
-	t_philo	*temp;
-	t_philo	*first;
+	t_philo		*temp;
+	t_philo		*first;
 
 	if (!node)
 		return ;
@@ -80,9 +80,9 @@ void	append_philosopher(t_philo *node, t_philo **list)
 
 t_philo	*new_philosopher(unsigned int index)
 {
-	t_philo	*node;
+	t_philo		*node;
 
-	node = (t_philo *) malloc(sizeof(t_philo));
+	node = (t_philo *)malloc(sizeof(t_philo));
 	if (!node)
 		return ((t_philo *) NULL);
 	node->id = index;

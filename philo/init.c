@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-t_philo	*initialise_philosophers(t_param *param)
+t_philo	*init_philosophers(t_param *param)
 {
 	unsigned int	i;
 	t_philo			*philo_list;
@@ -31,17 +31,17 @@ t_philo	*initialise_philosophers(t_param *param)
 	return (philo_list);
 }
 
-t_param	*initialise_parameters(int argc, char *argv[])
+t_param	*init_parameters(int argc, char *argv[])
 {
-	t_param	*param;
+	t_param			*param;
 
-	param = (t_param *) malloc(sizeof(t_param));
+	param = (t_param *)malloc(sizeof(t_param));
 	if (!param)
 		return ((t_param *) NULL);
-	param->nb_philos = (unsigned int) ft_atoi(argv[1]);
-	param->time_to_die = (unsigned int) ft_atoi(argv[2]);
-	param->time_to_eat = (unsigned int) ft_atoi(argv[3]);
-	param->time_to_sleep = (unsigned int) ft_atoi(argv[4]);
+	param->nb_philos = (unsigned int)ft_atoi(argv[1]);
+	param->time_to_die = (unsigned int)ft_atoi(argv[2]);
+	param->time_to_eat = (unsigned int)ft_atoi(argv[3]);
+	param->time_to_sleep = (unsigned int)ft_atoi(argv[4]);
 	if (argc == 6)
 		param->eating_limits = ft_atoi(argv[5]);
 	else
@@ -49,20 +49,20 @@ t_param	*initialise_parameters(int argc, char *argv[])
 	return (param);
 }
 
-int	initialise_data(int argc, char *argv[], t_data **data)
+int	init_data(int argc, char *argv[], t_data **data)
 {
-	t_data	*new_data;
+	t_data			*new_data;
 
-	new_data = (t_data *) malloc(sizeof(t_data));
+	new_data = (t_data *)malloc(sizeof(t_data));
 	if (!new_data)
 	{
 		data = (t_data **) NULL;
 		return (0);
 	}
-	new_data->param = initialise_parameters(argc, argv);
+	new_data->param = init_parameters(argc, argv);
 	if (!new_data->param)
 		return (free_all(&new_data), 0);
-	new_data->philo = initialise_philosophers(new_data->param);
+	new_data->philo = init_philosophers(new_data->param);
 	if (!new_data->philo)
 		return (free_all(&new_data), 0);
 	*data = new_data;
