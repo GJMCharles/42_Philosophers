@@ -11,3 +11,9 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	action_sleep(t_philo *philo)
+{
+	printf("Philosopher %u is sleeping.\n", philo->id);
+	philo->status = SLEEPING;
+}

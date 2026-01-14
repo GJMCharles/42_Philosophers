@@ -53,9 +53,9 @@ util.c \
 node.c \
 mutex.c \
 activity.c \
-activity_eat.c \
-activity_sleep.c \
-activity_think.c
+action_eat.c \
+action_sleep.c \
+action_think.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \

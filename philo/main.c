@@ -47,10 +47,12 @@ int	main(int argc, char *argv[])
 		return (display_error("Error: Invalid arguments."), EXIT_FAILURE);
 	if (!init_data(argc, argv, &data))
 		return (display_error("Error: Failed initialisation."), EXIT_FAILURE);
-	display_philosophers(data->philo);
 	init_thread_mutex(&data);
-	init_philosophers_activities(&data);
+	philosophers_activities(&data);
 	destroy_thread_mutex(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }
+/**
+// display_philosophers(data->philo);
+*/

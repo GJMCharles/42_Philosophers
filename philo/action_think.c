@@ -11,3 +11,9 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	action_think(t_philo *philo)
+{
+	printf("Philosopher %u is thinking.\n", philo->id);
+	philo->status = THINKING;
+}

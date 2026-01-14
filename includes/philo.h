@@ -59,7 +59,8 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pthread_mutex_t		mutex_start;
+	pthread_mutex_t		mutex_timer;
+	pthread_mutex_t		mutex_printer;
 	pthread_mutex_t		mutex_eating;
 	pthread_mutex_t		mutex_sleeping;
 	pthread_mutex_t		mutex_thinking;
@@ -68,11 +69,13 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-void		*philosopher_routine(void *arg);
-void		init_philosophers_activities(t_data **data);
+void		action_eat(t_philo *philo);
+void		action_think(t_philo *philo);
+void		action_sleep(t_philo *philo);
+void		*activities(void *arg);
+void		philosophers_activities(t_data **data);
 void		destroy_thread_mutex(t_data **data);
 void		init_thread_mutex(t_data **data);
-void		display_philosophers(t_philo *philo);
 void		clear_philosophers(t_philo **list);
 void		append_philosopher(t_philo *node, t_philo **list);
 void		free_all(t_data **data);
@@ -82,5 +85,7 @@ t_param		*init_parameters(int argc, char *argv[]);
 int			init_data(int argc, char *argv[], t_data **data);
 void		display_error(char *message);
 int			verify_arguments(int argc, char *argv[]);
+
+void		display_philosophers(t_philo *philo);
 
 #endif // PHILO_H

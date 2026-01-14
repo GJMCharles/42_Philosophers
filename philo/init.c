@@ -25,6 +25,7 @@ t_philo	*init_philosophers(t_param *param)
 		philo_node = new_philosopher(i + 1);
 		if (!philo_node)
 			return ((t_philo *) NULL);
+		philo_node->param = param;
 		append_philosopher(philo_node, &philo_list);
 		i += 1;
 	}

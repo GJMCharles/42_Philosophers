@@ -11,3 +11,12 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	action_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->fork);
+	printf("Philosopher %u is eating.\n", philo->id);
+	philo->status = EATING;
+	philo->eat_counter += 1;
+	pthread_mutex_unlock(&philo->fork);
+}

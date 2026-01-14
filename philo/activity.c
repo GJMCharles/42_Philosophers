@@ -12,36 +12,43 @@
 
 #include "philo.h"
 
-void	*philosopher_routine(void *arg)
+void	*activities(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		eat_action(philo);
-		think_action(philo);
-		sleep_action(philo);
+		action_eat(philo);
+		action_think(philo);
+		action_sleep(philo);
 		break ;
 	}
 	return ((void *) NULL);
 }
 
-void	init_philosophers_activities(t_data **data)
+void	philosophers_activities(t_data **data)
 {
 	t_data	*temp;
 	t_philo	*philo_first;
-	t_philo	*philo_list;
+	t_philo	*philo;
 
 	temp = *data;
 	philo_first = temp->philo;
-	philo_list = temp->philo;
-	while (philo_list != (t_philo *) NULL)
+	philo = temp->philo;
+	while (philo != (t_philo *) NULL)
 	{
-		pthread_create(&philo_list->thread, NULL,
-			&philosopher_routine, (void *) philo_list);
-		philo_list = philo_list->next;
-		if (philo_list == philo_first)
+		pthread_create(&philo->thread, NULL, &activities, (void *) philo);
+		philo = philo->next;
+		if (philo == philo_first)
+			break ;
+	}
+	philo = temp->philo;
+	while (philo != (t_philo *) NULL)
+	{
+		pthread_join(philo->thread, (void **) NULL);
+		philo = philo->next;
+		if (philo == philo_first)
 			break ;
 	}
 }
