@@ -72,7 +72,9 @@ void	append_philosopher(t_philo *node, t_philo **list)
 	first = *list;
 	while (temp->next != (t_philo *) NULL && temp->next != first)
 		temp = temp->next;
+	node->prev = temp;
 	node->next = first;
+	first->prev = node;
 	temp->next = node;
 }
 
