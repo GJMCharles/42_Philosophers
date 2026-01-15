@@ -53,7 +53,7 @@ int	main(int argc, char *argv[])
 	if (!init_data(argc, argv, &data))
 		return (print_error_message("Error: Failed init"), EXIT_FAILURE);
 	init_pthread_mutex(&data);
-	// start_simulation(&data);
+	start_simulation(&data);
 	destroy_pthread_mutex(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);

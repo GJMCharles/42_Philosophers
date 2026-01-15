@@ -74,6 +74,11 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
+void				exec_pthread(pthread_mutex_t *m, void (*func)(void));
+char				*get_text_from_status(t_status code);
+void				*simulation(void *arg);
+void				start_simulation(t_data **data);
+
 unsigned long int	get_timestamp_ms(void);
 void				free_all(t_data **data);
 

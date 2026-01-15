@@ -22,15 +22,15 @@ void	exec_pthread(pthread_mutex_t *m, void (*func)(void))
 char	*get_text_from_status(t_status code)
 {
 	if (code == FORK_UP)
-		return ("has taken a fork");
+		return ((char *) "has taken a fork");
 	else if (code == EATING)
-		return ("is eating");
+		return ((char *) "is eating");
 	else if (code == SLEEPING)
-		return ("is sleeping");
+		return ((char *) "is sleeping");
 	else if (code == THINKING)
-		return ("is thinking");
+		return ((char *) "is thinking");
 	else if (code == DEAD)
-		return ("died");
+		return ((char *) "died");
 	return ((char *) NULL);
 }
 
