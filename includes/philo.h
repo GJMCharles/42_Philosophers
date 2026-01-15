@@ -13,11 +13,10 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+# include "libft.h"
 # include <pthread.h>
 # include <sys/time.h>
-# include <stdlib.h>
 # include <stdio.h>
-# include "libft.h"
 
 # ifndef TRUE
 #  define TRUE 1
@@ -75,24 +74,48 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-// void				report_message(t_philo *philo);
-void				exec_pthread(pthread_mutex_t *m, void (*func)(void));
 unsigned long int	get_timestamp_ms(void);
-void				action_die(t_philo *philo);
-void				action_eat(t_philo *philo);
-void				action_sleep(t_philo *philo);
-void				action_think(t_philo *philo);
-void				*simulation(void *arg);
-void				start_simulation(t_data **data);
-void				destroy_thread_mutex(t_data **data);
-void				init_thread_mutex(t_data **data);
-void				clear_philosophers(t_philo **list);
-void				append_philosopher(t_philo *node, t_philo **list);
 void				free_all(t_data **data);
-t_philo				*new_philosopher(unsigned int index);
+
+void				init_pthread_mutex(t_data **data);
+void				destroy_pthread_mutex(t_data **data);
+
 t_philo				*init_philosophers(t_param *param);
 t_param				*init_parameters(int argc, char *argv[]);
 int					init_data(int argc, char *argv[], t_data **data);
+
+void				clear_philosophers(t_philo **list);
+void				append_philosopher(t_philo *node, t_philo **list);
+t_philo				*new_philosopher(unsigned int index);
+
+void				print_error_message(const char *message);
 int					verify_arguments(int argc, char *argv[]);
+
+// t_philo	*init_philosophers(t_param *param);
+// void	free_all(t_data **data);
+// t_param	*init_parameters(int argc, char *argv[]);
+// int	init_data(int argc, char *argv[], t_data **data);
+// void	print_error_message(const char *message);
+// int	verify_arguments(int argc, char *argv[]);
+
+// void				report_message(t_philo *philo);
+// void				exec_pthread(pthread_mutex_t *m, void (*func)(void));
+// unsigned long int	get_timestamp_ms(void);
+// void				action_die(t_philo *philo);
+// void				action_eat(t_philo *philo);
+// void				action_sleep(t_philo *philo);
+// void				action_think(t_philo *philo);
+// void				*simulation(void *arg);
+// void				start_simulation(t_data **data);
+// void				destroy_pthread_mutex(t_data **data);
+// void				init_pthread_mutex(t_data **data);
+// void				clear_philosophers(t_philo **list);
+// void				append_philosopher(t_philo *node, t_philo **list);
+// void				free_all(t_data **data);
+// t_philo				*new_philosopher(unsigned int index);
+// t_philo				*init_philosophers(t_param *param);
+// t_param				*init_parameters(int argc, char *argv[]);
+// int					init_data(int argc, char *argv[], t_data **data);
+// int					verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H

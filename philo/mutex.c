@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void	init_thread_mutex(t_data **data)
+void	init_pthread_mutex(t_data **data)
 {
 	t_param	*temp;
 	t_philo	*philo_first;
@@ -36,7 +36,7 @@ void	init_thread_mutex(t_data **data)
 	}
 }
 
-void	destroy_thread_mutex(t_data **data)
+void	destroy_pthread_mutex(t_data **data)
 {
 	t_param	*temp;
 	t_philo	*philo_first;

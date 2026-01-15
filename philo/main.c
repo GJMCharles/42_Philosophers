@@ -12,6 +12,11 @@
 
 #include "philo.h"
 
+void	print_error_message(const char *message)
+{
+	ft_putendl_fd((char *) message, STDERR_FILENO);
+}
+
 int	verify_arguments(int argc, char *argv[])
 {
 	int	argi;
@@ -44,12 +49,12 @@ int	main(int argc, char *argv[])
 
 	data = (t_data *) NULL;
 	if (!verify_arguments(argc, argv))
-		return (ft_putendl_fd("Error: Invalid arguments", 2), EXIT_FAILURE);
+		return (print_error_message("Error: Invalid arguments"), EXIT_FAILURE);
 	if (!init_data(argc, argv, &data))
-		return (ft_putendl_fd("Error: Failed init", 2), EXIT_FAILURE);
-	init_thread_mutex(&data);
-	start_simulation(&data);
-	destroy_thread_mutex(&data);
+		return (print_error_message("Error: Failed init"), EXIT_FAILURE);
+	init_pthread_mutex(&data);
+	// start_simulation(&data);
+	destroy_pthread_mutex(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }

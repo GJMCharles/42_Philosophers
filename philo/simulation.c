@@ -56,8 +56,8 @@ void	*simulation(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (philo->param->death_encountered == 0)
-			action_eat(philo);
+		// if (philo->param->death_encountered == 0)
+		// 	action_eat(philo);
 		// if (philo->param->death_encountered == 0)
 		// 	action_sleep(philo);
 		// if (philo->param->death_encountered == 0)
@@ -71,8 +71,8 @@ void	*simulation(void *arg)
 		}
 		break ;
 	}
-	if (philo->has_died == 1)
-		action_die(philo);
+	// if (philo->has_died == 1)
+	// 	action_die(philo);
 	return ((void *) NULL);
 }
 

@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
+                "${workspaceFolder}",
                 "${workspaceFolder}/includes",
                 "${workspaceFolder}/includes/libft"
             ],
