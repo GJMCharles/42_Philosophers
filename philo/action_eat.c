@@ -33,6 +33,7 @@ int	action_eat(t_philo *philo)
 	usleep(philo->param->time_to_eat * 1000);
 	philo->eat_counter += 1;
 	report_message(philo);
+	philo->time_last_meal = get_timestamp_ms();
 	pthread_mutex_unlock(&philo->param->mutex_eating);
 	pthread_mutex_unlock(right_fork);
 	pthread_mutex_unlock(left_fork);

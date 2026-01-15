@@ -87,6 +87,7 @@ t_philo	*new_philosopher(unsigned int index)
 		return ((t_philo *) NULL);
 	node->id = index;
 	node->eat_counter = 0;
+	node->time_last_meal = 0;
 	node->status = IDLE;
 	node->thread = (pthread_t) NULL;
 	node->param = (t_param *) NULL;

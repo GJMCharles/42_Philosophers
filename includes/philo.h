@@ -31,7 +31,6 @@ typedef enum e_status
 {
 	IDLE,
 	FORK_UP,
-	FORK_DOWN,
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -59,6 +58,7 @@ typedef struct s_philo
 {
 	unsigned int		id;
 	int					eat_counter;
+	unsigned long int	time_last_meal;
 	t_status			status;
 	pthread_t			thread;
 	pthread_mutex_t		fork;

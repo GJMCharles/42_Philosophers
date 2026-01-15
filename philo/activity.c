@@ -16,8 +16,6 @@ char	*get_status_text(t_status code)
 {
 	if (code == FORK_UP)
 		return ("has taken a fork");
-	if (code == FORK_DOWN)
-		return ("has returned a fork");
 	else if (code == EATING)
 		return ("is eating");
 	else if (code == SLEEPING)
