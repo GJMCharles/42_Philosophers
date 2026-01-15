@@ -37,8 +37,3 @@ void	free_all(t_data **data)
 	free(temp);
 	temp = (t_data *) NULL;
 }
-
-void	display_error(char *message)
-{
-	ft_putendl_fd(message, STDERR_FILENO);
-}

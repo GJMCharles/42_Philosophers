@@ -14,6 +14,8 @@
 
 void	action_think(t_philo *philo)
 {
-	printf("Philosopher %u is thinking.\n", philo->id);
+	pthread_mutex_lock(&philo->param->mutex_thinking);
 	philo->status = THINKING;
+	report_message(philo);
+	pthread_mutex_unlock(&philo->param->mutex_thinking);
 }

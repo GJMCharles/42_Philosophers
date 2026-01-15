@@ -44,9 +44,9 @@ int	main(int argc, char *argv[])
 
 	data = (t_data *) NULL;
 	if (!verify_arguments(argc, argv))
-		return (display_error("Error: Invalid arguments."), EXIT_FAILURE);
+		return (ft_putendl_fd("Error: Invalid arguments", 2), EXIT_FAILURE);
 	if (!init_data(argc, argv, &data))
-		return (display_error("Error: Failed initialisation."), EXIT_FAILURE);
+		return (ft_putendl_fd("Error: Failed init", 2), EXIT_FAILURE);
 	init_thread_mutex(&data);
 	philosophers_activities(&data);
 	destroy_thread_mutex(&data);

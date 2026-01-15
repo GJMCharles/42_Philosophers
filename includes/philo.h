@@ -30,11 +30,13 @@
 typedef enum e_status
 {
 	IDLE,
-	THINKING,
+	FORK_UP,
+	FORK_DOWN,
 	EATING,
 	SLEEPING,
+	THINKING,
 	DEAD
-}	t_action_code;
+}	t_status;
 
 typedef struct s_param
 {
@@ -43,14 +45,21 @@ typedef struct s_param
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					eating_limits;
+	unsigned char		death_encountered;
 	unsigned long int	start_time;
+	pthread_mutex_t		mutex_timer;
+	pthread_mutex_t		mutex_printer;
+	pthread_mutex_t		mutex_eating;
+	pthread_mutex_t		mutex_sleeping;
+	pthread_mutex_t		mutex_thinking;
+	pthread_mutex_t		mutex_dead;
 }	t_param;
 
 typedef struct s_philo
 {
 	unsigned int		id;
 	int					eat_counter;
-	t_action_code		status;
+	t_status			status;
 	pthread_t			thread;
 	pthread_mutex_t		fork;
 	struct s_param		*param;
@@ -60,20 +69,16 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pthread_mutex_t		mutex_timer;
-	pthread_mutex_t		mutex_printer;
-	pthread_mutex_t		mutex_eating;
-	pthread_mutex_t		mutex_sleeping;
-	pthread_mutex_t		mutex_thinking;
-	pthread_mutex_t		mutex_dead;
 	struct s_param		*param;
 	struct s_philo		*philo;
 }	t_data;
 
+void				report_message(t_philo *philo);
 unsigned long int	get_timestamp_ms(void);
-void				action_eat(t_philo *philo);
+void				action_die(t_philo *philo);
+int					action_eat(t_philo *philo);
+int					action_sleep(t_philo *philo);
 void				action_think(t_philo *philo);
-void				action_sleep(t_philo *philo);
 void				*activities(void *arg);
 void				philosophers_activities(t_data **data);
 void				destroy_thread_mutex(t_data **data);
@@ -85,9 +90,7 @@ t_philo				*new_philosopher(unsigned int index);
 t_philo				*init_philosophers(t_param *param);
 t_param				*init_parameters(int argc, char *argv[]);
 int					init_data(int argc, char *argv[], t_data **data);
-void				display_error(char *message);
 int					verify_arguments(int argc, char *argv[]);
-
-void				display_philosophers(t_philo *philo);
+// void				display_philosophers(t_philo *philo);
 
 #endif // PHILO_H

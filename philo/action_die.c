@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   action_sleep.c                                     :+:      :+:    :+:   */
+/*   action_die.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/14 06:53:05 by grcharle          #+#    #+#             */
-/*   Updated: 2026/01/14 06:53:15 by grcharle         ###   ########.fr       */
+/*   Created: 2026/01/15 05:40:28 by grcharle          #+#    #+#             */
+/*   Updated: 2026/01/15 05:45:16 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	action_sleep(t_philo *philo)
+void	action_die(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->param->mutex_sleeping);
-	philo->status = SLEEPING;
-	usleep(philo->param->time_to_sleep * 1000);
+	pthread_mutex_lock(&philo->param->mutex_dead);
+	philo->status = DEAD;
+	philo->param->death_encountered = 1;
+	usleep(10 * 1000);
 	report_message(philo);
-	pthread_mutex_unlock(&philo->param->mutex_sleeping);
-	return (1);
+	pthread_mutex_unlock(&philo->param->mutex_dead);
 }
