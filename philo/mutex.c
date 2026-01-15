@@ -19,8 +19,8 @@ void	init_thread_mutex(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
-	pthread_mutex_init(&temp->mutex_timer, NULL);
-	pthread_mutex_init(&temp->mutex_printer, NULL);
+	pthread_mutex_init(&temp->mutex_timestamp, NULL);
+	pthread_mutex_init(&temp->mutex_print, NULL);
 	pthread_mutex_init(&temp->mutex_eating, NULL);
 	pthread_mutex_init(&temp->mutex_sleeping, NULL);
 	pthread_mutex_init(&temp->mutex_thinking, NULL);
@@ -43,8 +43,8 @@ void	destroy_thread_mutex(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
-	pthread_mutex_destroy(&temp->mutex_timer);
-	pthread_mutex_destroy(&temp->mutex_printer);
+	pthread_mutex_destroy(&temp->mutex_timestamp);
+	pthread_mutex_destroy(&temp->mutex_print);
 	pthread_mutex_destroy(&temp->mutex_eating);
 	pthread_mutex_destroy(&temp->mutex_sleeping);
 	pthread_mutex_destroy(&temp->mutex_thinking);

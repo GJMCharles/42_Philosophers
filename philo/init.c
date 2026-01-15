@@ -48,7 +48,8 @@ t_param	*init_parameters(int argc, char *argv[])
 	else
 		param->eating_limits = -1;
 	param->death_encountered = 0;
-	param->start_time = 0;
+	param->timestamp_start = 0;
+	param->total_min_eaten = 0;
 	return (param);
 }
 

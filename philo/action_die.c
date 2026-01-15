@@ -18,6 +18,6 @@ void	action_die(t_philo *philo)
 	philo->status = DEAD;
 	philo->param->death_encountered = 1;
 	usleep(10 * 1000);
-	report_message(philo);
+	// report_message(philo);
 	pthread_mutex_unlock(&philo->param->mutex_dead);
 }

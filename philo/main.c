@@ -48,11 +48,8 @@ int	main(int argc, char *argv[])
 	if (!init_data(argc, argv, &data))
 		return (ft_putendl_fd("Error: Failed init", 2), EXIT_FAILURE);
 	init_thread_mutex(&data);
-	philosophers_activities(&data);
+	start_simulation(&data);
 	destroy_thread_mutex(&data);
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }
-/**
-// display_philosophers(data->philo);
-*/
