@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   action_eat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 06:52:37 by grcharle          #+#    #+#             */
 /*   Updated: 2026/01/14 06:52:51 by grcharle         ###   ########.fr       */

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 06:09:09 by grcharle          #+#    #+#             */
 /*   Updated: 2026/01/14 06:09:57 by grcharle         ###   ########.fr       */

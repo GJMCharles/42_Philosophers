@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   action_sleep.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 06:53:05 by grcharle          #+#    #+#             */
 /*   Updated: 2026/01/14 06:53:15 by grcharle         ###   ########.fr       */

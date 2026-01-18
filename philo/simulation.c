@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: grcharle </var/spool/mail/grcharle>        +#+  +:+       +#+        */
+/*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 06:37:38 by grcharle          #+#    #+#             */
 /*   Updated: 2026/01/15 08:59:37 by grcharle         ###   ########.fr       */
