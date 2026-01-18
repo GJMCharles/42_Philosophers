@@ -14,8 +14,5 @@
 
 void	action_think(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->param->mutex_thinking);
-	philo->status = THINKING;
-	// report_message(philo);
-	pthread_mutex_unlock(&philo->param->mutex_thinking);
+	(void) philo;
 }

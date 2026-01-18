@@ -49,14 +49,9 @@ OBJECTS_DIR := .objects
 SOURCES_MANDATORY := \
 main.c \
 init.c \
-util.c \
-node.c \
+philo.c \
 mutex.c \
-simulation.c \
-action_eat.c \
-action_sleep.c \
-action_think.c \
-action_die.c
+simulation.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \

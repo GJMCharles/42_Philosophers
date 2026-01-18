@@ -14,9 +14,5 @@
 
 void	action_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->param->mutex_sleeping);
-	philo->status = SLEEPING;
-	// report_message(philo);
-	usleep(philo->param->time_to_sleep * 1000);
-	pthread_mutex_unlock(&philo->param->mutex_sleeping);
+	(void) philo;
 }

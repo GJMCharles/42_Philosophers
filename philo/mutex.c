@@ -12,30 +12,6 @@
 
 #include "philo.h"
 
-void	init_pthread_mutex(t_data **data)
-{
-	t_param	*temp;
-	t_philo	*philo_first;
-	t_philo	*philo_list;
-
-	temp = (*data)->param;
-	pthread_mutex_init(&temp->mutex_timestamp, NULL);
-	pthread_mutex_init(&temp->mutex_print, NULL);
-	pthread_mutex_init(&temp->mutex_eating, NULL);
-	pthread_mutex_init(&temp->mutex_sleeping, NULL);
-	pthread_mutex_init(&temp->mutex_thinking, NULL);
-	pthread_mutex_init(&temp->mutex_dead, NULL);
-	philo_first = (*data)->philo;
-	philo_list = (*data)->philo;
-	while (philo_list != (t_philo *) NULL)
-	{
-		pthread_mutex_init(&philo_list->fork, NULL);
-		philo_list = philo_list->next;
-		if (philo_list == philo_first)
-			break ;
-	}
-}
-
 void	destroy_pthread_mutex(t_data **data)
 {
 	t_param	*temp;
@@ -54,6 +30,30 @@ void	destroy_pthread_mutex(t_data **data)
 	while (philo_list != (t_philo *) NULL)
 	{
 		pthread_mutex_destroy(&philo_list->fork);
+		philo_list = philo_list->next;
+		if (philo_list == philo_first)
+			break ;
+	}
+}
+
+void	init_pthread_mutex(t_data **data)
+{
+	t_param	*temp;
+	t_philo	*philo_first;
+	t_philo	*philo_list;
+
+	temp = (*data)->param;
+	pthread_mutex_init(&temp->mutex_timestamp, NULL);
+	pthread_mutex_init(&temp->mutex_print, NULL);
+	pthread_mutex_init(&temp->mutex_eating, NULL);
+	pthread_mutex_init(&temp->mutex_sleeping, NULL);
+	pthread_mutex_init(&temp->mutex_thinking, NULL);
+	pthread_mutex_init(&temp->mutex_dead, NULL);
+	philo_first = (*data)->philo;
+	philo_list = (*data)->philo;
+	while (philo_list != (t_philo *) NULL)
+	{
+		pthread_mutex_init(&philo_list->fork, NULL);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
 			break ;

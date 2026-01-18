@@ -14,10 +14,5 @@
 
 void	action_die(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->param->mutex_dead);
-	philo->status = DEAD;
-	philo->param->death_encountered = 1;
-	usleep(10 * 1000);
-	// report_message(philo);
-	pthread_mutex_unlock(&philo->param->mutex_dead);
+	(void) philo;
 }
