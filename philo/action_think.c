@@ -12,7 +12,13 @@
 
 #include "philo.h"
 
+void	think_callback(t_philo *philo)
+{
+	philo->status = THINKING;
+	print_status(philo);
+}
+
 void	action_think(t_philo *philo)
 {
-	(void) philo;
+	exec_mutex(&(philo->param->mutex_thinking), philo, think_callback);
 }

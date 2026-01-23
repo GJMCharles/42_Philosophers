@@ -16,3 +16,9 @@ void	action_die(t_philo *philo)
 {
 	(void) philo;
 }
+
+int	is_dead(t_philo *philo)
+{
+	(void) philo;
+	return (1);
+}

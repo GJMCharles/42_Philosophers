@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   node_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 09:08:51 by grcharle          #+#    #+#             */
-/*   Updated: 2026/01/18 15:30:42 by grcharle         ###   ########.fr       */
+/*   Updated: 2026/01/23 05:48:26 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ void	append_philosopher(t_philo *node, t_philo **list)
 	first = *list;
 	while (temp->next != (t_philo *) NULL && temp->next != first)
 		temp = temp->next;
-	node->prev = temp;
 	node->next = first;
-	first->prev = node;
 	temp->next = node;
 }
 
@@ -86,13 +84,11 @@ t_philo	*new_philosopher(unsigned int index)
 	if (!node)
 		return ((t_philo *) NULL);
 	node->id = index;
-	node->eat_counter = 0;
-	node->has_died = 0;
-	node->timestamp_last_meal = 0;
 	node->status = IDLE;
 	node->thread = (pthread_t) NULL;
 	node->param = (t_param *) NULL;
-	node->prev = (t_philo *) NULL;
 	node->next = (t_philo *) NULL;
+	node->last_eaten = 0;
+	node->eating_counter = 0;
 	return (node);
 }

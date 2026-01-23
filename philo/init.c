@@ -12,24 +12,6 @@
 
 #include "philo.h"
 
-void	free_data(t_data **data)
-{
-	t_data	*temp;
-
-	if (!(*data))
-		return ;
-	temp = *data;
-	if (temp->philo != (t_philo *) NULL)
-		clear_philosophers(&(temp->philo));
-	if (temp->param != (t_param *) NULL)
-	{
-		free(temp->param);
-		temp->param = (t_param *) NULL;
-	}
-	free(temp);
-	temp = (t_data *) NULL;
-}
-
 t_philo	*init_philosophers(t_param *param)
 {
 	unsigned int	i;
@@ -65,44 +47,16 @@ t_param	*init_parameters(int argc, char *argv[])
 		param->eating_limits = ft_atoi(argv[5]);
 	else
 		param->eating_limits = -1;
-	param->total_min_eaten = 0;
-	param->timestamp_start = 0;
-	param->death_encountered = 0;
+	param->initiator_count = 0;
+	param->start_timestamp = 0;
+	param->abort_simulation = 0;
 	return (param);
 }
 
-int	verify_arguments(int argc, char *argv[])
-{
-	int	argi;
-	int	i;
-	int	value;
-
-	if (argc < 5 || argc > 6)
-		return (0);
-	argi = 1;
-	while (argi < argc)
-	{
-		value = ft_atoi(argv[argi]);
-		if (!value || value < 0)
-			return (0);
-		i = 0;
-		while (argv[argi][i] != '\0')
-		{
-			if (!ft_isdigit(argv[argi][i]))
-				return (0);
-			i += 1;
-		}
-		argi += 1;
-	}
-	return (1);
-}
-
-t_data	*get_data(int argc, char *argv[])
+t_data	*build_data(int argc, char *argv[])
 {
 	t_data	*new_data;
 
-	if (!verify_arguments(argc, argv))
-		return ((t_data *) NULL);
 	new_data = (t_data *)malloc(sizeof(t_data));
 	if (!new_data)
 		return ((t_data *) NULL);
@@ -110,13 +64,10 @@ t_data	*get_data(int argc, char *argv[])
 	if (!new_data->param)
 	{
 		free_data(&new_data);
-		return ((t_data *) NULL);
+		return (new_data);
 	}
 	new_data->philo = init_philosophers(new_data->param);
 	if (!new_data->philo)
-	{
 		free_data(&new_data);
-		return ((t_data *) NULL);
-	}
 	return (new_data);
 }

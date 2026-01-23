@@ -12,7 +12,14 @@
 
 #include "philo.h"
 
+void	sleep_callback(t_philo *philo)
+{
+	philo->status = SLEEPING;
+	print_status(philo);
+	forced_waiting(philo->param->time_to_sleep);
+}
+
 void	action_sleep(t_philo *philo)
 {
-	(void) philo;
+	exec_mutex(&(philo->param->mutex_sleeping), philo, sleep_callback);
 }

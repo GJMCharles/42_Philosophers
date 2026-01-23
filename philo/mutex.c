@@ -12,6 +12,16 @@
 
 #include "philo.h"
 
+void	exec_mutex(void *mutex, t_philo *p, void (*fn)(t_philo *))
+{
+	pthread_mutex_t	*m;
+
+	m = (pthread_mutex_t *) mutex;
+	pthread_mutex_lock(m);
+	(*fn)(p);
+	pthread_mutex_unlock(m);
+}
+
 void	destroy_pthread_mutex(t_data **data)
 {
 	t_param	*temp;
@@ -19,6 +29,7 @@ void	destroy_pthread_mutex(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
+	pthread_mutex_destroy(&temp->mutex_start);
 	pthread_mutex_destroy(&temp->mutex_timestamp);
 	pthread_mutex_destroy(&temp->mutex_print);
 	pthread_mutex_destroy(&temp->mutex_eating);
@@ -43,6 +54,7 @@ void	init_pthread_mutex(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
+	pthread_mutex_init(&temp->mutex_start, NULL);
 	pthread_mutex_init(&temp->mutex_timestamp, NULL);
 	pthread_mutex_init(&temp->mutex_print, NULL);
 	pthread_mutex_init(&temp->mutex_eating, NULL);

@@ -12,17 +12,9 @@
 
 #include "philo.h"
 
-unsigned long int	get_timestamp_ms(void)
-{
-	struct timeval		time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
 char	*get_text_from_status(t_status code)
 {
-	if (code == FORK_UP)
+	if (code == PICK_FORK)
 		return ((char *) "has taken a fork");
 	else if (code == EATING)
 		return ((char *) "is eating");
@@ -35,21 +27,64 @@ char	*get_text_from_status(t_status code)
 	return ((char *) NULL);
 }
 
-void	*simulation(void *arg)
+void	waiting_loader(t_param *param, unsigned int *is_init)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
 	while (1)
 	{
-		if (philo->param->death_encountered == 1 || philo->has_died == 1)
-			break ;
-		if (philo->param->eating_limits > 0)
+		pthread_mutex_lock(&(param->mutex_start));
+		if (!*is_init)
 		{
-			if (philo->param->eating_limits == philo->param->total_min_eaten)
-				break ;
+			*is_init = 1;
+			param->initiator_count += 1;
 		}
-		break ;
+		usleep(100);
+		if (param->initiator_count == param->nb_philos)
+		{
+			param->start_timestamp = get_timestamp_ms();
+			pthread_mutex_unlock(&(param->mutex_start));
+			break ;
+		}
+		pthread_mutex_unlock(&(param->mutex_start));
+	}
+}
+
+int	can_abort_simulation(t_philo *philo)
+{
+	if (philo->param->abort_simulation)
+		return (1);
+	if ((get_timestamp_ms() - philo->last_eaten) >= philo->param->time_to_die)
+	{
+		philo->status = DEAD;
+		philo->param->abort_simulation = 1;
+		return (1);
+	}
+	return (0);
+}
+
+void	*simulation(void *arg)
+{
+	t_philo			*philo;
+	unsigned int	is_init;
+
+	philo = (t_philo *)arg;
+	is_init = 0;
+	waiting_loader(philo->param, &is_init);
+	while (1)
+	{
+		action_eat(philo);
+		if (can_abort_simulation(philo))
+			break ;
+		action_sleep(philo);
+		if (can_abort_simulation(philo))
+			break ;
+		action_think(philo);
+		if (can_abort_simulation(philo))
+			break ;
+	}
+	if (philo->status == DEAD)
+	{
+		usleep(100);
+		print_status(philo);
 	}
 	return ((void *) NULL);
 }
@@ -58,25 +93,24 @@ void	start_simulation(t_data **data)
 {
 	t_data	*temp;
 	t_philo	*first;
-	t_philo	*philo;
+	t_philo	*current;
 
 	temp = *data;
 	first = temp->philo;
-	philo = temp->philo;
-	while (philo != (t_philo *) NULL)
+	current = temp->philo;
+	while (current != (t_philo *) NULL)
 	{
-		pthread_create(&philo->thread, NULL, &simulation, (void *) philo);
-		philo = philo->next;
-		if (philo == first)
+		pthread_create(&current->thread, NULL, &simulation, (void *) current);
+		current = current->next;
+		if (current == first)
 			break ;
 	}
-	philo = temp->philo;
-	temp->param->timestamp_start = get_timestamp_ms();
-	while (philo != (t_philo *) NULL)
+	current = temp->philo;
+	while (current != (t_philo *) NULL)
 	{
-		pthread_join(philo->thread, (void **) NULL);
-		philo = philo->next;
-		if (philo == first)
+		pthread_join(current->thread, (void **) NULL);
+		current = current->next;
+		if (current == first)
 			break ;
 	}
 }

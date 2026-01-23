@@ -49,9 +49,14 @@ OBJECTS_DIR := .objects
 SOURCES_MANDATORY := \
 main.c \
 init.c \
-philo.c \
+node_philo.c \
 mutex.c \
-simulation.c
+simulation.c \
+action_eat.c \
+action_sleep.c \
+action_think.c \
+action_die.c \
+utils.c
 
 OBJECTS_MANDATORY := \
 $(patsubst \
@@ -77,7 +82,7 @@ LIBS:
 
 all: $(NAME)
 	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o ./$^/$^ $(LDFLAGS) $(LDLIBS)
-	echo -n "Generated executable: ./$^/$^\n"
+	echo "Generated executable: ./$^/$^"
 
 clean:
 	@$(MAKE) -C ./includes/$(LIBFT) clean
@@ -101,7 +106,7 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 5 3 3 3
+	-s ./$(NAME)/$(NAME) 3 400 100 100
 
 .SECONDARY: $(OBJECTS_MANDATORY)
 
