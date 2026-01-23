@@ -40,7 +40,7 @@ int	death_callback(t_philo *philo)
 		if (least_eaten_number(philo) == philo->param->eating_limits)
 		{
 			philo->param->abort_simulation = 1;
-				return (1);
+			return (1);
 		}
 	}
 	if ((get_timestamp_ms() - philo->last_eaten) >= philo->param->time_to_die)
