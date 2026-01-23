@@ -33,10 +33,11 @@
 // 	print_status(philo);
 // }
 
-void	post_meal(t_philo *philo)
+int	eat_callback(t_philo *philo)
 {
 	philo->last_eaten = get_timestamp_ms();
 	philo->eating_counter += 1;
+	return (1);
 }
 
 void	action_eat(t_philo *philo)
@@ -60,7 +61,7 @@ void	action_eat(t_philo *philo)
 	philo->status = EATING;
 	print_status(philo);
 	forced_waiting(philo->param->time_to_eat);
-	exec_mutex(&philo->param->mutex_eating, philo, post_meal);
+	exec_mutex(&philo->param->mutex_eating, philo, eat_callback);
 	pthread_mutex_unlock(&right_fork);
 	pthread_mutex_unlock(&left_fork);
 }

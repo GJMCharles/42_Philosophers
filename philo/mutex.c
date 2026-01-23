@@ -12,14 +12,16 @@
 
 #include "philo.h"
 
-void	exec_mutex(void *mutex, t_philo *p, void (*fn)(t_philo *))
+int	exec_mutex(void *mutex, t_philo *p, int (*fn)(t_philo *))
 {
 	pthread_mutex_t	*m;
+	int				status;
 
 	m = (pthread_mutex_t *) mutex;
 	pthread_mutex_lock(m);
-	(*fn)(p);
+	status = (*fn)(p);
 	pthread_mutex_unlock(m);
+	return (status);
 }
 
 void	destroy_pthread_mutex(t_data **data)

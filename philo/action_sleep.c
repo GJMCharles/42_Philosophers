@@ -12,11 +12,12 @@
 
 #include "philo.h"
 
-void	sleep_callback(t_philo *philo)
+int	sleep_callback(t_philo *philo)
 {
 	philo->status = SLEEPING;
 	print_status(philo);
 	forced_waiting(philo->param->time_to_sleep);
+	return (1);
 }
 
 void	action_sleep(t_philo *philo)

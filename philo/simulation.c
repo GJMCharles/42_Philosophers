@@ -48,19 +48,6 @@ void	waiting_loader(t_param *param, unsigned int *is_init)
 	}
 }
 
-int	can_abort_simulation(t_philo *philo)
-{
-	if (philo->param->abort_simulation)
-		return (1);
-	if ((get_timestamp_ms() - philo->last_eaten) >= philo->param->time_to_die)
-	{
-		philo->status = DEAD;
-		philo->param->abort_simulation = 1;
-		return (1);
-	}
-	return (0);
-}
-
 void	*simulation(void *arg)
 {
 	t_philo			*philo;
@@ -80,11 +67,6 @@ void	*simulation(void *arg)
 		action_think(philo);
 		if (can_abort_simulation(philo))
 			break ;
-	}
-	if (philo->status == DEAD)
-	{
-		usleep(100);
-		print_status(philo);
 	}
 	return ((void *) NULL);
 }

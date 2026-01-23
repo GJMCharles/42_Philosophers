@@ -73,13 +73,18 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-void				exec_mutex(void *mutex, t_philo *p, void (*fn)(t_philo *));
-void				action_die(t_philo *philo);
+int					exec_mutex(void *mutex, t_philo *p, int (*fn)(t_philo *));
 void				action_think(t_philo *philo);
 void				action_sleep(t_philo *philo);
 void				action_eat(t_philo *philo);
 
+int					death_callback(t_philo *philo);
+int					think_callback(t_philo *philo);
+int					sleep_callback(t_philo *philo);
+int					eat_callback(t_philo *philo);
+
 void				print_status(t_philo *philo);
+int					can_abort_simulation(t_philo *philo);
 unsigned long int	get_timestamp_ms(void);
 void				forced_waiting(unsigned int duration);
 char				*get_text_from_status(t_status code);

@@ -12,13 +12,48 @@
 
 #include "philo.h"
 
-void	action_die(t_philo *philo)
+int	least_eaten_number(t_philo *philo)
 {
-	(void) philo;
+	t_philo			*first;
+	t_philo			*current;
+	unsigned int	nb;
+
+	first = philo;
+	current = philo;
+	nb = current->eating_counter;
+	current = current->next;
+	while (current && current->next != (t_philo *) NULL && current != first)
+	{
+		if (nb > current->eating_counter)
+			nb = current->eating_counter;
+		current = current->next;
+	}
+	return (nb);
 }
 
-int	is_dead(t_philo *philo)
+int	death_callback(t_philo *philo)
 {
-	(void) philo;
-	return (1);
+	if (philo->param->abort_simulation)
+		return (1);
+	if (philo->param->eating_limits > 0)
+	{
+		if (least_eaten_number(philo) == philo->param->eating_limits)
+		{
+			philo->param->abort_simulation = 1;
+				return (1);
+		}
+	}
+	if ((get_timestamp_ms() - philo->last_eaten) >= philo->param->time_to_die)
+	{
+		philo->status = DEAD;
+		philo->param->abort_simulation = 1;
+		print_status(philo);
+		return (1);
+	}
+	return (0);
+}
+
+int	can_abort_simulation(t_philo *philo)
+{
+	return (exec_mutex(&(philo->param->mutex_dead), philo, death_callback));
 }

@@ -12,10 +12,11 @@
 
 #include "philo.h"
 
-void	think_callback(t_philo *philo)
+int	think_callback(t_philo *philo)
 {
 	philo->status = THINKING;
 	print_status(philo);
+	return (1);
 }
 
 void	action_think(t_philo *philo)
