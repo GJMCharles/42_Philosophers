@@ -33,35 +33,35 @@
 // 	print_status(philo);
 // }
 
-int	eat_callback(t_philo *philo)
-{
-	philo->last_eaten = get_timestamp_ms();
-	philo->eating_counter += 1;
-	return (1);
-}
+// int	eat_callback(t_philo *philo)
+// {
+// 	philo->last_eaten = get_timestamp_ms();
+// 	philo->eating_counter += 1;
+// 	return (1);
+// }
 
-void	action_eat(t_philo *philo)
-{
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
+// void	action_eat(t_philo *philo)
+// {
+// 	pthread_mutex_t	left_fork;
+// 	pthread_mutex_t	right_fork;
 
-	left_fork = philo->fork;
-	pthread_mutex_lock(&left_fork);
-	philo->status = PICK_FORK;
-	print_status(philo);
-	if (!philo->next)
-	{
-		forced_waiting(philo->param->time_to_die);
-		pthread_mutex_unlock(&left_fork);
-		return ;
-	}
-	right_fork = philo->next->fork;
-	pthread_mutex_lock(&right_fork);
-	print_status(philo);
-	philo->status = EATING;
-	print_status(philo);
-	forced_waiting(philo->param->time_to_eat);
-	exec_mutex(&philo->param->mutex_eating, philo, eat_callback);
-	pthread_mutex_unlock(&right_fork);
-	pthread_mutex_unlock(&left_fork);
-}
+// 	left_fork = philo->fork;
+// 	pthread_mutex_lock(&left_fork);
+// 	philo->status = PICK_FORK;
+// 	print_status(philo);
+// 	if (!philo->next)
+// 	{
+// 		forced_waiting(philo->param->time_to_die);
+// 		pthread_mutex_unlock(&left_fork);
+// 		return ;
+// 	}
+// 	right_fork = philo->next->fork;
+// 	pthread_mutex_lock(&right_fork);
+// 	print_status(philo);
+// 	philo->status = EATING;
+// 	print_status(philo);
+// 	forced_waiting(philo->param->time_to_eat);
+// 	exec_mutex(&philo->param->mutex_eating, philo, eat_callback);
+// 	pthread_mutex_unlock(&right_fork);
+// 	pthread_mutex_unlock(&left_fork);
+// }

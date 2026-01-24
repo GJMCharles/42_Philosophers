@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 20:33:34 by grcharle          #+#    #+#             */
-/*   Updated: 2026/01/13 20:34:46 by grcharle         ###   ########.fr       */
+/*   Updated: 2026/01/24 13:23:01 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_param	*init_parameters(int argc, char *argv[])
 		param->eating_limits = ft_atoi(argv[5]);
 	else
 		param->eating_limits = -1;
-	param->initiator_count = 0;
+	param->test_count = 0;
 	param->start_timestamp = 0;
 	param->abort_simulation = 0;
 	return (param);

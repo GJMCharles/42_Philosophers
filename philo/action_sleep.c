@@ -12,15 +12,15 @@
 
 #include "philo.h"
 
-int	sleep_callback(t_philo *philo)
-{
-	philo->status = SLEEPING;
-	print_status(philo);
-	forced_waiting(philo->param->time_to_sleep);
-	return (1);
-}
+// int	sleep_callback(t_philo *philo)
+// {
+// 	philo->status = SLEEPING;
+// 	print_status(philo);
+// 	forced_waiting(philo->param->time_to_sleep);
+// 	return (1);
+// }
 
-void	action_sleep(t_philo *philo)
-{
-	exec_mutex(&(philo->param->mutex_sleeping), philo, sleep_callback);
-}
+// void	action_sleep(t_philo *philo)
+// {
+// 	exec_mutex(&(philo->param->mutex_sleeping), philo, sleep_callback);
+// }

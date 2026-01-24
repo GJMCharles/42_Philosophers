@@ -48,8 +48,8 @@ OBJECTS_DIR := .objects
 
 SOURCES_MANDATORY := \
 main.c \
-init.c \
-node_philo.c \
+data.c \
+node.c \
 mutex.c \
 simulation.c \
 action_eat.c \
@@ -106,7 +106,7 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 3 400 100 100 3
+	-s ./$(NAME)/$(NAME) 5 800 400 300 2
 
 .SECONDARY: $(OBJECTS_MANDATORY)
 

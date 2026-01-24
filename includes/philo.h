@@ -43,9 +43,9 @@ typedef struct s_param
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					eating_limits;
-	unsigned int		initiator_count;
-	unsigned long int	start_timestamp;
-	unsigned int		abort_simulation;
+	unsigned int		test_count;
+	long int			start_timestamp;
+	unsigned char		abort_simulation;
 	pthread_mutex_t		mutex_start;
 	pthread_mutex_t		mutex_timestamp;
 	pthread_mutex_t		mutex_print;
@@ -60,11 +60,11 @@ typedef struct s_philo
 	unsigned int		id;
 	t_status			status;
 	pthread_t			thread;
-	struct s_param		*param;
-	struct s_philo		*next;
 	unsigned long int	last_eaten;
 	unsigned int		eating_counter;
 	pthread_mutex_t		fork;
+	struct s_param		*param;
+	struct s_philo		*next;
 }	t_philo;
 
 typedef struct s_data
@@ -73,36 +73,52 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-int					exec_mutex(void *mutex, t_philo *p, int (*fn)(t_philo *));
-void				action_think(t_philo *philo);
-void				action_sleep(t_philo *philo);
-void				action_eat(t_philo *philo);
+// int					exec_mutex(void *mutex, t_philo *p, int (*fn)(t_philo *));
+// void				action_think(t_philo *philo);
+// void				action_sleep(t_philo *philo);
+// void				action_eat(t_philo *philo);
 
-int					death_callback(t_philo *philo);
-int					think_callback(t_philo *philo);
-int					sleep_callback(t_philo *philo);
-int					eat_callback(t_philo *philo);
+// int					death_callback(t_philo *philo);
+// int					think_callback(t_philo *philo);
+// int					sleep_callback(t_philo *philo);
+// int					eat_callback(t_philo *philo);
 
-void				print_status(t_philo *philo);
-int					can_abort_simulation(t_philo *philo);
+// void				print_status(t_philo *philo);
+// int					can_abort_simulation(t_philo *philo);
+// unsigned long int	get_timestamp_ms(void);
+// void				forced_waiting(unsigned int duration);
+// char				*get_text_from_status(t_status code);
+// void				waiting_loader(t_param *param, unsigned int *is_init);
+// void				*simulation(void *arg);
+// void				start_simulation(t_data **data);
+
+// void				destroy_pthread_mutex(t_data **data);
+// void				init_pthread_mutex(t_data **data);
+
+// void				clear_philosophers(t_philo **list);
+// void				append_philosopher(t_philo *node, t_philo **list);
+// t_philo				*new_philosopher(unsigned int index);
+
+// void				free_data(t_data **data);
+// t_philo				*init_philosophers(t_param *param);
+// t_param				*init_parameters(int argc, char *argv[]);
+// int					verify_arguments(int argc, char *argv[]);
+// t_data				*build_data(int argc, char *argv[]);
+
+char	*get_text_from_status(t_status code);
 unsigned long int	get_timestamp_ms(void);
-void				forced_waiting(unsigned int duration);
-char				*get_text_from_status(t_status code);
-void				waiting_loader(t_param *param, unsigned int *is_init);
-void				*simulation(void *arg);
-void				start_simulation(t_data **data);
-
-void				destroy_pthread_mutex(t_data **data);
-void				init_pthread_mutex(t_data **data);
-
-void				clear_philosophers(t_philo **list);
-void				append_philosopher(t_philo *node, t_philo **list);
-t_philo				*new_philosopher(unsigned int index);
-
-void				free_data(t_data **data);
-t_philo				*init_philosophers(t_param *param);
-t_param				*init_parameters(int argc, char *argv[]);
-int					verify_arguments(int argc, char *argv[]);
-t_data				*build_data(int argc, char *argv[]);
+void	print_status(t_philo *philo);
+void	*simulation(void *arg);
+void	start_simulation(t_data **data);
+void	destroy_pthread_mutex(t_data **data);
+void	init_pthread_mutex(t_data **data);
+void	clear_philosophers(t_philo **list);
+void	append_philosopher(t_philo *node, t_philo **list);
+t_philo	*new_philosopher(unsigned int index);
+t_philo	*init_philosophers(t_param *param);
+t_param	*init_parameters(int argc, char *argv[]);
+void	free_data(t_data **data);
+t_data	*build_data(int argc, char *argv[]);
+int	verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H

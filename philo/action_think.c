@@ -12,14 +12,14 @@
 
 #include "philo.h"
 
-int	think_callback(t_philo *philo)
-{
-	philo->status = THINKING;
-	print_status(philo);
-	return (1);
-}
+// int	think_callback(t_philo *philo)
+// {
+// 	philo->status = THINKING;
+// 	print_status(philo);
+// 	return (1);
+// }
 
-void	action_think(t_philo *philo)
-{
-	exec_mutex(&(philo->param->mutex_thinking), philo, think_callback);
-}
+// void	action_think(t_philo *philo)
+// {
+// 	exec_mutex(&(philo->param->mutex_thinking), philo, think_callback);
+// }

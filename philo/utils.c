@@ -19,11 +19,34 @@
 // 	exec_mutex(philo->param->mutex_print, get_line());
 // }
 
+char	*get_text_from_status(t_status code)
+{
+	if (code == PICK_FORK)
+		return ((char *) "has taken a fork");
+	else if (code == EATING)
+		return ((char *) "is eating");
+	else if (code == SLEEPING)
+		return ((char *) "is sleeping");
+	else if (code == THINKING)
+		return ((char *) "is thinking");
+	else if (code == DEAD)
+		return ((char *) "died");
+	return ((char *) NULL);
+}
+
+unsigned long int	get_timestamp_ms(void)
+{
+	struct timeval		time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
 void	print_status(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->param->mutex_print);
 	printf("%lu %u %s\n",
-		(get_timestamp_ms() - philo->param->start_timestamp),
+		(philo->param->start_timestamp - get_timestamp_ms()),
 		philo->id,
 		get_text_from_status(philo->status));
 	pthread_mutex_unlock(&philo->param->mutex_print);
@@ -47,19 +70,11 @@ void	free_data(t_data **data)
 	temp = (t_data *) NULL;
 }
 
-unsigned long int	get_timestamp_ms(void)
-{
-	struct timeval		time;
+// void	forced_waiting(unsigned int duration)
+// {
+// 	unsigned long int	current_time;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
-void	forced_waiting(unsigned int duration)
-{
-	unsigned long int	current_time;
-
-	current_time = get_timestamp_ms();
-	while ((get_timestamp_ms() - current_time) < (unsigned long int) duration)
-		usleep(100);
-}
+// 	current_time = get_timestamp_ms();
+// 	while ((get_timestamp_ms() - current_time) < (unsigned long int) duration)
+// 		usleep(100);
+// }
