@@ -29,7 +29,7 @@
 typedef enum e_status
 {
 	IDLE,
-	PICK_FORK,
+	FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -73,10 +73,13 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-int					action_die(t_philo *philo, t_param *param);
-int					action_think(t_philo *philo, t_param *param);
-int					action_sleep(t_philo *philo, t_param *param);
-int					action_eat(t_philo *philo, t_param *param);
+char				*get_status_status(t_status code);
+void				display_current_state(t_philo *philo);
+int					exec_mutex(void *m, t_philo *philo, int (*fn)(t_philo *));
+void				action_die(t_philo *philo);
+int					action_think(t_philo *philo);
+int					action_sleep(t_philo *philo);
+int					action_eat(t_philo *philo);
 void				sync_simulators(t_param **param, unsigned int *is_init);
 void				*simulator(void *arg);
 unsigned long int	get_timestamp_ms(void);

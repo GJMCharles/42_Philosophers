@@ -12,10 +12,10 @@
 
 #include "philo.h"
 
-int action_sleep(t_philo *philo, t_param *param)
+int action_sleep(t_philo *philo)
 {
-    (void) philo;
-    return (0);
+	(void) philo;
+	return (TRUE);
 }
 // int	sleep_callback(t_philo *philo)
 // {

@@ -55,7 +55,7 @@ t_param	*init_parameters(int argc, char *argv[])
 		param->eating_limits = -1;
 	param->test_count = 0;
 	param->start_timestamp = 0;
-	param->abort_simulation = 0;
+	param->abort_simulation = FALSE;
 	param->mutex_start = (pthread_mutex_t){};
 	param->mutex_timestamp = (pthread_mutex_t){};
 	param->mutex_print = (pthread_mutex_t){};
@@ -75,12 +75,9 @@ t_data	*build_data(int argc, char *argv[])
 		return ((t_data *) NULL);
 	new_data->param = init_parameters(argc, argv);
 	if (!new_data->param)
-	{
-		free_data(&new_data);
-		return (new_data);
-	}
+		return (free_data(&new_data), (t_data *) NULL);
 	new_data->philo = init_philosophers(new_data->param);
 	if (!new_data->philo)
-		free_data(&new_data);
+		return (free_data(&new_data), (t_data *) NULL);
 	return (new_data);
 }

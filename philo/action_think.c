@@ -12,10 +12,10 @@
 
 #include "philo.h"
 
-int action_think(t_philo *philo, t_param *param)
+int action_think(t_philo *philo)
 {
-    (void) philo;
-    return (0);
+	(void) philo;
+	return (TRUE);
 }
 // int	think_callback(t_philo *philo)
 // {

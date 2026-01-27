@@ -12,6 +12,33 @@
 
 #include "philo.h"
 
+char	*get_status_text(t_status code)
+{
+	if (code == FORK)
+		return ((char *)"has taken a fork");
+	else if (code == EATING)
+		return ((char *)"is eating");
+	else if (code == SLEEPING)
+			return ((char *)"is sleeping");
+	else if (code == THINKING)
+			return ((char *)"is thinking");
+	else if (code == DEAD)
+			return ((char *)"died");
+	return ((char *) NULL);
+}
+
+void	display_current_state(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->param->mutex_print));
+	printf(
+		"%lu %u %s\n",
+		(get_timestamp_ms() - philo->param->start_timestamp),
+		philo->id,
+		get_status_text(philo->status)
+	);
+	pthread_mutex_unlock(&(philo->param->mutex_print));
+}
+
 void	sync_simulators(t_param **param, unsigned int *sync_test)
 {
 	if (!(*param) || !param)
@@ -47,15 +74,12 @@ void	*simulator(void *arg)
 	sync_simulators(&param, &sync_test);
 	while (1)
 	{
-		if (param->abort_simulation)
+		if (param->abort_simulation || action_eat(philo) == FALSE)
 			break;
-		action_eat(philo);
-		if (param->abort_simulation)
+		if (param->abort_simulation || action_sleep(philo) == FALSE)
 			break;
-		action_sleep(philo);
-		if (param->abort_simulation)
+		if (param->abort_simulation || action_think(philo) == FALSE)
 			break;
-		action_think(philo);
 		break ;
 	}
 	if (philo->status == DEAD)
@@ -73,12 +97,6 @@ void	start_simulators(t_data **data)
 	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&current->thread, NULL, &simulator, (void *) current);
-		current = current->next;
-		if (current == first)
-			break ;
-	}
-	while (current != (t_philo *) NULL)
-	{
 		pthread_join(current->thread, (void *) NULL);
 		current = current->next;
 		if (current == first)

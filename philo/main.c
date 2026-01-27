@@ -19,30 +19,30 @@ int	verify_arguments(int argc, char *argv[])
 	int	value;
 
 	if (argc < 5 || argc > 6)
-		return (1);
+		return (FALSE);
 	index = 1;
 	while (index < argc)
 	{
 		value = ft_atoi(argv[index]);
 		if (!value || value < 0)
-			return (1);
+			return (FALSE);
 		i = 0;
 		while (argv[index][i] != '\0')
 		{
 			if (!ft_isdigit(argv[index][i]))
-				return (1);
+				return (FALSE);
 			i += 1;
 		}
 		index += 1;
 	}
-	return (0);
+	return (TRUE);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
 
-	if (verify_arguments(argc, argv))
+	if (verify_arguments(argc, argv) == FALSE)
 		return (EXIT_FAILURE);
 	data = build_data(argc, argv);
 	if (!data)
