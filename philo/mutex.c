@@ -24,16 +24,6 @@ int	exec_mutex(void *m, t_philo *philo, int (*fn)(t_philo *))
 	return (status);
 }
 
-int	destroy_mutex(pthread_mutex_t *mutex)
-{
-	return (pthread_mutex_destroy(mutex) == 0);
-}
-
-int	init_mutex(pthread_mutex_t *mutex)
-{
-	return (pthread_mutex_init(mutex, NULL) == 0);
-}
-
 void	end_pthreads(t_data **data)
 {
 	t_param	*temp;
@@ -41,18 +31,18 @@ void	end_pthreads(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
-	(void) destroy_mutex(&temp->mutex_start);
-	(void) destroy_mutex(&temp->mutex_timestamp);
-	(void) destroy_mutex(&temp->mutex_print);
-	(void) destroy_mutex(&temp->mutex_eating);
-	(void) destroy_mutex(&temp->mutex_sleeping);
-	(void) destroy_mutex(&temp->mutex_thinking);
-	(void) destroy_mutex(&temp->mutex_dead);
+	(void) pthread_mutex_destroy(&temp->mutex_start);
+	(void) pthread_mutex_destroy(&temp->mutex_timestamp);
+	(void) pthread_mutex_destroy(&temp->mutex_print);
+	(void) pthread_mutex_destroy(&temp->mutex_eating);
+	(void) pthread_mutex_destroy(&temp->mutex_sleeping);
+	(void) pthread_mutex_destroy(&temp->mutex_thinking);
+	(void) pthread_mutex_destroy(&temp->mutex_dead);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
 	while (philo_list != (t_philo *) NULL)
 	{
-		(void) destroy_mutex(&philo_list->fork);
+		(void) pthread_mutex_destroy(&philo_list->fork);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
 			break ;
@@ -66,18 +56,18 @@ void	start_pthreads(t_data **data)
 	t_philo	*philo_list;
 
 	temp = (*data)->param;
-	(void) init_mutex(&temp->mutex_start);
-	(void) init_mutex(&temp->mutex_timestamp);
-	(void) init_mutex(&temp->mutex_print);
-	(void) init_mutex(&temp->mutex_eating);
-	(void) init_mutex(&temp->mutex_sleeping);
-	(void) init_mutex(&temp->mutex_thinking);
-	(void) init_mutex(&temp->mutex_dead);
+	(void) pthread_mutex_init(&temp->mutex_start, NULL);
+	(void) pthread_mutex_init(&temp->mutex_timestamp, NULL);
+	(void) pthread_mutex_init(&temp->mutex_print, NULL);
+	(void) pthread_mutex_init(&temp->mutex_eating, NULL);
+	(void) pthread_mutex_init(&temp->mutex_sleeping, NULL);
+	(void) pthread_mutex_init(&temp->mutex_thinking, NULL);
+	(void) pthread_mutex_init(&temp->mutex_dead, NULL);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
 	while (philo_list != (t_philo *) NULL)
 	{
-		(void) init_mutex(&philo_list->fork);
+		(void) pthread_mutex_init(&philo_list->fork, NULL);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
 			break ;

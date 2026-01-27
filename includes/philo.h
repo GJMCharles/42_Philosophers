@@ -73,7 +73,7 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-char				*get_status_status(t_status code);
+char				*get_status_text(t_status code);
 void				display_current_state(t_philo *philo);
 int					exec_mutex(void *m, t_philo *philo, int (*fn)(t_philo *));
 void				action_die(t_philo *philo);
@@ -84,8 +84,6 @@ void				sync_simulators(t_param **param, unsigned int *is_init);
 void				*simulator(void *arg);
 unsigned long int	get_timestamp_ms(void);
 void				start_simulators(t_data **data);
-int					destroy_mutex(pthread_mutex_t *mutex);
-int					init_mutex(pthread_mutex_t *mutex);
 void				end_pthreads(t_data **data);
 void				start_pthreads(t_data **data);
 void				append_philosopher(t_philo *node, t_philo **list);

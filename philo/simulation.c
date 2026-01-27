@@ -12,33 +12,6 @@
 
 #include "philo.h"
 
-char	*get_status_text(t_status code)
-{
-	if (code == FORK)
-		return ((char *)"has taken a fork");
-	else if (code == EATING)
-		return ((char *)"is eating");
-	else if (code == SLEEPING)
-			return ((char *)"is sleeping");
-	else if (code == THINKING)
-			return ((char *)"is thinking");
-	else if (code == DEAD)
-			return ((char *)"died");
-	return ((char *) NULL);
-}
-
-void	display_current_state(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->param->mutex_print));
-	printf(
-		"%lu %u %s\n",
-		(get_timestamp_ms() - philo->param->start_timestamp),
-		philo->id,
-		get_status_text(philo->status)
-	);
-	pthread_mutex_unlock(&(philo->param->mutex_print));
-}
-
 void	sync_simulators(t_param **param, unsigned int *sync_test)
 {
 	if (!(*param) || !param)
