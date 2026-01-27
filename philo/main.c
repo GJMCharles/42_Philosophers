@@ -14,42 +14,42 @@
 
 int	verify_arguments(int argc, char *argv[])
 {
-	int	argi;
+	int	index;
 	int	i;
 	int	value;
 
 	if (argc < 5 || argc > 6)
-		return (0);
-	argi = 1;
-	while (argi < argc)
+		return (1);
+	index = 1;
+	while (index < argc)
 	{
-		value = ft_atoi(argv[argi]);
+		value = ft_atoi(argv[index]);
 		if (!value || value < 0)
-			return (0);
+			return (1);
 		i = 0;
-		while (argv[argi][i] != '\0')
+		while (argv[index][i] != '\0')
 		{
-			if (!ft_isdigit(argv[argi][i]))
-				return (0);
+			if (!ft_isdigit(argv[index][i]))
+				return (1);
 			i += 1;
 		}
-		argi += 1;
+		index += 1;
 	}
-	return (1);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
 
-	if (!verify_arguments(argc, argv))
+	if (verify_arguments(argc, argv))
 		return (EXIT_FAILURE);
 	data = build_data(argc, argv);
 	if (!data)
 		return (EXIT_FAILURE);
-	init_pthread_mutex(&data);
+	start_pthreads(&data);
 	start_simulation(&data);
-	destroy_pthread_mutex(&data);
+	end_pthreads(&data);
 	free_data(&data);
 	return (EXIT_SUCCESS);
 }

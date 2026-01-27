@@ -76,19 +76,12 @@ void	append_philosopher(t_philo *node, t_philo **list)
 	temp->next = node;
 }
 
-t_philo	*new_philosopher(unsigned int index)
+t_philo	*new_philosopher(void)
 {
 	t_philo		*node;
 
 	node = (t_philo *)malloc(sizeof(t_philo));
 	if (!node)
 		return ((t_philo *) NULL);
-	node->id = index;
-	node->status = IDLE;
-	node->thread = (pthread_t) NULL;
-	node->param = (t_param *) NULL;
-	node->next = (t_philo *) NULL;
-	node->last_eaten = 0;
-	node->eating_counter = 0;
 	return (node);
 }

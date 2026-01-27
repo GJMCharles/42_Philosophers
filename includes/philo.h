@@ -105,20 +105,25 @@ typedef struct s_data
 // int					verify_arguments(int argc, char *argv[]);
 // t_data				*build_data(int argc, char *argv[]);
 
-char	*get_text_from_status(t_status code);
+// char	*get_text_from_status(t_status code);
+
+// void	print_status(t_philo *philo);
+
+
+void				*simulation(void *arg);
 unsigned long int	get_timestamp_ms(void);
-void	print_status(t_philo *philo);
-void	*simulation(void *arg);
-void	start_simulation(t_data **data);
-void	destroy_pthread_mutex(t_data **data);
-void	init_pthread_mutex(t_data **data);
-void	clear_philosophers(t_philo **list);
-void	append_philosopher(t_philo *node, t_philo **list);
-t_philo	*new_philosopher(unsigned int index);
-t_philo	*init_philosophers(t_param *param);
-t_param	*init_parameters(int argc, char *argv[]);
-void	free_data(t_data **data);
-t_data	*build_data(int argc, char *argv[]);
-int	verify_arguments(int argc, char *argv[]);
+void				start_simulation(t_data **data);
+int					destroy_mutex(pthread_mutex_t *mutex);
+int					init_mutex(pthread_mutex_t *mutex);
+void				end_pthreads(t_data **data);
+void				start_pthreads(t_data **data);
+void				append_philosopher(t_philo *node, t_philo **list);
+void				clear_philosophers(t_philo **list);
+t_philo				*new_philosopher(void);
+t_philo				*init_philosophers(t_param *param);
+t_param				*init_parameters(int argc, char *argv[]);
+void				free_data(t_data **data);
+t_data				*build_data(int argc, char *argv[]);
+int					verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H

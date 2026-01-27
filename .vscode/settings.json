@@ -1,6 +1,9 @@
 {
-	"workbench.colorCustomizations": {
-		"editorRuler.foreground": "#ff4081"
-	},
-	"C_Cpp.default.compilerPath": "/usr/bin/clang-12"
+	"C_Cpp.default.compilerPath": "/usr/bin/clang-12",
+	"editor.rulers": [
+		{
+			"column": 80,
+			"color": "#ff4081"
+		}
+	]
 }

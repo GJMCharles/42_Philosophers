@@ -14,20 +14,26 @@
 
 t_philo	*init_philosophers(t_param *param)
 {
-	unsigned int	i;
+	unsigned int	index;
 	t_philo			*philo_list;
-	t_philo			*philo_node;
+	t_philo			*node;
 
-	i = 0;
+	index = 0;
 	philo_list = (t_philo *) NULL;
-	while (i < param->nb_philos)
+	while (index++ < param->nb_philos)
 	{
-		philo_node = new_philosopher(i + 1);
-		if (!philo_node)
-			return ((t_philo *) NULL);
-		philo_node->param = param;
-		append_philosopher(philo_node, &philo_list);
-		i += 1;
+		node = new_philosopher();
+		if (!node)
+			return (clear_philosophers(&philo_list), (t_philo *) NULL);
+		node->id = index;
+		node->status = IDLE;
+		node->thread = (pthread_t) NULL;
+		node->last_eaten = 0;
+		node->eating_counter = 0;
+		node->fork = (pthread_mutex_t){};
+		node->param = param;
+		node->next = (t_philo *) NULL;
+		append_philosopher(node, &philo_list);
 	}
 	return (philo_list);
 }
@@ -50,6 +56,13 @@ t_param	*init_parameters(int argc, char *argv[])
 	param->test_count = 0;
 	param->start_timestamp = 0;
 	param->abort_simulation = 0;
+	param->mutex_start = (pthread_mutex_t){};
+	param->mutex_timestamp = (pthread_mutex_t){};
+	param->mutex_print = (pthread_mutex_t){};
+	param->mutex_eating = (pthread_mutex_t){};
+	param->mutex_sleeping = (pthread_mutex_t){};
+	param->mutex_thinking = (pthread_mutex_t){};
+	param->mutex_dead = (pthread_mutex_t){};
 	return (param);
 }
 
