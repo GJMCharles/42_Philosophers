@@ -39,12 +39,12 @@ void	*simulator(void *arg)
 {
 	t_philo			*philo;
 	t_param			*param;
-	unsigned int	sync_test;
+	//unsigned int	sync_test;
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	sync_test = 0;
-	sync_simulators(&param, &sync_test);
+	//sync_test = 0;
+	//sync_simulators(&param, &sync_test);
 	while (1)
 	{
 		if (param->abort_simulation || !action_eat(philo))
@@ -67,6 +67,7 @@ void	start_simulators(t_data **data)
 
 	current = (*data)->philo;
 	first = current;
+	(*data)->param->start_timestamp = get_timestamp_ms();
 	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&current->thread, NULL, &simulator, (void *) current);

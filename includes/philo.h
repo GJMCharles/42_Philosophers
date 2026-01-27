@@ -75,7 +75,7 @@ typedef struct s_data
 
 char				*get_status_text(t_status code);
 void				display_current_state(t_philo *philo);
-int					exec_mutex(void *m, t_philo *philo, int (*fn)(t_philo *));
+//int				exec_mutex(pthread_mutex_t m, t_philo *philo, int (*fn)(t_philo *));
 void				action_die(t_philo *philo);
 int					action_think(t_philo *philo);
 int					action_sleep(t_philo *philo);

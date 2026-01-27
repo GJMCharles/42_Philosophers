@@ -12,17 +12,24 @@
 
 #include "philo.h"
 
-int	exec_mutex(void *m, t_philo *philo, int (*fn)(t_philo *))
-{
-	int	status;
+//int	exec_mutex(pthread_mutex_t mutex, t_philo *philo, int (*fn)(t_philo *))
+//{
+//	int	status;
+//	//pthread_mutex_t	mutex;
 
-	if (!m || !philo)
-		return (FALSE);
-	pthread_mutex_lock(m);
-	status = fn(philo);
-	pthread_mutex_unlock(m);
-	return (status);
-}
+//	//mutex = (pthread_mutex_t *)m;
+//	printf("001\n");
+//	if (philo->param->abort_simulation || !philo)
+//		return (FALSE);
+//	printf("002\n");
+//	pthread_mutex_lock(&mutex);
+//	printf("003\n");
+//	status = fn(philo);
+//	printf("004\n");
+//	pthread_mutex_unlock(&mutex);
+//	printf("005\n");
+//	return (status);
+//}
 
 void	end_pthreads(t_data **data)
 {
