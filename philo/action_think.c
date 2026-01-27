@@ -14,17 +14,10 @@
 
 int action_think(t_philo *philo)
 {
-	(void) philo;
-	return (TRUE);
+	pthread_mutex_lock(&(philo->param->mutex_thinking));
+	if (philo->param->abort_simulation)
+		return (pthread_mutex_unlock(&(philo->param->mutex_thinking)), FALSE);
+	philo->status = THINKING;
+	display_current_state(philo);
+	return (pthread_mutex_unlock(&(philo->param->mutex_thinking)), TRUE);
 }
-// int	think_callback(t_philo *philo)
-// {
-// 	philo->status = THINKING;
-// 	print_status(philo);
-// 	return (1);
-// }
-
-// void	action_think(t_philo *philo)
-// {
-// 	exec_mutex(&(philo->param->mutex_thinking), philo, think_callback);
-// }

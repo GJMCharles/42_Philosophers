@@ -74,11 +74,11 @@ void	*simulator(void *arg)
 	sync_simulators(&param, &sync_test);
 	while (1)
 	{
-		if (param->abort_simulation || action_eat(philo) == FALSE)
+		if (param->abort_simulation || !action_eat(philo))
 			break;
-		if (param->abort_simulation || action_sleep(philo) == FALSE)
+		if (param->abort_simulation || !action_sleep(philo))
 			break;
-		if (param->abort_simulation || action_think(philo) == FALSE)
+		if (param->abort_simulation || !action_think(philo))
 			break;
 		break ;
 	}
