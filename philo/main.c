@@ -48,7 +48,7 @@ int	main(int argc, char *argv[])
 	if (!data)
 		return (EXIT_FAILURE);
 	start_pthreads(&data);
-	start_simulation(&data);
+	start_simulators(&data);
 	end_pthreads(&data);
 	free_data(&data);
 	return (EXIT_SUCCESS);

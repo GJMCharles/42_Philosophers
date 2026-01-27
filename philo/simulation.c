@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void	syncronised_loader(t_param **param, unsigned int *is_init)
+void	sync_simulators(t_param **param, unsigned int *sync_test)
 {
 	if (!(*param) || !param)
 		return ;
@@ -26,61 +26,53 @@ void	syncronised_loader(t_param **param, unsigned int *is_init)
 			pthread_mutex_unlock(&(*param)->mutex_start);
 			break ;
 		}
-		if (*is_init == 0)
+		if (*sync_test == 0)
 		{
-			*is_init = 1;
+			*sync_test = 1;
 			(*param)->test_count += 1;
 		}
 		pthread_mutex_unlock(&(*param)->mutex_start);
 	}
 }
 
-void	*simulation(void *arg)
+void	*simulator(void *arg)
 {
 	t_philo			*philo;
 	t_param			*param;
-	unsigned int	is_init;
-	// unsigned long int	timestamp;
+	unsigned int	sync_test;
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	is_init = 0;
-	// timestamp = get_timestamp_ms();
-	// is_init = 0;
-	syncronised_loader(&param, &is_init);
-	// philo->status = SLEEPING;
-	// print_status(philo);
-	printf("TEST {%u} {%lu}\n", philo->id, (get_timestamp_ms() - param->start_timestamp));
-	// while (1)
-	// {
-	// 	action_eat(philo);
-	// 	if (can_abort_simulation(philo))
-	// 		break ;
-	// 	action_sleep(philo);
-	// 	if (can_abort_simulation(philo))
-	// 		break ;
-	// 	action_think(philo);
-	// 	if (can_abort_simulation(philo))
-	// 		break ;
-	// }
+	sync_test = 0;
+	sync_simulators(&param, &sync_test);
+	while (1)
+	{
+		if (param->abort_simulation)
+			break;
+		action_eat(philo);
+		if (param->abort_simulation)
+			break;
+		action_sleep(philo);
+		if (param->abort_simulation)
+			break;
+		action_think(philo);
+		break ;
+	}
+	if (philo->status == DEAD)
+		action_die(philo);
 	return ((void *) NULL);
 }
 
-void	start_simulation(t_data **data)
+void	start_simulators(t_data **data)
 {
-	// t_param	*param;
 	t_philo	*current;
 	t_philo	*first;
 
-	// param = (*data)->param;
 	current = (*data)->philo;
 	first = current;
 	while (current != (t_philo *) NULL)
 	{
-		// pthread_mutex_lock(&(param->mutex_start));
-
-		// pthread_mutex_unlock(&(param->mutex_start));
-		pthread_create(&current->thread, NULL, &simulation, (void *) current);
+		pthread_create(&current->thread, NULL, &simulator, (void *) current);
 		current = current->next;
 		if (current == first)
 			break ;

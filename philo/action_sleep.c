@@ -12,6 +12,11 @@
 
 #include "philo.h"
 
+int action_sleep(t_philo *philo, t_param *param)
+{
+    (void) philo;
+    return (0);
+}
 // int	sleep_callback(t_philo *philo)
 // {
 // 	philo->status = SLEEPING;

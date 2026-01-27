@@ -12,6 +12,11 @@
 
 #include "philo.h"
 
+int action_think(t_philo *philo, t_param *param)
+{
+    (void) philo;
+    return (0);
+}
 // int	think_callback(t_philo *philo)
 // {
 // 	philo->status = THINKING;

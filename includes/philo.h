@@ -73,46 +73,14 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-// int					exec_mutex(void *mutex, t_philo *p, int (*fn)(t_philo *));
-// void				action_think(t_philo *philo);
-// void				action_sleep(t_philo *philo);
-// void				action_eat(t_philo *philo);
-
-// int					death_callback(t_philo *philo);
-// int					think_callback(t_philo *philo);
-// int					sleep_callback(t_philo *philo);
-// int					eat_callback(t_philo *philo);
-
-// void				print_status(t_philo *philo);
-// int					can_abort_simulation(t_philo *philo);
-// unsigned long int	get_timestamp_ms(void);
-// void				forced_waiting(unsigned int duration);
-// char				*get_text_from_status(t_status code);
-// void				waiting_loader(t_param *param, unsigned int *is_init);
-// void				*simulation(void *arg);
-// void				start_simulation(t_data **data);
-
-// void				destroy_pthread_mutex(t_data **data);
-// void				init_pthread_mutex(t_data **data);
-
-// void				clear_philosophers(t_philo **list);
-// void				append_philosopher(t_philo *node, t_philo **list);
-// t_philo				*new_philosopher(unsigned int index);
-
-// void				free_data(t_data **data);
-// t_philo				*init_philosophers(t_param *param);
-// t_param				*init_parameters(int argc, char *argv[]);
-// int					verify_arguments(int argc, char *argv[]);
-// t_data				*build_data(int argc, char *argv[]);
-
-// char	*get_text_from_status(t_status code);
-
-// void	print_status(t_philo *philo);
-
-
-void				*simulation(void *arg);
+int					action_die(t_philo *philo, t_param *param);
+int					action_think(t_philo *philo, t_param *param);
+int					action_sleep(t_philo *philo, t_param *param);
+int					action_eat(t_philo *philo, t_param *param);
+void				sync_simulators(t_param **param, unsigned int *is_init);
+void				*simulator(void *arg);
 unsigned long int	get_timestamp_ms(void);
-void				start_simulation(t_data **data);
+void				start_simulators(t_data **data);
 int					destroy_mutex(pthread_mutex_t *mutex);
 int					init_mutex(pthread_mutex_t *mutex);
 void				end_pthreads(t_data **data);

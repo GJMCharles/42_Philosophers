@@ -12,6 +12,12 @@
 
 #include "philo.h"
 
+int action_die(t_philo *philo, t_param *param)
+{
+	(void) philo;
+	return (0);
+}
+
 // int	least_eaten_number(t_philo *philo)
 // {
 // 	t_philo			*first;

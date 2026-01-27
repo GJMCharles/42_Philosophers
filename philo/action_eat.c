@@ -12,6 +12,13 @@
 
 #include "philo.h"
 
+int action_eat(t_philo *philo, t_param *param)
+{
+	//mutex_execution(&(param->mutex_eating))
+	(void) philo;
+	return (0);
+}
+
 // int		fn_mutex(pthread_mutex_t *mutex, void (*fn)(void *))
 // {
 // 	pthread_mutex_lock(mutex);
