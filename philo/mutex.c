@@ -35,6 +35,7 @@ void end_pthreads(t_data **data)
 
 	temp = (*data)->param;
 	(void)pthread_mutex_destroy(&temp->mutex_start);
+	(void)pthread_mutex_destroy(&temp->mutex_wait);
 	(void)pthread_mutex_destroy(&temp->mutex_timestamp);
 	(void)pthread_mutex_destroy(&temp->mutex_print);
 	(void)pthread_mutex_destroy(&temp->mutex_eating);
@@ -60,6 +61,7 @@ void start_pthreads(t_data **data)
 
 	temp = (*data)->param;
 	(void)pthread_mutex_init(&temp->mutex_start, NULL);
+	(void)pthread_mutex_init(&temp->mutex_wait, NULL);
 	(void)pthread_mutex_init(&temp->mutex_timestamp, NULL);
 	(void)pthread_mutex_init(&temp->mutex_print, NULL);
 	(void)pthread_mutex_init(&temp->mutex_eating, NULL);

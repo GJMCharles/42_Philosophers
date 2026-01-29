@@ -12,6 +12,19 @@
 
 #include "philo.h"
 
+void	forced_waiting(t_param *param, unsigned int delay)
+{
+	unsigned long int current;
+
+	current = get_timestamp_ms();
+	while ((get_timestamp_ms() - current) < delay)
+	{
+		pthread_mutex_lock(&(param->mutex_wait));
+		usleep(100);
+		pthread_mutex_unlock(&(param->mutex_wait));
+	}
+}
+
 char *get_status_text(t_status code)
 {
 	if (code == FORK)

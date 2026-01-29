@@ -44,9 +44,10 @@ typedef struct s_param
 	unsigned int		time_to_sleep;
 	int					eating_limits;
 	unsigned int		test_count;
-	long int			start_timestamp;
+	unsigned long int	start_timestamp;
 	unsigned char		abort_simulator;
 	pthread_mutex_t		mutex_start;
+	pthread_mutex_t		mutex_wait;
 	pthread_mutex_t		mutex_timestamp;
 	pthread_mutex_t		mutex_print;
 	pthread_mutex_t		mutex_eating;
@@ -76,8 +77,10 @@ typedef struct s_data
 char					*get_status_text(t_status code);
 void					display_current_status(t_philo *philo);
 void					action_die(t_philo *philo);
-int						action_think(t_philo *philo);
-int						action_sleep(t_philo *philo);
+//int						action_think(t_philo *philo);
+//int						action_sleep(t_philo *philo);
+void					start_eating(t_philo *philo);
+void					forced_waiting(t_param *param, unsigned int delay);
 int						action_eat(t_philo *philo);
 void					set_timestamp(t_param *param);
 void					*simulator(void *arg);

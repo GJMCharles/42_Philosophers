@@ -12,22 +12,6 @@
 
 #include "philo.h"
 
-int sync_loop(pthread_mutex_t *mutex, t_param **param, unsigned int *test)
-{
-	pthread_mutex_lock(mutex);
-	if ((*param)->test_count == (*param)->nb_philos)
-		return (pthread_mutex_unlock(mutex), FALSE);
-	usleep(100);
-	if (*test == 0)
-	{
-		*test = 1;
-		(*param)->test_count += 1;
-		(*param)->start_timestamp = get_timestamp_ms();
-	}
-	printf("{%u}\n", (*param)->test_count);
-	return (pthread_mutex_unlock(mutex), TRUE);
-}
-
 void set_timestamp(t_param *param)
 {
 	pthread_mutex_lock(&(param->mutex_start));
@@ -74,11 +58,4 @@ void start_simulators(t_data **data)
 		if (current == first)
 			break;
 	}
-	// while (current != (t_philo *)NULL)
-	//{
-
-	//	current = current->next;
-	//	if (current == first)
-	//		break;
-	//}
 }

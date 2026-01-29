@@ -57,6 +57,7 @@ t_param *init_parameters(int argc, char *argv[])
 	param->start_timestamp = 0;
 	param->abort_simulator = FALSE;
 	param->mutex_start = (pthread_mutex_t){};
+	param->mutex_wait = (pthread_mutex_t){};
 	param->mutex_timestamp = (pthread_mutex_t){};
 	param->mutex_print = (pthread_mutex_t){};
 	param->mutex_eating = (pthread_mutex_t){};

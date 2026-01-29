@@ -12,14 +12,14 @@
 
 #include "philo.h"
 
-// void start_eating(t_philo *philo)
-//{
-//	pthread_mutex_lock(&(philo->param->mutex_eating));
-//	philo->status = EATING;
-//	display_current_status(philo);
-//	// usleep(philo->param->time_to_eat * 1000);
-//	pthread_mutex_unlock(&(philo->param->mutex_eating));
-// }
+void start_eating(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->param->mutex_eating));
+	philo->status = EATING;
+	display_current_status(philo);
+	forced_waiting(philo->param, philo->param->time_to_eat);
+	pthread_mutex_unlock(&(philo->param->mutex_eating));
+ }
 
 int action_eat(t_philo *philo)
 {
@@ -28,18 +28,18 @@ int action_eat(t_philo *philo)
 		return (pthread_mutex_unlock(&(philo->fork)), FALSE);
 	philo->status = FORK;
 	display_current_status(philo);
-	if (!philo->next)
+	if (philo->next == (t_philo *) NULL)
 	{
 		philo->status = DEAD;
 		philo->param->abort_simulator = TRUE;
-		usleep(philo->param->time_to_die * 1000);
+		forced_waiting(philo->param, philo->param->time_to_die);
 		return (pthread_mutex_unlock(&(philo->fork)), FALSE);
 	}
 	pthread_mutex_lock(&(philo->next->fork));
 	if (philo->param->abort_simulator == TRUE)
 		return (pthread_mutex_unlock(&(philo->next->fork)), FALSE);
 	display_current_status(philo);
-	// start_eating(philo);
+	start_eating(philo);
 	pthread_mutex_unlock(&(philo->next->fork));
 	pthread_mutex_unlock(&(philo->fork));
 	return (TRUE);
