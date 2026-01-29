@@ -12,71 +12,67 @@
 
 #include "philo.h"
 
-//int	exec_mutex(pthread_mutex_t mutex, t_philo *philo, int (*fn)(t_philo *))
-//{
-//	int	status;
-//	//pthread_mutex_t	mutex;
-
-//	//mutex = (pthread_mutex_t *)m;
-//	printf("001\n");
-//	if (philo->param->abort_simulation || !philo)
-//		return (FALSE);
-//	printf("002\n");
-//	pthread_mutex_lock(&mutex);
-//	printf("003\n");
-//	status = fn(philo);
-//	printf("004\n");
-//	pthread_mutex_unlock(&mutex);
-//	printf("005\n");
-//	return (status);
-//}
-
-void	end_pthreads(t_data **data)
+int exec_mutex(pthread_mutex_t mutex, t_philo *philo, int (*fn)(t_philo *))
 {
-	t_param	*temp;
-	t_philo	*philo_first;
-	t_philo	*philo_list;
+	int status;
+	/**
+	pthread_mutex_t	mutex;
+	mutex = (pthread_mutex_t *)m;
+	*/
+	pthread_mutex_lock(&mutex);
+	if (philo->param->abort_simulator || !philo)
+		return (pthread_mutex_unlock(&mutex), FALSE);
+	status = fn(philo);
+	pthread_mutex_unlock(&mutex);
+	return (status);
+}
+
+void end_pthreads(t_data **data)
+{
+	t_param *temp;
+	t_philo *philo_first;
+	t_philo *philo_list;
 
 	temp = (*data)->param;
-	(void) pthread_mutex_destroy(&temp->mutex_start);
-	(void) pthread_mutex_destroy(&temp->mutex_timestamp);
-	(void) pthread_mutex_destroy(&temp->mutex_print);
-	(void) pthread_mutex_destroy(&temp->mutex_eating);
-	(void) pthread_mutex_destroy(&temp->mutex_sleeping);
-	(void) pthread_mutex_destroy(&temp->mutex_thinking);
-	(void) pthread_mutex_destroy(&temp->mutex_dead);
+	(void)pthread_mutex_destroy(&temp->mutex_start);
+	(void)pthread_mutex_destroy(&temp->mutex_timestamp);
+	(void)pthread_mutex_destroy(&temp->mutex_print);
+	(void)pthread_mutex_destroy(&temp->mutex_eating);
+	(void)pthread_mutex_destroy(&temp->mutex_sleeping);
+	(void)pthread_mutex_destroy(&temp->mutex_thinking);
+	(void)pthread_mutex_destroy(&temp->mutex_dead);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
-	while (philo_list != (t_philo *) NULL)
+	while (philo_list != (t_philo *)NULL)
 	{
-		(void) pthread_mutex_destroy(&philo_list->fork);
+		(void)pthread_mutex_destroy(&philo_list->fork);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
-			break ;
+			break;
 	}
 }
 
-void	start_pthreads(t_data **data)
+void start_pthreads(t_data **data)
 {
-	t_param	*temp;
-	t_philo	*philo_first;
-	t_philo	*philo_list;
+	t_param *temp;
+	t_philo *philo_first;
+	t_philo *philo_list;
 
 	temp = (*data)->param;
-	(void) pthread_mutex_init(&temp->mutex_start, NULL);
-	(void) pthread_mutex_init(&temp->mutex_timestamp, NULL);
-	(void) pthread_mutex_init(&temp->mutex_print, NULL);
-	(void) pthread_mutex_init(&temp->mutex_eating, NULL);
-	(void) pthread_mutex_init(&temp->mutex_sleeping, NULL);
-	(void) pthread_mutex_init(&temp->mutex_thinking, NULL);
-	(void) pthread_mutex_init(&temp->mutex_dead, NULL);
+	(void)pthread_mutex_init(&temp->mutex_start, NULL);
+	(void)pthread_mutex_init(&temp->mutex_timestamp, NULL);
+	(void)pthread_mutex_init(&temp->mutex_print, NULL);
+	(void)pthread_mutex_init(&temp->mutex_eating, NULL);
+	(void)pthread_mutex_init(&temp->mutex_sleeping, NULL);
+	(void)pthread_mutex_init(&temp->mutex_thinking, NULL);
+	(void)pthread_mutex_init(&temp->mutex_dead, NULL);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
-	while (philo_list != (t_philo *) NULL)
+	while (philo_list != (t_philo *)NULL)
 	{
-		(void) pthread_mutex_init(&philo_list->fork, NULL);
+		(void)pthread_mutex_init(&philo_list->fork, NULL);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
-			break ;
+			break;
 	}
 }

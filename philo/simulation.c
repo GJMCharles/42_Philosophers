@@ -12,68 +12,73 @@
 
 #include "philo.h"
 
-void	sync_simulators(t_param **param, unsigned int *sync_test)
+int sync_loop(pthread_mutex_t *mutex, t_param **param, unsigned int *test)
 {
-	if (!(*param) || !param)
-		return ;
-	while (1)
+	pthread_mutex_lock(mutex);
+	if ((*param)->test_count == (*param)->nb_philos)
+		return (pthread_mutex_unlock(mutex), FALSE);
+	usleep(100);
+	if (*test == 0)
 	{
-		pthread_mutex_lock(&(*param)->mutex_start);
-		usleep(100);
-		if ((*param)->test_count == (*param)->nb_philos)
-		{
-			(*param)->start_timestamp = get_timestamp_ms();
-			pthread_mutex_unlock(&(*param)->mutex_start);
-			break ;
-		}
-		if (*sync_test == 0)
-		{
-			*sync_test = 1;
-			(*param)->test_count += 1;
-		}
-		pthread_mutex_unlock(&(*param)->mutex_start);
+		*test = 1;
+		(*param)->test_count += 1;
+		(*param)->start_timestamp = get_timestamp_ms();
 	}
+	printf("{%u}\n", (*param)->test_count);
+	return (pthread_mutex_unlock(mutex), TRUE);
 }
 
-void	*simulator(void *arg)
+void set_timestamp(t_param *param)
 {
-	t_philo			*philo;
-	t_param			*param;
-	//unsigned int	sync_test;
+	pthread_mutex_lock(&(param->mutex_start));
+	if (param->start_timestamp == 0)
+		param->start_timestamp = get_timestamp_ms();
+	pthread_mutex_unlock(&(param->mutex_start));
+}
+
+void *simulator(void *arg)
+{
+	t_philo *philo;
+	t_param *param;
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	//sync_test = 0;
-	//sync_simulators(&param, &sync_test);
+	set_timestamp(param);
 	while (1)
 	{
-		if (param->abort_simulation || !action_eat(philo))
+		if (param->abort_simulator == TRUE || action_eat(philo) == FALSE)
 			break;
-		if (param->abort_simulation || !action_sleep(philo))
-			break;
-		if (param->abort_simulation || !action_think(philo))
-			break;
-		break ;
+		// if (param->abort_simulator == TRUE || action_sleep(philo) == FALSE)
+		//	break;
+		// if (param->abort_simulator == TRUE || action_think(philo) == FALSE)
+		//	break;
+		break;
 	}
 	if (philo->status == DEAD)
 		action_die(philo);
-	return ((void *) NULL);
+	return ((void *)NULL);
 }
 
-void	start_simulators(t_data **data)
+void start_simulators(t_data **data)
 {
-	t_philo	*current;
-	t_philo	*first;
+	t_philo *current;
+	t_philo *first;
 
 	current = (*data)->philo;
 	first = current;
-	(*data)->param->start_timestamp = get_timestamp_ms();
-	while (current != (t_philo *) NULL)
+	while (current != (t_philo *)NULL)
 	{
-		pthread_create(&current->thread, NULL, &simulator, (void *) current);
-		pthread_join(current->thread, (void *) NULL);
+		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
+		pthread_join(current->thread, (void *)NULL);
 		current = current->next;
 		if (current == first)
-			break ;
+			break;
 	}
+	// while (current != (t_philo *)NULL)
+	//{
+
+	//	current = current->next;
+	//	if (current == first)
+	//		break;
+	//}
 }

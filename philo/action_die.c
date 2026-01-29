@@ -16,6 +16,6 @@ void action_die(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->param->mutex_dead));
 	usleep(10 * 1000);
-	display_current_state(philo);
+	display_current_status(philo);
 	pthread_mutex_unlock(&(philo->param->mutex_dead));
 }
