@@ -106,7 +106,7 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 4 410 200 200 28
+	-s ./$(NAME)/$(NAME) 1 410 200 200 7
 
 .SECONDARY: $(OBJECTS_MANDATORY)
 

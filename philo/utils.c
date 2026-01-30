@@ -48,7 +48,7 @@ void	display_message(t_philo *philo, char *message)
 	else
 		printf(
 			"%lu %u %s\n",
-			get_timestamp_ms() - philo->last_eaten,
+			get_timestamp_ms(),
 			philo->id,
 			get_status_text(philo->status));
 	pthread_mutex_unlock(&(philo->param->mutex_print));
