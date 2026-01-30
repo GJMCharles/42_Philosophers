@@ -12,69 +12,64 @@
 
 #include "philo.h"
 
-int	everyone_is_fed(t_philo *philo)
+void	start_eating(t_philo *philo, t_param *param)
 {
-	if (philo->param->eating_limits == -1)
-		return (FALSE);
-	return (FALSE);
-}
-
-int	has_starved_to_death(t_philo *philo)
-{
-	//unsigned long int ttd;
-
-	if (philo->param->abort_simulator == TRUE)
-		return (TRUE);
-	//ttd = (unsigned long int) philo->param->time_to_die;
-	//if (philo->last_eaten == 0 
-	//	&& (get_timestamp_ms() - philo->param->start_timestamp) > ttd)
-	//{
-	//	philo->status = DEAD;
-	//	return (TRUE);
-	//}
-	//if (philo->last_eaten != 0 
-	//	&& (get_timestamp_ms() - philo->last_eaten) > ttd)
-	//{
-	//	philo->status = DEAD;
-	//	return (TRUE);
-	//}
-	return (FALSE);
-}
-
-void start_eating(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->param->mutex_eating));
+	pthread_mutex_lock(&param->mutex_eating);
+	param->abort_simulator = should_abort_simulator(philo, param);
+	if (param->abort_simulator == TRUE)
+	{
+		pthread_mutex_unlock(&param->mutex_eating);
+		return ;
+	}
 	philo->status = EATING;
 	display_current_status(philo);
-	forced_waiting(philo->param, philo->param->time_to_eat);
-	philo->last_eaten = get_timestamp_ms();
+	forced_waiting(param, param->time_to_eat);
 	philo->eating_counter += 1;
-	pthread_mutex_unlock(&(philo->param->mutex_eating));
- }
+	philo->last_eaten = get_timestamp_ms();
+	pthread_mutex_unlock(&param->mutex_eating);
+}
 
-int action_eat(t_philo *philo)
+int action_eat(t_philo *philo, t_param *param)
 {
-	pthread_mutex_lock(&(philo->fork));
-	//philo->param->abort_simulator = has_starved_to_death(philo);
-	if (philo->param->abort_simulator == TRUE)
-		return (pthread_mutex_unlock(&(philo->fork)), FALSE);
+	if (!philo->next)
+	{
+		pthread_mutex_lock(&philo->fork);
+		philo->status = DEAD;
+		param->abort_simulator = TRUE;
+		forced_waiting(param, param->time_to_die);
+		return (pthread_mutex_unlock(&philo->fork), FALSE);
+	}
+	pthread_mutex_lock(&philo->fork);
 	philo->status = FORK;
 	display_current_status(philo);
-	if (philo->next == (t_philo *) NULL)
-	{
-		philo->status = DEAD;
-		philo->param->abort_simulator = TRUE;
-		forced_waiting(philo->param, philo->param->time_to_die);
-		return (pthread_mutex_unlock(&(philo->fork)), FALSE);
-	}
-	pthread_mutex_lock(&(philo->next->fork));
-	//philo->param->abort_simulator = has_starved_to_death(philo);
-	if (philo->param->abort_simulator == TRUE)
-		return (pthread_mutex_unlock(&(philo->next->fork)), FALSE);
+
+	pthread_mutex_lock(&philo->next->fork);
 	display_current_status(philo);
-	start_eating(philo);
-	philo->param->abort_simulator = everyone_is_fed(philo);
-	pthread_mutex_unlock(&(philo->next->fork));
-	pthread_mutex_unlock(&(philo->fork));
+
+	start_eating(philo, param);
+
+	pthread_mutex_unlock(&philo->next->fork);
+	pthread_mutex_unlock(&philo->fork);
+
 	return (TRUE);
+	/**
+	pthread_mutex_lock(&philo->fork);
+	param->abort_simulator = should_abort_simulator(philo, param);
+	if (param->abort_simulator == TRUE)
+		return (pthread_mutex_unlock(&philo->fork), FALSE);
+	philo->status = FORK;
+	display_current_status(philo);
+	
+	pthread_mutex_lock(&philo->next->fork);
+	param->abort_simulator = should_abort_simulator(philo, param);
+	if (param->abort_simulator == TRUE)
+	{
+		pthread_mutex_unlock(&philo->next->fork);
+		return (pthread_mutex_unlock(&philo->fork), FALSE);
+	}
+	display_current_status(philo);
+	param->abort_simulator = start_eating(philo, param);
+	pthread_mutex_unlock(&philo->next->fork);
+	return (pthread_mutex_unlock(&philo->fork), TRUE);
+	*/
 }

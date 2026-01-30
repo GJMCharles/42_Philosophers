@@ -12,21 +12,6 @@
 
 #include "philo.h"
 
-int exec_mutex(pthread_mutex_t mutex, t_philo *philo, int (*fn)(t_philo *))
-{
-	int status;
-	/**
-	pthread_mutex_t	mutex;
-	mutex = (pthread_mutex_t *)m;
-	*/
-	pthread_mutex_lock(&mutex);
-	if (philo->param->abort_simulator || !philo)
-		return (pthread_mutex_unlock(&mutex), FALSE);
-	status = fn(philo);
-	pthread_mutex_unlock(&mutex);
-	return (status);
-}
-
 void end_pthreads(t_data **data)
 {
 	t_param *temp;

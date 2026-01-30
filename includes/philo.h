@@ -74,16 +74,16 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-int						everyone_is_fed(t_philo *philo);
-int						has_starved_to_death(t_philo *philo);
+int						everyone_satiated(t_philo *philo, t_param *param);
+int						should_abort_simulator(t_philo *philo, t_param *param);
 char					*get_status_text(t_status code);
 void					display_current_status(t_philo *philo);
-void					action_die(t_philo *philo);
-int						action_think(t_philo *philo);
-int						action_sleep(t_philo *philo);
-void					start_eating(t_philo *philo);
+void					action_die(t_philo *philo, t_param *param);
+int						action_think(t_philo *philo, t_param *param);
+int						action_sleep(t_philo *philo, t_param *param);
+void					start_eating(t_philo *philo, t_param *param);
 void					forced_waiting(t_param *param, unsigned int delay);
-int						action_eat(t_philo *philo);
+int						action_eat(t_philo *philo, t_param *param);
 void					set_timestamp(t_param *param);
 void					*simulator(void *arg);
 unsigned long int		get_timestamp_ms(void);

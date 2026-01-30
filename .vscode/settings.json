@@ -5,5 +5,8 @@
 			"column": 80,
 			"color": "#ff4081"
 		}
-	]
+	],
+	"workbench.colorCustomizations": {
+		"editorRuler.foreground": "#ff4081"
+	}
 }

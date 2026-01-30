@@ -12,14 +12,14 @@
 
 #include "philo.h"
 
-int action_sleep(t_philo *philo)
+int action_sleep(t_philo *philo, t_param *param)
 {
-	pthread_mutex_lock(&(philo->param->mutex_sleeping));
-	philo->param->abort_simulator = has_starved_to_death(philo);
-	if (philo->param->abort_simulator == TRUE)
-		return (pthread_mutex_unlock(&(philo->param->mutex_sleeping)), FALSE);
+	pthread_mutex_lock(&param->mutex_sleeping);
+	param->abort_simulator = should_abort_simulator(philo, param);
+	if (param->abort_simulator == TRUE)
+		return (pthread_mutex_unlock(&param->mutex_sleeping), FALSE);
 	philo->status = SLEEPING;
 	display_current_status(philo);
-	forced_waiting(philo->param, philo->param->time_to_sleep);
-	return (pthread_mutex_unlock(&(philo->param->mutex_sleeping)), TRUE);
+	forced_waiting(param, param->time_to_sleep);
+	return (pthread_mutex_unlock(&param->mutex_sleeping), TRUE);
 }

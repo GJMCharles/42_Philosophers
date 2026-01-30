@@ -19,20 +19,19 @@ t_philo *init_philosophers(t_param *param)
 	t_philo *node;
 
 	index = 0;
-	philo_list = (t_philo *)NULL;
+	philo_list = (t_philo *) NULL;
 	while (index++ < param->nb_philos)
 	{
 		node = new_philosopher();
 		if (!node)
-			return (clear_philosophers(&philo_list), (t_philo *)NULL);
+			return (clear_philosophers(&philo_list), (t_philo *) NULL);
 		node->id = index;
 		node->status = IDLE;
-		node->thread = (pthread_t)NULL;
+		node->thread = (pthread_t) NULL;
 		node->last_eaten = 0;
 		node->eating_counter = 0;
-		node->fork = (pthread_mutex_t){};
 		node->param = param;
-		node->next = (t_philo *)NULL;
+		node->next = (t_philo *) NULL;
 		append_philosopher(node, &philo_list);
 	}
 	return (philo_list);
@@ -44,7 +43,7 @@ t_param *init_parameters(int argc, char *argv[])
 
 	param = (t_param *)malloc(sizeof(t_param));
 	if (!param)
-		return ((t_param *)NULL);
+		return ((t_param *) NULL);
 	param->nb_philos = (unsigned int)ft_atoi(argv[1]);
 	param->time_to_die = (unsigned int)ft_atoi(argv[2]);
 	param->time_to_eat = (unsigned int)ft_atoi(argv[3]);
@@ -56,14 +55,6 @@ t_param *init_parameters(int argc, char *argv[])
 	param->test_count = 0;
 	param->start_timestamp = 0;
 	param->abort_simulator = FALSE;
-	param->mutex_start = (pthread_mutex_t){};
-	param->mutex_wait = (pthread_mutex_t){};
-	param->mutex_timestamp = (pthread_mutex_t){};
-	param->mutex_print = (pthread_mutex_t){};
-	param->mutex_eating = (pthread_mutex_t){};
-	param->mutex_sleeping = (pthread_mutex_t){};
-	param->mutex_thinking = (pthread_mutex_t){};
-	param->mutex_dead = (pthread_mutex_t){};
 	return (param);
 }
 
@@ -73,12 +64,12 @@ t_data *build_data(int argc, char *argv[])
 
 	new_data = (t_data *)malloc(sizeof(t_data));
 	if (!new_data)
-		return ((t_data *)NULL);
+		return ((t_data *) NULL);
 	new_data->param = init_parameters(argc, argv);
 	if (!new_data->param)
-		return (free_data(&new_data), (t_data *)NULL);
+		return (free_data(&new_data), (t_data *) NULL);
 	new_data->philo = init_philosophers(new_data->param);
 	if (!new_data->philo)
-		return (free_data(&new_data), (t_data *)NULL);
+		return (free_data(&new_data), (t_data *) NULL);
 	return (new_data);
 }
