@@ -74,6 +74,9 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
+int						exec_mutex(pthread_mutex_t mutex, \
+							t_philo *philo, t_param *param, \
+							int (*f)(t_philo *, t_param *));
 int						everyone_satiated(t_philo *philo, t_param *param);
 int						should_abort_simulator(t_philo *philo, t_param *param);
 char					*get_status_text(t_status code);
@@ -81,8 +84,10 @@ void					display_current_status(t_philo *philo);
 void					action_die(t_philo *philo, t_param *param);
 int						action_think(t_philo *philo, t_param *param);
 int						action_sleep(t_philo *philo, t_param *param);
-void					start_eating(t_philo *philo, t_param *param);
+int						start_eating(t_philo *philo, t_param *param);
 void					forced_waiting(t_param *param, unsigned int delay);
+int						pick_right_fork(t_philo *philo, t_param *param);
+int						pick_left_fork(t_philo *philo, t_param *param);
 int						action_eat(t_philo *philo, t_param *param);
 void					set_timestamp(t_param *param);
 void					*simulator(void *arg);

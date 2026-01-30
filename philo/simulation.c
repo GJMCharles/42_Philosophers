@@ -39,10 +39,7 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 	if (param->abort_simulator == TRUE)
 		return (TRUE);
 	if (param->eating_limits > 0 && everyone_satiated(philo, param))
-	{
-		param->abort_simulator = TRUE;
 		return (TRUE);
-	}
 	if (philo->last_eaten == 0)
 	{
 		if ((get_timestamp_ms() - param->start_timestamp) > param->time_to_die)
@@ -102,13 +99,15 @@ void	start_simulators(t_data **data)
 	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
+		if (current->next == (t_philo *) NULL)
+			pthread_join(current->thread, (void **) NULL);
 		current = current->next;
 		if (current == first)
 			break ;
 	}
 	while (current != (t_philo *) NULL)
 	{
-		pthread_join(current->thread, (void *) NULL);
+		pthread_join(current->thread, (void **) NULL);
 		current = current->next;
 		if (current == first)
 			break ;
