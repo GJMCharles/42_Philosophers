@@ -15,10 +15,11 @@
 int action_sleep(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->param->mutex_sleeping));
-	if (philo->param->abort_simulator)
+	philo->param->abort_simulator = has_starved_to_death(philo);
+	if (philo->param->abort_simulator == TRUE)
 		return (pthread_mutex_unlock(&(philo->param->mutex_sleeping)), FALSE);
-	usleep(philo->param->time_to_sleep * 1000);
 	philo->status = SLEEPING;
 	display_current_status(philo);
+	forced_waiting(philo->param, philo->param->time_to_sleep);
 	return (pthread_mutex_unlock(&(philo->param->mutex_sleeping)), TRUE);
 }

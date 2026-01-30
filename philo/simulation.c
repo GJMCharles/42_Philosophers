@@ -32,11 +32,10 @@ void *simulator(void *arg)
 	{
 		if (param->abort_simulator == TRUE || action_eat(philo) == FALSE)
 			break;
-		// if (param->abort_simulator == TRUE || action_sleep(philo) == FALSE)
-		//	break;
-		// if (param->abort_simulator == TRUE || action_think(philo) == FALSE)
-		//	break;
-		break;
+		 if (param->abort_simulator == TRUE || action_sleep(philo) == FALSE)
+			break;
+		 if (param->abort_simulator == TRUE || action_think(philo) == FALSE)
+			break;
 	}
 	if (philo->status == DEAD)
 		action_die(philo);
