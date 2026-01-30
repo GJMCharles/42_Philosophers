@@ -46,14 +46,50 @@
 // 		forced_waiting(param, param->time_to_die);
 // 		return (FALSE);
 // 	}
-// 	return (exec_mutex(philo->next->fork, philo, param, pick_right_fork));
+// 	return (exec_pthread_mutex(philo->next->fork, philo, param, pick_right_fork));
+// }
+//////////////////
+// int	start_eating(t_philo *philo, t_param *param)
+// {
+// 	(void) param;
+// 	philo->status = EATING;
+// 	display_message(philo, (char *) NULL);
+// 	philo->eating_counter += 1;
+// 	return (TRUE);
 // }
 
-int	start_eating(t_philo *philo, t_param *param)
+// int	pick_right_fork(t_philo *philo, t_param *param)
+// {
+// 	int	status;
+
+// 	philo->status = FORK;
+// 	display_message(philo, (char *) NULL);
+// 	status = exec_pthread_mutex(param->mutex_eating, philo, param, start_eating);
+// 	forced_waiting(param, param->time_to_eat);
+// 	philo->last_eaten = get_timestamp_ms();
+// 	return (status);
+// }
+
+// int	pick_left_fork(t_philo *philo, t_param *param)
+// {
+// 	philo->status = FORK;
+// 	display_message(philo, (char *) NULL);
+// 	if (philo->next == (t_philo *) NULL)
+// 	{
+// 		philo->status = DEAD;
+// 		param->abort_simulator = TRUE;
+// 		forced_waiting(param, param->time_to_die);
+// 		return (FALSE);
+// 	}
+// 	return (exec_pthread_mutex(philo->next->fork, philo, param, pick_right_fork));
+// }
+
+int	eating_process(t_philo *philo, t_param *param)
 {
 	(void) param;
 	philo->status = EATING;
 	display_message(philo, (char *) NULL);
+	philo->last_eaten = get_timestamp_ms();
 	philo->eating_counter += 1;
 	return (TRUE);
 }
@@ -62,29 +98,33 @@ int	pick_right_fork(t_philo *philo, t_param *param)
 {
 	int	status;
 
-	philo->status = FORK;
 	display_message(philo, (char *) NULL);
-	status = exec_mutex(param->mutex_eating, philo, param, start_eating);
-	forced_waiting(param, param->time_to_eat);
-	philo->last_eaten = get_timestamp_ms();
+	status = exec_pthread_mutex(philo->fork, philo, param, eating_process);
 	return (status);
 }
 
 int	pick_left_fork(t_philo *philo, t_param *param)
 {
+	int	status;
+
 	philo->status = FORK;
 	display_message(philo, (char *) NULL);
-	if (philo->next == (t_philo *) NULL)
+	if (!(philo->next))
 	{
 		philo->status = DEAD;
 		param->abort_simulator = TRUE;
-		forced_waiting(param, param->time_to_die);
 		return (FALSE);
 	}
-	return (exec_mutex(philo->next->fork, philo, param, pick_right_fork));
+	status = exec_pthread_mutex(philo->next->fork, philo, param, pick_right_fork);
+	return (status);
 }
 
 int	action_eat(t_philo *philo, t_param *param)
 {
-	return (exec_mutex(philo->fork, philo, param, pick_left_fork));
+	int	status;
+
+	status = exec_pthread_mutex(philo->fork, philo, param, pick_left_fork);
+	if (status)
+		forced_waiting(param, param->time_to_eat);
+	return (status);
 }

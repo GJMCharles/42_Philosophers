@@ -41,16 +41,29 @@ int	everyone_satiated(t_philo *philo, t_param *param)
 
 int	should_abort_simulator(t_philo *philo, t_param *param)
 {
+	unsigned long int	duration;
+
 	if (param->abort_simulator == TRUE)
 		return (TRUE);
 	if (param->eating_limits > 0 && everyone_satiated(philo, param))
 		return (TRUE);
-	if ((get_timestamp_ms() - philo->last_eaten) > param->time_to_die)
+	duration = (get_timestamp_ms() - philo->last_eaten);
+	if (duration >= param->time_to_die)
 	{
+		printf("{%lu}\n", duration);
 		philo->status = DEAD;
 		return (TRUE);
 	}
 	return (FALSE);
+}
+
+void	set_timestamp(t_philo *philo, t_param *param)
+{
+	pthread_mutex_lock(&param->mutex_start);
+	if (param->start_timestamp == 0)
+		param->start_timestamp = get_timestamp_ms();
+	philo->last_eaten = get_timestamp_ms();
+	pthread_mutex_unlock(&(param->mutex_start));
 }
 
 void	*simulator(void *arg)
@@ -60,11 +73,8 @@ void	*simulator(void *arg)
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	pthread_mutex_lock(&param->mutex_start);
-	philo->last_eaten = get_timestamp_ms();
-	if (param->start_timestamp == 0)
-		param->start_timestamp = get_timestamp_ms();
-	pthread_mutex_unlock(&(param->mutex_start));
+	usleep(100);
+	set_timestamp(philo, param);
 	while (1)
 	{
 		if (param->abort_simulator || !action_eat(philo, param))
@@ -89,6 +99,7 @@ void	start_simulators(t_data **data)
 	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
+		usleep(100);
 		if (current->next == (t_philo *) NULL)
 			pthread_join(current->thread, (void **) NULL);
 		current = current->next;

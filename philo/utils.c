@@ -19,9 +19,9 @@ void	forced_waiting(t_param *param, unsigned int delay)
 	current = get_timestamp_ms();
 	while ((get_timestamp_ms() - current) < (unsigned long int) delay)
 	{
-		pthread_mutex_lock(&param->mutex_wait);
+		pthread_mutex_lock(&param->mutex_timestamp);
 		usleep(100);
-		pthread_mutex_unlock(&param->mutex_wait);
+		pthread_mutex_unlock(&param->mutex_timestamp);
 	}
 }
 
