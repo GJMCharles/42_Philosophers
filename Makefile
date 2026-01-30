@@ -23,6 +23,8 @@ CFLAGS := -Wall -Wextra -Werror -pedantic
 RM := rm -f -v
 RM_DIR := rmdir -v
 
+NAME := philo
+
 # Project Libft (+GetNextLine/+FtPrintF)
 LIBFT := libft
 
@@ -40,13 +42,7 @@ LDLIBS := \
 -lft \
 -lpthread
 
-NAME := philo
-
-DIR_MANDATORY := $(NAME)
-
-OBJECTS_DIR := .objects
-
-SOURCES_MANDATORY := \
+SOURCES_M := \
 main.c \
 data.c \
 node.c \
@@ -58,43 +54,40 @@ action_think.c \
 action_die.c \
 utils.c
 
-OBJECTS_MANDATORY := \
-$(patsubst \
-	$(DIR_MANDATORY)/%.c,\
-	$(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o,\
-	$(addprefix $(DIR_MANDATORY)/, $(SOURCES_MANDATORY))\
+OBJECTS_M := \
+$(patsubst ./philo/%.c,\
+	.objects/.philo/%.o, \
+	$(addprefix ./philo/, $(SOURCES_M)) \
 )
 
-DEPS_MANDATORY := $(OBJECTS_MANDATORY:.o=.d)
+DEPS_M := $(OBJECTS_M:.o=.d)
+-include $(DEPS_M)
 
--include $(DEPS_MANDATORY)
+OBJECTS_DIR := .objects/.philo/
 
 $(OBJECTS_DIR):
-	mkdir -p $@/.$(DIR_MANDATORY)
+	mkdir -p $@
 
-$(OBJECTS_DIR)/.$(DIR_MANDATORY)/%.o: $(DIR_MANDATORY)/%.c | $(OBJECTS_DIR)
+$(OBJECTS_DIR)%.o: ./philo/%.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(NAME): LIBS $(OBJECTS_MANDATORY)
-
-LIBS:
-	$(MAKE) -C ./includes/$(LIBFT)
+$(NAME): $(OBJECTS_M)
+	@$(MAKE) -C ./includes/$(LIBFT) all
+	$(CC) $(CFLAGS) $^ -o ./philo/$@ $(LDFLAGS) $(LDLIBS)
 
 all: $(NAME)
-	$(CC) $(CFLAGS) $(OBJECTS_MANDATORY) -o ./$^/$^ $(LDFLAGS) $(LDLIBS)
-	echo "Generated executable: ./$^/$^"
 
 clean:
 	@$(MAKE) -C ./includes/$(LIBFT) clean
-	@$(RM) $(OBJECTS_MANDATORY)
-	@$(RM) $(DEPS_MANDATORY)
-	@if [ -d  $(OBJECTS_DIR)/.$(DIR_MANDATORY) ]; then \
-		$(RM_DIR) -p $(OBJECTS_DIR)/.$(DIR_MANDATORY); \
+	@$(RM) $(OBJECTS_M)
+	@$(RM) $(DEPS_M)
+	@if [ -d  $(OBJECTS_DIR) ]; then \
+		$(RM_DIR) -p $(OBJECTS_DIR); \
 	fi
 
 fclean: clean
 	@$(MAKE) -C ./includes/$(LIBFT) fclean
-	@$(RM) ./$(NAME)/$(NAME)
+	@$(RM) ./philo/$(NAME)
 
 re: fclean all
 
@@ -106,12 +99,8 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 1 410 200 200 7
-
-.SECONDARY: $(OBJECTS_MANDATORY)
+	-s ./$(NAME)/$(NAME) 4 410 200 200 7
 
 .PRECIOUS: $(OBJECTS_DIR)
 
-.SILENT:
-
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re norm runtest
