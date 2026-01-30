@@ -24,8 +24,8 @@ int	action_sleep(t_philo *philo, t_param *param)
 {
 	int	status;
 
-	status = exec_pthread_mutex(\
-		param->mutex_sleeping, philo, param, sleeping_process);
+	status = exec_pthread_mutex(
+			param->mutex_sleeping, philo, param, sleeping_process);
 	forced_waiting(param, param->time_to_sleep);
 	return (status);
 }

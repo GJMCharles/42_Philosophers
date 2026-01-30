@@ -74,8 +74,8 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-int						exec_pthread_mutex(pthread_mutex_t mutex, \
-							t_philo *philo, t_param *param, \
+int						exec_pthread_mutex(pthread_mutex_t mutex,\
+							t_philo *philo, t_param *param,\
 							int (*f)(t_philo *, t_param *));
 int						everyone_satiated(t_philo *philo, t_param *param);
 int						should_abort_simulator(t_philo *philo, t_param *param);

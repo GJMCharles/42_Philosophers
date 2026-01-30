@@ -24,7 +24,7 @@ int	action_think(t_philo *philo, t_param *param)
 {
 	int	status;
 
-	status = exec_pthread_mutex(\
-		param->mutex_thinking, philo, param, thinking_process);
+	status = exec_pthread_mutex(
+			param->mutex_thinking, philo, param, thinking_process);
 	return (status);
 }

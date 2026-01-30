@@ -42,8 +42,8 @@ int	pick_left_fork(t_philo *philo, t_param *param)
 		param->abort_simulator = TRUE;
 		return (FALSE);
 	}
-	status = exec_pthread_mutex(\
-		philo->next->fork, philo, param, pick_right_fork);
+	status = exec_pthread_mutex(
+			philo->next->fork, philo, param, pick_right_fork);
 	return (status);
 }
 
