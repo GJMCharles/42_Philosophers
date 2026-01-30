@@ -40,14 +40,17 @@ char	*get_status_text(t_status code)
 	return ((char *) NULL);
 }
 
-void	display_current_status(t_philo *philo)
+void	display_message(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&(philo->param->mutex_print));
-	printf(
-		"%lu %u %s\n",
-		(get_timestamp_ms() - philo->param->start_timestamp),
-		philo->id,
-		get_status_text(philo->status));
+	if (message != (char *) NULL)
+		printf("%s\n", message);
+	else
+		printf(
+			"%lu %u %s\n",
+			get_timestamp_ms() - philo->last_eaten,
+			philo->id,
+			get_status_text(philo->status));	
 	pthread_mutex_unlock(&(philo->param->mutex_print));
 }
 

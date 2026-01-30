@@ -23,7 +23,7 @@
 // 	}
 // 	philo->status = EATING;
 // 	philo->eating_counter += 1;
-// 	display_current_status(philo);
+// 	display_message(philo);
 // 	forced_waiting(param, param->time_to_eat);
 // 	philo->last_eaten = get_timestamp_ms();
 // 	pthread_mutex_unlock(&param->mutex_eating);
@@ -32,14 +32,14 @@
 
 // int	pick_right_fork(t_philo *philo, t_param *param)
 // {
-// 	display_current_status(philo);
+// 	display_message(philo);
 // 	return (start_eating(philo, param));
 // }
 
 // int	pick_left_fork(t_philo *philo, t_param *param)
 // {
 // 	philo->status = FORK;
-// 	display_current_status(philo);
+// 	display_message(philo);
 // 	if (philo->next == (t_philo *) NULL)
 // 	{
 // 		philo->status = DEAD;
@@ -51,25 +51,30 @@
 
 int	start_eating(t_philo *philo, t_param *param)
 {
+	(void) param;
 	philo->status = EATING;
-	display_current_status(philo);
+	display_message(philo, (char *) NULL);
 	philo->eating_counter += 1;
-	forced_waiting(param, param->time_to_eat);
-	philo->last_eaten = get_timestamp_ms();
 	return (TRUE);
 }
 
 int	pick_right_fork(t_philo *philo, t_param *param)
 {
+	int	status;
+
 	philo->status = FORK;
-	display_current_status(philo);
-	return (exec_mutex(param->mutex_eating, philo, param, start_eating));
+	display_message(philo, (char *) NULL);
+
+	status = exec_mutex(param->mutex_eating, philo, param, start_eating);
+	forced_waiting(param, param->time_to_eat);
+	philo->last_eaten = get_timestamp_ms();
+	return (status);
 }
 
 int	pick_left_fork(t_philo *philo, t_param *param)
 {
 	philo->status = FORK;
-	display_current_status(philo);
+	display_message(philo, (char *) NULL);
 	if (philo->next == (t_philo *) NULL)
 	{
 		philo->status = DEAD;

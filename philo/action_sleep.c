@@ -19,7 +19,8 @@ int	action_sleep(t_philo *philo, t_param *param)
 	if (param->abort_simulator == TRUE)
 		return (pthread_mutex_unlock(&param->mutex_sleeping), FALSE);
 	philo->status = SLEEPING;
-	display_current_status(philo);
+	display_message(philo, (char *) NULL);
+	pthread_mutex_unlock(&param->mutex_sleeping);
 	forced_waiting(param, param->time_to_sleep);
-	return (pthread_mutex_unlock(&param->mutex_sleeping), TRUE);
+	return (TRUE);
 }

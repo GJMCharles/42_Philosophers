@@ -19,6 +19,6 @@ int	action_think(t_philo *philo, t_param *param)
 	if (param->abort_simulator == TRUE)
 		return (pthread_mutex_unlock(&param->mutex_thinking), FALSE);
 	philo->status = THINKING;
-	display_current_status(philo);
+	display_message(philo, (char *) NULL);
 	return (pthread_mutex_unlock(&param->mutex_thinking), TRUE);
 }

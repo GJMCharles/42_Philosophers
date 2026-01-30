@@ -43,7 +43,7 @@ typedef struct s_param
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					eating_limits;
-	unsigned int		test_count;
+	unsigned int		minimum_eaten;
 	unsigned long int	start_timestamp;
 	unsigned char		abort_simulator;
 	pthread_mutex_t		mutex_start;
@@ -80,7 +80,7 @@ int						exec_mutex(pthread_mutex_t mutex, \
 int						everyone_satiated(t_philo *philo, t_param *param);
 int						should_abort_simulator(t_philo *philo, t_param *param);
 char					*get_status_text(t_status code);
-void					display_current_status(t_philo *philo);
+void					display_message(t_philo *philo, char *message);
 void					action_die(t_philo *philo, t_param *param);
 int						action_think(t_philo *philo, t_param *param);
 int						action_sleep(t_philo *philo, t_param *param);
@@ -89,7 +89,6 @@ void					forced_waiting(t_param *param, unsigned int delay);
 int						pick_right_fork(t_philo *philo, t_param *param);
 int						pick_left_fork(t_philo *philo, t_param *param);
 int						action_eat(t_philo *philo, t_param *param);
-void					set_timestamp(t_param *param);
 void					*simulator(void *arg);
 unsigned long int		get_timestamp_ms(void);
 void					start_simulators(t_data **data);

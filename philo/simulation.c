@@ -30,7 +30,12 @@ int	everyone_satiated(t_philo *philo, t_param *param)
 			break ;
 	}
 	if (param->eating_limits == (int) lower_limit)
+	{
+		pthread_mutex_lock(&param->mutex_print);
+		printf("All philosophers have eaten %u times\n", lower_limit);
+		pthread_mutex_unlock(&param->mutex_print);
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -40,31 +45,12 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 		return (TRUE);
 	if (param->eating_limits > 0 && everyone_satiated(philo, param))
 		return (TRUE);
-	if (philo->last_eaten == 0)
+	if ((get_timestamp_ms() - philo->last_eaten) > param->time_to_die)
 	{
-		if ((get_timestamp_ms() - param->start_timestamp) > param->time_to_die)
-		{
-			philo->status = DEAD;
-			return (TRUE);
-		}
-	}
-	else
-	{
-		if ((get_timestamp_ms() - philo->last_eaten) > param->time_to_die)
-		{
-			philo->status = DEAD;
-			return (TRUE);
-		}
+		philo->status = DEAD;
+		return (TRUE);
 	}
 	return (FALSE);
-}
-
-void	set_timestamp(t_param *param)
-{
-	pthread_mutex_lock(&param->mutex_start);
-	if (param->start_timestamp == 0)
-		param->start_timestamp = get_timestamp_ms();
-	pthread_mutex_unlock(&(param->mutex_start));
 }
 
 void	*simulator(void *arg)
@@ -74,14 +60,18 @@ void	*simulator(void *arg)
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	set_timestamp(param);
+	pthread_mutex_lock(&param->mutex_start);
+	philo->last_eaten = get_timestamp_ms();
+	if (param->start_timestamp == 0)
+		param->start_timestamp = get_timestamp_ms();
+	pthread_mutex_unlock(&(param->mutex_start));
 	while (1)
 	{
-		if (action_eat(philo, param) == FALSE)
+		if (param->abort_simulator || !action_eat(philo, param))
 			break ;
-		if (action_sleep(philo, param) == FALSE)
+		if (param->abort_simulator || !action_sleep(philo, param))
 			break ;
-		if (action_think(philo, param) == FALSE)
+		if (param->abort_simulator || !action_think(philo, param))
 			break ;
 	}
 	if (philo->status == DEAD)

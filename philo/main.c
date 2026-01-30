@@ -43,7 +43,7 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 
 	if (verify_arguments(argc, argv) == FALSE)
-		return (EXIT_FAILURE);
+		return (ft_putendl_fd((char *) "Error", STDERR_FILENO), EXIT_FAILURE);
 	data = build_data(argc, argv);
 	if (!data)
 		return (EXIT_FAILURE);
