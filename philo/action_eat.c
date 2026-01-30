@@ -64,7 +64,6 @@ int	pick_right_fork(t_philo *philo, t_param *param)
 
 	philo->status = FORK;
 	display_message(philo, (char *) NULL);
-
 	status = exec_mutex(param->mutex_eating, philo, param, start_eating);
 	forced_waiting(param, param->time_to_eat);
 	philo->last_eaten = get_timestamp_ms();

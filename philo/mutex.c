@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+
 int	exec_mutex(pthread_mutex_t mutex, \
 	t_philo *philo, t_param *param, int (*f)(t_philo *, t_param *))
 {

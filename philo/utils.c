@@ -50,7 +50,7 @@ void	display_message(t_philo *philo, char *message)
 			"%lu %u %s\n",
 			get_timestamp_ms() - philo->last_eaten,
 			philo->id,
-			get_status_text(philo->status));	
+			get_status_text(philo->status));
 	pthread_mutex_unlock(&(philo->param->mutex_print));
 }
 
