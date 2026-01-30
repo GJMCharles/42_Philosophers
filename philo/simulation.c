@@ -50,7 +50,6 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 	duration = (get_timestamp_ms() - philo->last_eaten);
 	if (duration >= param->time_to_die)
 	{
-		printf("{%lu}\n", duration);
 		philo->status = DEAD;
 		return (TRUE);
 	}

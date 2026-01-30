@@ -17,7 +17,6 @@ int	eating_process(t_philo *philo, t_param *param)
 	(void) param;
 	philo->status = EATING;
 	display_message(philo, (char *) NULL);
-	philo->last_eaten = get_timestamp_ms();
 	philo->eating_counter += 1;
 	return (TRUE);
 }
@@ -54,6 +53,11 @@ int	action_eat(t_philo *philo, t_param *param)
 
 	status = exec_pthread_mutex(philo->fork, philo, param, pick_left_fork);
 	if (status)
+	{
+		pthread_mutex_lock(&param->mutex_wait);
 		forced_waiting(param, param->time_to_eat);
+		philo->last_eaten = get_timestamp_ms();
+		pthread_mutex_unlock(&param->mutex_wait);
+	}
 	return (status);
 }
