@@ -62,7 +62,7 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 	return (FALSE);
 }
 
-void set_timestamp(t_param *param)
+void	set_timestamp(t_param *param)
 {
 	pthread_mutex_lock(&param->mutex_start);
 	if (param->start_timestamp == 0)
@@ -70,10 +70,10 @@ void set_timestamp(t_param *param)
 	pthread_mutex_unlock(&(param->mutex_start));
 }
 
-void *simulator(void *arg)
+void	*simulator(void *arg)
 {
-	t_philo *philo;
-	t_param *param;
+	t_philo	*philo;
+	t_param	*param;
 
 	philo = (t_philo *)arg;
 	param = philo->param;
@@ -81,21 +81,21 @@ void *simulator(void *arg)
 	while (1)
 	{
 		if (action_eat(philo, param) == FALSE)
-			break;
+			break ;
 		if (action_sleep(philo, param) == FALSE)
-			break;
+			break ;
 		if (action_think(philo, param) == FALSE)
-			break;
+			break ;
 	}
 	if (philo->status == DEAD)
 		action_die(philo, param);
 	return ((void *) NULL);
 }
 
-void start_simulators(t_data **data)
+void	start_simulators(t_data **data)
 {
-	t_philo *current;
-	t_philo *first;
+	t_philo	*current;
+	t_philo	*first;
 
 	current = (*data)->philo;
 	first = current;
@@ -104,13 +104,13 @@ void start_simulators(t_data **data)
 		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
 		current = current->next;
 		if (current == first)
-			break;
+			break ;
 	}
 	while (current != (t_philo *) NULL)
 	{
 		pthread_join(current->thread, (void *) NULL);
 		current = current->next;
 		if (current == first)
-			break;
+			break ;
 	}
 }
