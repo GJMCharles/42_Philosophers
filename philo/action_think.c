@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int action_think(t_philo *philo, t_param *param)
+int	action_think(t_philo *philo, t_param *param)
 {
 	pthread_mutex_lock(&param->mutex_thinking);
 	param->abort_simulator = should_abort_simulator(philo, param);

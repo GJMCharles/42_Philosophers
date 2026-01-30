@@ -29,47 +29,28 @@ void	start_eating(t_philo *philo, t_param *param)
 	pthread_mutex_unlock(&param->mutex_eating);
 }
 
-int action_eat(t_philo *philo, t_param *param)
+int	action_eat(t_philo *philo, t_param *param)
 {
 	if (!philo->next)
 	{
 		pthread_mutex_lock(&philo->fork);
+		philo->status = FORK;
+		display_current_status(philo);
 		philo->status = DEAD;
 		param->abort_simulator = TRUE;
 		forced_waiting(param, param->time_to_die);
 		return (pthread_mutex_unlock(&philo->fork), FALSE);
 	}
 	pthread_mutex_lock(&philo->fork);
+	param->abort_simulator = should_abort_simulator(philo, param);
+	if (param->abort_simulator == TRUE)
+		return (pthread_mutex_unlock(&philo->fork), FALSE);
 	philo->status = FORK;
 	display_current_status(philo);
-
 	pthread_mutex_lock(&philo->next->fork);
 	display_current_status(philo);
-
 	start_eating(philo, param);
-
 	pthread_mutex_unlock(&philo->next->fork);
 	pthread_mutex_unlock(&philo->fork);
-
 	return (TRUE);
-	/**
-	pthread_mutex_lock(&philo->fork);
-	param->abort_simulator = should_abort_simulator(philo, param);
-	if (param->abort_simulator == TRUE)
-		return (pthread_mutex_unlock(&philo->fork), FALSE);
-	philo->status = FORK;
-	display_current_status(philo);
-	
-	pthread_mutex_lock(&philo->next->fork);
-	param->abort_simulator = should_abort_simulator(philo, param);
-	if (param->abort_simulator == TRUE)
-	{
-		pthread_mutex_unlock(&philo->next->fork);
-		return (pthread_mutex_unlock(&philo->fork), FALSE);
-	}
-	display_current_status(philo);
-	param->abort_simulator = start_eating(philo, param);
-	pthread_mutex_unlock(&philo->next->fork);
-	return (pthread_mutex_unlock(&philo->fork), TRUE);
-	*/
 }

@@ -12,11 +12,11 @@
 
 #include "philo.h"
 
-t_philo *init_philosophers(t_param *param)
+t_philo	*init_philosophers(t_param *param)
 {
-	unsigned int index;
-	t_philo *philo_list;
-	t_philo *node;
+	unsigned int	index;
+	t_philo			*philo_list;
+	t_philo			*node;
 
 	index = 0;
 	philo_list = (t_philo *) NULL;
@@ -37,9 +37,9 @@ t_philo *init_philosophers(t_param *param)
 	return (philo_list);
 }
 
-t_param *init_parameters(int argc, char *argv[])
+t_param	*init_parameters(int argc, char *argv[])
 {
-	t_param *param;
+	t_param			*param;
 
 	param = (t_param *)malloc(sizeof(t_param));
 	if (!param)
@@ -58,9 +58,9 @@ t_param *init_parameters(int argc, char *argv[])
 	return (param);
 }
 
-t_data *build_data(int argc, char *argv[])
+t_data	*build_data(int argc, char *argv[])
 {
-	t_data *new_data;
+	t_data			*new_data;
 
 	new_data = (t_data *)malloc(sizeof(t_data));
 	if (!new_data)

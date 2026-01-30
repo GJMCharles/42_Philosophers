@@ -12,11 +12,11 @@
 
 #include "philo.h"
 
-void end_pthreads(t_data **data)
+void	end_pthreads(t_data **data)
 {
-	t_param *temp;
-	t_philo *philo_first;
-	t_philo *philo_list;
+	t_param	*temp;
+	t_philo	*philo_first;
+	t_philo	*philo_list;
 
 	temp = (*data)->param;
 	(void)pthread_mutex_destroy(&temp->mutex_start);
@@ -34,15 +34,15 @@ void end_pthreads(t_data **data)
 		(void)pthread_mutex_destroy(&philo_list->fork);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
-			break;
+			break ;
 	}
 }
 
-void start_pthreads(t_data **data)
+void	start_pthreads(t_data **data)
 {
-	t_param *temp;
-	t_philo *philo_first;
-	t_philo *philo_list;
+	t_param	*temp;
+	t_philo	*philo_first;
+	t_philo	*philo_list;
 
 	temp = (*data)->param;
 	(void)pthread_mutex_init(&temp->mutex_start, NULL);
@@ -60,6 +60,6 @@ void start_pthreads(t_data **data)
 		(void)pthread_mutex_init(&philo_list->fork, NULL);
 		philo_list = philo_list->next;
 		if (philo_list == philo_first)
-			break;
+			break ;
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void action_die(t_philo *philo, t_param *param)
+void	action_die(t_philo *philo, t_param *param)
 {
 	pthread_mutex_lock(&param->mutex_dead);
 	forced_waiting(param, 10);
