@@ -32,7 +32,9 @@ int	everyone_satiated(t_philo *philo, t_param *param)
 	if (param->eating_limits == (int) lower_limit)
 	{
 		pthread_mutex_lock(&param->mutex_print);
-		printf("All philosophers have eaten %u times\n", lower_limit);
+		ft_putstr_fd("All philosophers have eaten ", STDOUT_FILENO);
+		ft_putnbr_fd(lower_limit, STDOUT_FILENO);
+		ft_putendl_fd(" times", STDOUT_FILENO);
 		pthread_mutex_unlock(&param->mutex_print);
 		return (TRUE);
 	}

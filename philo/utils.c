@@ -44,13 +44,15 @@ void	display_message(t_philo *philo, char *message)
 {
 	pthread_mutex_lock(&(philo->param->mutex_print));
 	if (message != (char *) NULL)
-		printf("%s\n", message);
+		ft_putendl_fd(message, STDOUT_FILENO);
 	else
-		printf(
-			"%lu %u %s\n",
-			get_timestamp_ms(),
-			philo->id,
-			get_status_text(philo->status));
+	{
+		ft_putnbr_fd(get_timestamp_ms(), STDOUT_FILENO);
+		ft_putstr_fd(" ", STDOUT_FILENO);
+		ft_putnbr_fd(philo->id, STDOUT_FILENO);
+		ft_putstr_fd(" ", STDOUT_FILENO);
+		ft_putendl_fd(get_status_text(philo->status), STDOUT_FILENO);
+	}
 	pthread_mutex_unlock(&(philo->param->mutex_print));
 }
 
