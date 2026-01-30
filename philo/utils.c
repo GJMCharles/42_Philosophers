@@ -14,7 +14,7 @@
 
 void	forced_waiting(t_param *param, unsigned int delay)
 {
-	unsigned long int current;
+	unsigned long int	current;
 
 	current = get_timestamp_ms();
 	while ((get_timestamp_ms() - current) < delay)
@@ -25,7 +25,7 @@ void	forced_waiting(t_param *param, unsigned int delay)
 	}
 }
 
-char *get_status_text(t_status code)
+char	*get_status_text(t_status code)
 {
 	if (code == FORK)
 		return ((char *)"has taken a fork");
@@ -37,7 +37,7 @@ char *get_status_text(t_status code)
 		return ((char *)"is thinking");
 	else if (code == DEAD)
 		return ((char *)"died");
-	return ((char *)NULL);
+	return ((char *) NULL);
 }
 
 void display_current_status(t_philo *philo)
@@ -66,13 +66,13 @@ void free_data(t_data **data)
 	if (!(*data))
 		return;
 	temp = *data;
-	if (temp->philo != (t_philo *)NULL)
+	if (temp->philo != (t_philo *) NULL)
 		clear_philosophers(&(temp->philo));
-	if (temp->param != (t_param *)NULL)
+	if (temp->param != (t_param *) NULL)
 	{
 		free(temp->param);
-		temp->param = (t_param *)NULL;
+		temp->param = (t_param *) NULL;
 	}
 	free(temp);
-	temp = (t_data *)NULL;
+	temp = (t_data *) NULL;
 }

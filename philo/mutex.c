@@ -29,7 +29,7 @@ void end_pthreads(t_data **data)
 	(void)pthread_mutex_destroy(&temp->mutex_dead);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
-	while (philo_list != (t_philo *)NULL)
+	while (philo_list != (t_philo *) NULL)
 	{
 		(void)pthread_mutex_destroy(&philo_list->fork);
 		philo_list = philo_list->next;
@@ -55,7 +55,7 @@ void start_pthreads(t_data **data)
 	(void)pthread_mutex_init(&temp->mutex_dead, NULL);
 	philo_first = (*data)->philo;
 	philo_list = (*data)->philo;
-	while (philo_list != (t_philo *)NULL)
+	while (philo_list != (t_philo *) NULL)
 	{
 		(void)pthread_mutex_init(&philo_list->fork, NULL);
 		philo_list = philo_list->next;

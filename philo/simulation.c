@@ -89,7 +89,7 @@ void *simulator(void *arg)
 	}
 	if (philo->status == DEAD)
 		action_die(philo, param);
-	return ((void *)NULL);
+	return ((void *) NULL);
 }
 
 void start_simulators(t_data **data)
@@ -99,16 +99,16 @@ void start_simulators(t_data **data)
 
 	current = (*data)->philo;
 	first = current;
-	while (current != (t_philo *)NULL)
+	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
 		current = current->next;
 		if (current == first)
 			break;
 	}
-	while (current != (t_philo *)NULL)
+	while (current != (t_philo *) NULL)
 	{
-		pthread_join(current->thread, (void *)NULL);
+		pthread_join(current->thread, (void *) NULL);
 		current = current->next;
 		if (current == first)
 			break;
