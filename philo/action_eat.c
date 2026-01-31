@@ -12,52 +12,33 @@
 
 #include "philo.h"
 
-int	eating_process(t_philo *philo, t_param *param)
-{
-	(void) param;
-	philo->status = EATING;
-	display_message(philo, (char *) NULL);
-	philo->eating_counter += 1;
-	return (TRUE);
-}
-
-int	pick_right_fork(t_philo *philo, t_param *param)
-{
-	int	status;
-
-	display_message(philo, (char *) NULL);
-	status = exec_pthread_mutex(philo->fork, philo, param, eating_process);
-	return (status);
-}
-
-int	pick_left_fork(t_philo *philo, t_param *param)
-{
-	int	status;
-
-	philo->status = FORK;
-	display_message(philo, (char *) NULL);
-	if (!(philo->next))
-	{
-		philo->status = DEAD;
-		param->abort_simulator = TRUE;
-		return (FALSE);
-	}
-	status = exec_pthread_mutex(
-			philo->next->fork, philo, param, pick_right_fork);
-	return (status);
-}
-
 int	action_eat(t_philo *philo, t_param *param)
 {
-	int	status;
+	unsigned int	index_left;
+	unsigned int	index_right;
 
-	status = exec_pthread_mutex(philo->fork, philo, param, pick_left_fork);
-	if (status)
+	index_left = philo->id;
+	index_right = (philo->id + 1) % param->nb_philos;
+	if (param->nb_philos == 1)
 	{
-		pthread_mutex_lock(&param->mutex_wait);
-		forced_waiting(param, param->time_to_eat);
-		philo->last_eaten = get_timestamp_ms();
-		pthread_mutex_unlock(&param->mutex_wait);
+		pthread_mutex_lock(&param->forks[index_left]);
+		philo->state = FORK;
+		display_message(philo, (char *) NULL);
+		philo->state = DEAD;
+		forced_waiting(param, param->time_to_die);
+		return (pthread_mutex_unlock(&param->forks[index_left]), FALSE);
 	}
-	return (status);
+	philo->state = FORK;
+	pthread_mutex_lock(&param->forks[index_left]);
+	pthread_mutex_lock(&param->forks[index_right]);
+	display_message(philo, (char *) NULL);
+	display_message(philo, (char *) NULL);
+	philo->state = EATING;
+	display_message(philo, (char *) NULL);
+	forced_waiting(param, param->time_to_eat);
+	philo->last_eaten = get_timestamp_ms();
+	philo->eating_counter += 1;
+	pthread_mutex_unlock(&param->forks[index_right]);
+	pthread_mutex_unlock(&param->forks[index_left]);
+	return (TRUE);
 }

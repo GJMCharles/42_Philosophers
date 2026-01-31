@@ -35,6 +35,7 @@ CPPFLAGS := \
 # Specifies options for the linker:
 # example: -L/usr/local/lib
 LDFLAGS := \
+-L./includes \
 -L./includes/$(LIBFT)
 
 # Lists libraries to link with:
@@ -44,6 +45,7 @@ LDLIBS := \
 
 SOURCES_M := \
 main.c \
+utils.c \
 data.c \
 node.c \
 mutex.c \
@@ -51,8 +53,7 @@ simulation.c \
 action_eat.c \
 action_sleep.c \
 action_think.c \
-action_die.c \
-utils.c
+action_die.c
 
 OBJECTS_M := \
 $(patsubst ./philo/%.c,\
@@ -99,7 +100,7 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 4 410 200 200 7
+	-s ./$(NAME)/$(NAME) 4 210 100 100 7
 
 .PRECIOUS: $(OBJECTS_DIR)
 

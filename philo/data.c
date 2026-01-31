@@ -20,19 +20,20 @@ t_philo	*init_philosophers(t_param *param)
 
 	index = 0;
 	philo_list = (t_philo *) NULL;
-	while (index++ < param->nb_philos)
+	while (index < param->nb_philos)
 	{
 		node = new_philosopher();
 		if (!node)
 			return (clear_philosophers(&philo_list), (t_philo *) NULL);
 		node->id = index;
-		node->status = IDLE;
+		node->state = IDLE;
 		node->thread = (pthread_t) NULL;
 		node->last_eaten = 0;
 		node->eating_counter = 0;
 		node->param = param;
 		node->next = (t_philo *) NULL;
 		append_philosopher(node, &philo_list);
+		index += 1;
 	}
 	return (philo_list);
 }
@@ -44,6 +45,10 @@ t_param	*init_parameters(int argc, char *argv[])
 	param = (t_param *)malloc(sizeof(t_param));
 	if (!param)
 		return ((t_param *) NULL);
+	param->forks = \
+		(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	if (!(param->forks))
+		return (free(param), (t_param *) NULL);
 	param->nb_philos = (unsigned int)ft_atoi(argv[1]);
 	param->time_to_die = (unsigned int)ft_atoi(argv[2]);
 	param->time_to_eat = (unsigned int)ft_atoi(argv[3]);
@@ -56,6 +61,25 @@ t_param	*init_parameters(int argc, char *argv[])
 	param->start_timestamp = 0;
 	param->abort_simulator = FALSE;
 	return (param);
+}
+
+void	free_data(t_data **data)
+{
+	t_data	*temp;
+
+	if (!(*data))
+		return ;
+	temp = *data;
+	if (temp->philo != (t_philo *) NULL)
+		clear_philosophers(&(temp->philo));
+	if (temp->param != (t_param *) NULL)
+	{
+		free(temp->param->forks);
+		free(temp->param);
+		temp->param = (t_param *) NULL;
+	}
+	free(temp);
+	temp = (t_data *) NULL;
 }
 
 t_data	*build_data(int argc, char *argv[])

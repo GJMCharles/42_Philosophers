@@ -19,13 +19,13 @@ void	forced_waiting(t_param *param, unsigned int delay)
 	current = get_timestamp_ms();
 	while ((get_timestamp_ms() - current) < (unsigned long int) delay)
 	{
-		pthread_mutex_lock(&param->mutex_timestamp);
+		pthread_mutex_lock(&param->mutex_wait);
 		usleep(100);
-		pthread_mutex_unlock(&param->mutex_timestamp);
+		pthread_mutex_unlock(&param->mutex_wait);
 	}
 }
 
-char	*get_status_text(t_status code)
+char	*get_status_text(t_state code)
 {
 	if (code == FORK)
 		return ((char *)"has taken a fork");
@@ -42,18 +42,21 @@ char	*get_status_text(t_status code)
 
 void	display_message(t_philo *philo, char *message)
 {
-	pthread_mutex_lock(&(philo->param->mutex_print));
+	t_param	*param;
+
+	param = philo->param;
+	pthread_mutex_lock(&param->mutex_print);
 	if (message != (char *) NULL)
 		ft_putendl_fd(message, STDOUT_FILENO);
 	else
 	{
-		ft_putnbr_fd(get_timestamp_ms(), STDOUT_FILENO);
-		ft_putstr_fd(" ", STDOUT_FILENO);
-		ft_putnbr_fd(philo->id, STDOUT_FILENO);
-		ft_putstr_fd(" ", STDOUT_FILENO);
-		ft_putendl_fd(get_status_text(philo->status), STDOUT_FILENO);
+		printf("%lu %u %s\n",
+			get_timestamp_ms() - param->start_timestamp,
+			(philo->id + 1),
+			get_status_text(philo->state)
+		);
 	}
-	pthread_mutex_unlock(&(philo->param->mutex_print));
+	pthread_mutex_unlock(&param->mutex_print);
 }
 
 unsigned long int	get_timestamp_ms(void)
@@ -64,20 +67,28 @@ unsigned long int	get_timestamp_ms(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	free_data(t_data **data)
+int	verify_arguments(int argc, char *argv[])
 {
-	t_data	*temp;
+	int	index;
+	int	i;
+	int	value;
 
-	if (!(*data))
-		return ;
-	temp = *data;
-	if (temp->philo != (t_philo *) NULL)
-		clear_philosophers(&(temp->philo));
-	if (temp->param != (t_param *) NULL)
+	if (argc < 5 || argc > 6)
+		return (FALSE);
+	index = 1;
+	while (index < argc)
 	{
-		free(temp->param);
-		temp->param = (t_param *) NULL;
+		value = ft_atoi(argv[index]);
+		if (!value || value < 0)
+			return (FALSE);
+		i = 0;
+		while (argv[index][i] != '\0')
+		{
+			if (!ft_isdigit(argv[index][i]))
+				return (FALSE);
+			i += 1;
+		}
+		index += 1;
 	}
-	free(temp);
-	temp = (t_data *) NULL;
+	return (TRUE);
 }

@@ -12,19 +12,10 @@
 
 #include "philo.h"
 
-int	thinking_process(t_philo *philo, t_param *param)
-{
-	(void) param;
-	philo->status = THINKING;
-	display_message(philo, (char *) NULL);
-	return (TRUE);
-}
-
 int	action_think(t_philo *philo, t_param *param)
 {
-	int	status;
-
-	status = exec_pthread_mutex(
-			param->mutex_thinking, philo, param, thinking_process);
-	return (status);
+	(void) param;
+	philo->state = THINKING;
+	display_message(philo, (char *) NULL);
+	return (TRUE);
 }

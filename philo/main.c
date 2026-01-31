@@ -12,32 +12,6 @@
 
 #include "philo.h"
 
-int	verify_arguments(int argc, char *argv[])
-{
-	int	index;
-	int	i;
-	int	value;
-
-	if (argc < 5 || argc > 6)
-		return (FALSE);
-	index = 1;
-	while (index < argc)
-	{
-		value = ft_atoi(argv[index]);
-		if (!value || value < 0)
-			return (FALSE);
-		i = 0;
-		while (argv[index][i] != '\0')
-		{
-			if (!ft_isdigit(argv[index][i]))
-				return (FALSE);
-			i += 1;
-		}
-		index += 1;
-	}
-	return (TRUE);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
@@ -47,9 +21,42 @@ int	main(int argc, char *argv[])
 	data = build_data(argc, argv);
 	if (!data)
 		return (EXIT_FAILURE);
-	start_pthreads(&data);
-	start_simulators(&data);
-	end_pthreads(&data);
+	init_pthreads_mutex(&data);
+	start_simulator(&data);
+	destroy_pthreads_mutex(&data);
 	free_data(&data);
+
+	/**
+	//start_simulators(&data);
+	int						exec_pthread_mutex(pthread_mutex_t mutex,\
+	//							t_philo *philo, t_param *param,\
+	//							int (*f)(t_philo *, t_param *));
+	//int						everyone_satiated(t_philo *philo, t_param *param);
+	//int						should_abort_simulator(t_philo *philo, t_param *param);
+	//char					*get_status_text(t_status code);
+	//void					display_message(t_philo *philo, char *message);
+	//void					forced_waiting(t_param *param, unsigned int delay);
+	//void					action_die(t_philo *philo, t_param *param);
+	//int						thinking_process(t_philo *philo, t_param *param);
+	//int						action_think(t_philo *philo, t_param *param);
+	//int						sleeping_process(t_philo *philo, t_param *param);
+	//int						action_sleep(t_philo *philo, t_param *param);
+	//int						eating_process(t_philo *philo, t_param *param);
+	//int						pick_right_fork(t_philo *philo, t_param *param);
+	//int						pick_left_fork(t_philo *philo, t_param *param);
+	//int						action_eat(t_philo *philo, t_param *param);
+	//void					*simulator(void *arg);
+	//unsigned long int		get_timestamp_ms(void);
+	//void					start_simulators(t_data **data);
+	//void					end_pthreads(t_data **data);
+	//void					init_pthreads_mutex(t_data **data);
+	//void					append_philosopher(t_philo *node, t_philo **list);
+	//void					clear_philosophers(t_philo **list);
+	//t_philo					*new_philosopher(void);
+	//t_philo					*init_philosophers(t_param *param);
+	//t_param					*init_parameters(int argc, char *argv[]);
+	//void					free_data(t_data **data);
+	//t_data					*build_data(int argc, char *argv[]);
+	*/
 	return (EXIT_SUCCESS);
 }

@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+/**
 int	everyone_satiated(t_philo *philo, t_param *param)
 {
 	unsigned int	lower_limit;
@@ -57,13 +58,21 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 	}
 	return (FALSE);
 }
+*/
 
 void	set_timestamp(t_philo *philo, t_param *param)
 {
+	unsigned long int	timestamp;
+
 	pthread_mutex_lock(&param->mutex_start);
 	if (param->start_timestamp == 0)
-		param->start_timestamp = get_timestamp_ms();
-	philo->last_eaten = get_timestamp_ms();
+	{
+		timestamp = get_timestamp_ms();
+		param->start_timestamp = timestamp;
+	}
+	else
+		timestamp = param->start_timestamp;		
+	philo->last_eaten = timestamp;
 	pthread_mutex_unlock(&(param->mutex_start));
 }
 
@@ -71,12 +80,13 @@ void	*simulator(void *arg)
 {
 	t_philo	*philo;
 	t_param	*param;
+	unsigned int	i;
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	usleep(100);
+	i = 2;
 	set_timestamp(philo, param);
-	while (1)
+	while (i--)
 	{
 		if (param->abort_simulator || !action_eat(philo, param))
 			break ;
@@ -85,12 +95,12 @@ void	*simulator(void *arg)
 		if (param->abort_simulator || !action_think(philo, param))
 			break ;
 	}
-	if (philo->status == DEAD)
+	if (philo->state == DEAD)
 		action_die(philo, param);
 	return ((void *) NULL);
 }
 
-void	start_simulators(t_data **data)
+void	start_simulator(t_data **data)
 {
 	t_philo	*current;
 	t_philo	*first;
@@ -100,7 +110,6 @@ void	start_simulators(t_data **data)
 	while (current != (t_philo *) NULL)
 	{
 		pthread_create(&(current->thread), NULL, &simulator, (void *)current);
-		usleep(100);
 		if (current->next == (t_philo *) NULL)
 			pthread_join(current->thread, (void **) NULL);
 		current = current->next;
