@@ -25,83 +25,73 @@ RM_DIR := rmdir -v
 
 NAME := philo
 
-# Project Libft (+GetNextLine/+FtPrintF)
-LIBFT := libft
-
 CPPFLAGS := \
--I ./includes \
--I ./includes/$(LIBFT)
+-I ./includes
 
 # Specifies options for the linker:
 # example: -L/usr/local/lib
 LDFLAGS := \
--L./includes \
--L./includes/$(LIBFT)
+-L./includes
 
 # Lists libraries to link with:
 LDLIBS := \
--lft \
 -lpthread
 
-SOURCES_M := \
-main.c \
-utils.c \
-data.c \
-node.c \
-mutex.c \
-simulation.c \
-action_eat.c \
-action_sleep.c \
-action_think.c \
-action_die.c
+SOURCES_DIR := sources
 
-OBJECTS_M := \
-$(patsubst ./philo/%.c,\
-	.objects/.philo/%.o, \
-	$(addprefix ./philo/, $(SOURCES_M)) \
-)
+SOURCES_FILES := \
+main.c
 
-DEPS_M := $(OBJECTS_M:.o=.d)
--include $(DEPS_M)
+SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
-OBJECTS_DIR := .objects/.philo/
+OBJECTS_DIR := .objects
 
 $(OBJECTS_DIR):
 	mkdir -p $@
 
-$(OBJECTS_DIR)%.o: ./philo/%.c | $(OBJECTS_DIR)
+OBJECTS_FILES := \
+$(patsubst \
+	$(SOURCES_DIR)/%.c,\
+	$(OBJECTS_DIR)/%.o,\
+	$(SOURCES)\
+)
+
+DEPENDANCIES := $(OBJECTS_FILES:.o=.d)
+-include $(DEPENDANCIES)
+
+$(OBJECTS_DIR)/%.o: $(SOURCES_DIR)/%.c | $(OBJECTS_DIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
-$(NAME): $(OBJECTS_M)
-	@$(MAKE) -C ./includes/$(LIBFT) all
-	$(CC) $(CFLAGS) $^ -o ./philo/$@ $(LDFLAGS) $(LDLIBS)
+$(NAME): $(OBJECTS_FILES)
+	$(CC) $(CFLAGS) $^ -o ./$@ $(LDFLAGS) $(LDLIBS)
 
 all: $(NAME)
 
 clean:
-	@$(MAKE) -C ./includes/$(LIBFT) clean
-	@$(RM) $(OBJECTS_M)
-	@$(RM) $(DEPS_M)
+	@$(RM) $(OBJECTS_FILES)
+	@$(RM) $(DEPENDANCIES)
 	@if [ -d  $(OBJECTS_DIR) ]; then \
 		$(RM_DIR) -p $(OBJECTS_DIR); \
 	fi
 
 fclean: clean
-	@$(MAKE) -C ./includes/$(LIBFT) fclean
-	@$(RM) ./philo/$(NAME)
+	@$(RM) ./$(NAME)
 
 re: fclean all
 
 norm:
-	norminette -R $(DIR_MANDATORY)
+	norminette -R -o includes/philo.h
+	norminette -R -o $(SOURCES)
 
 runtest: all
 	-valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME)/$(NAME) 4 210 100 100 7
+	-s ./$(NAME) 4 210 100 100 7
 
 .PRECIOUS: $(OBJECTS_DIR)
 
 .PHONY: all clean fclean re norm runtest
+
+.DELETE_ON_ERROR:

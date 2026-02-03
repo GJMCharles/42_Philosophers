@@ -15,8 +15,8 @@
 
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdlib.h>
 # include <stdio.h>
-# include "libft.h"
 
 # ifndef TRUE
 #  define TRUE 1
@@ -26,15 +26,35 @@
 #  define FALSE 0
 # endif
 
-typedef enum e_status
-{
-	IDLE,
-	FORK,
-	EATING,
-	SLEEPING,
-	THINKING,
-	DEAD
-}	t_status;
+# ifndef ERROR_01
+#  define ERROR_01 "X"
+# endif
+
+# ifndef ERROR_02
+#  define ERROR_02 "X"
+# endif
+
+# ifndef ERROR_03
+#  define ERROR_03 "X"
+# endif
+
+# ifndef ERROR_04
+#  define ERROR_04 "X"
+# endif
+
+# ifndef ERROR_05
+#  define ERROR_05 "X"
+# endif
+
+//typedef enum e_status
+//{
+//	IDLE,
+//	FORK,
+//	EATING,
+//	SLEEPING,
+//	THINKING,
+//	DEAD
+//}	t_status;
 
 typedef struct s_param
 {
@@ -45,30 +65,25 @@ typedef struct s_param
 	int					eating_limits;
 	unsigned int		minimum_eaten;
 	unsigned long int	start_timestamp;
-	unsigned char		abort_simulator;
-	pthread_mutex_t		*forks;
+	unsigned char		abort_simulation;
 	pthread_mutex_t		mutex_start;
 	pthread_mutex_t		mutex_wait;
 	pthread_mutex_t		mutex_timestamp;
 	pthread_mutex_t		mutex_print;
 	pthread_mutex_t		mutex_dead;
-	/**	
-	//pthread_mutex_t		mutex_wait;
-	//pthread_mutex_t		mutex_print;
-	//
-	*/
 }	t_param;
 
 typedef struct s_philo
 {
 	unsigned int		id;
 	unsigned char		is_dead;
-	pthread_t			thread;
-	unsigned char		fork_picked;
 	unsigned long int	last_eaten;
 	unsigned int		eating_counter;
 	struct s_param		*param;
+	struct s_philo		*prev;
 	struct s_philo		*next;
+	pthread_t			thread;
+	pthread_mutex_t		fork;
 }	t_philo;
 
 typedef struct s_data
@@ -76,32 +91,5 @@ typedef struct s_data
 	struct s_param		*param;
 	struct s_philo		*philo;
 }	t_data;
-
-void					forced_waiting(t_param *param, unsigned int delay);
-void					display_message(
-							t_status code, t_philo *philo, char *message);
-int						exec_pthread_mutex(
-							pthread_mutex_t *mutex, 
-							t_philo *philo, 
-							t_param *param, 
-							int (*f)(t_philo *, t_param *));
-void					action_die(t_philo *philo, t_param *param);
-int						action_eat(t_philo *philo, t_param *param);
-int						action_sleep(t_philo *philo, t_param *param);
-int						action_think(t_philo *philo, t_param *param);
-
-unsigned long int		get_timestamp_ms(void);
-void					set_timestamp(t_philo *philo, t_param *param);
-void					start_simulator(t_data **data);
-void					destroy_pthreads_mutex(t_data **data);
-void					init_pthreads_mutex(t_data **data);
-void					clear_philosophers(t_philo **list);
-void					append_philosopher(t_philo *node, t_philo **list);
-t_philo					*new_philosopher(void);
-t_philo					*init_philosophers(t_param *param);
-t_param					*init_parameters(int argc, char *argv[]);
-void					free_data(t_data **data);
-t_data					*build_data(int argc, char *argv[]);
-int						verify_arguments(int argc, char *argv[]);
 
 #endif // PHILO_H
