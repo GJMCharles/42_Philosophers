@@ -19,13 +19,13 @@ void	forced_waiting(t_param *param, unsigned int delay)
 	current = get_timestamp_ms();
 	while ((get_timestamp_ms() - current) < (unsigned long int) delay)
 	{
-		pthread_mutex_lock(&param->mutex_wait);
+		pthread_mutex_lock(&param->mutex_timestamp);
 		usleep(100);
-		pthread_mutex_unlock(&param->mutex_wait);
+		pthread_mutex_unlock(&param->mutex_timestamp);
 	}
 }
 
-char	*get_status_text(t_state code)
+char	*get_status_text(t_status code)
 {
 	if (code == FORK)
 		return ((char *)"has taken a fork");
@@ -40,7 +40,7 @@ char	*get_status_text(t_state code)
 	return ((char *) NULL);
 }
 
-void	display_message(t_philo *philo, char *message)
+void	display_message(t_status code, t_philo *philo, char *message)
 {
 	t_param	*param;
 
@@ -53,7 +53,7 @@ void	display_message(t_philo *philo, char *message)
 		printf("%lu %u %s\n",
 			get_timestamp_ms() - param->start_timestamp,
 			(philo->id + 1),
-			get_status_text(philo->state)
+			get_status_text(code)
 		);
 	}
 	pthread_mutex_unlock(&param->mutex_print);

@@ -14,8 +14,7 @@
 
 int	action_sleep(t_philo *philo, t_param *param)
 {
-	philo->state = SLEEPING;
-	display_message(philo, (char *) NULL);
+	display_message(SLEEPING, philo, (char *) NULL);
 	forced_waiting(param, param->time_to_sleep);
 	return (TRUE);
 }

@@ -16,6 +16,6 @@ void	action_die(t_philo *philo, t_param *param)
 {
 	pthread_mutex_lock(&param->mutex_dead);
 	forced_waiting(param, 10);
-	display_message(philo, (char *) NULL);
+	display_message(DEAD, philo, (char *) NULL);
 	pthread_mutex_unlock(&param->mutex_dead);
 }

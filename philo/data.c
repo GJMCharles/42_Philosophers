@@ -26,8 +26,9 @@ t_philo	*init_philosophers(t_param *param)
 		if (!node)
 			return (clear_philosophers(&philo_list), (t_philo *) NULL);
 		node->id = index;
-		node->state = IDLE;
+		node->is_dead = FALSE;
 		node->thread = (pthread_t) NULL;
+		node->fork_picked = FALSE;
 		node->last_eaten = 0;
 		node->eating_counter = 0;
 		node->param = param;

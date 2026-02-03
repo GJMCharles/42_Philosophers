@@ -31,6 +31,7 @@ void	destroy_pthreads_mutex(t_data **data)
 	param = (*data)->param;
 	(void) pthread_mutex_destroy(&param->mutex_start);
 	(void) pthread_mutex_destroy(&param->mutex_wait);
+	(void) pthread_mutex_destroy(&param->mutex_timestamp);
 	(void) pthread_mutex_destroy(&param->mutex_print);
 	(void) pthread_mutex_destroy(&param->mutex_dead);
 	index = 0;
@@ -49,6 +50,7 @@ t_param			*param;
 	param = (*data)->param;
 	(void) pthread_mutex_init(&param->mutex_start, NULL);
 	(void) pthread_mutex_init(&param->mutex_wait, NULL);
+	(void) pthread_mutex_init(&param->mutex_timestamp, NULL);
 	(void) pthread_mutex_init(&param->mutex_print, NULL);
 	(void) pthread_mutex_init(&param->mutex_dead, NULL);
 	index = 0;

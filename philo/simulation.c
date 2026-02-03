@@ -53,7 +53,7 @@ int	should_abort_simulator(t_philo *philo, t_param *param)
 	duration = (get_timestamp_ms() - philo->last_eaten);
 	if (duration >= param->time_to_die)
 	{
-		philo->status = DEAD;
+
 		return (TRUE);
 	}
 	return (FALSE);
@@ -84,7 +84,7 @@ void	*simulator(void *arg)
 
 	philo = (t_philo *)arg;
 	param = philo->param;
-	i = 2;
+	i = 1;
 	set_timestamp(philo, param);
 	while (i--)
 	{
@@ -95,7 +95,7 @@ void	*simulator(void *arg)
 		if (param->abort_simulator || !action_think(philo, param))
 			break ;
 	}
-	if (philo->state == DEAD)
+	if (philo->is_dead == TRUE)
 		action_die(philo, param);
 	return ((void *) NULL);
 }

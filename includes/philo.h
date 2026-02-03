@@ -26,7 +26,7 @@
 #  define FALSE 0
 # endif
 
-typedef enum e_state
+typedef enum e_status
 {
 	IDLE,
 	FORK,
@@ -34,7 +34,7 @@ typedef enum e_state
 	SLEEPING,
 	THINKING,
 	DEAD
-}	t_state;
+}	t_status;
 
 typedef struct s_param
 {
@@ -49,6 +49,7 @@ typedef struct s_param
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_start;
 	pthread_mutex_t		mutex_wait;
+	pthread_mutex_t		mutex_timestamp;
 	pthread_mutex_t		mutex_print;
 	pthread_mutex_t		mutex_dead;
 	/**	
@@ -61,8 +62,9 @@ typedef struct s_param
 typedef struct s_philo
 {
 	unsigned int		id;
-	t_state				state;
+	unsigned char		is_dead;
 	pthread_t			thread;
+	unsigned char		fork_picked;
 	unsigned long int	last_eaten;
 	unsigned int		eating_counter;
 	struct s_param		*param;
@@ -76,13 +78,13 @@ typedef struct s_data
 }	t_data;
 
 void					forced_waiting(t_param *param, unsigned int delay);
-void					display_message(t_philo *philo, char *message);
+void					display_message(
+							t_status code, t_philo *philo, char *message);
 int						exec_pthread_mutex(
 							pthread_mutex_t *mutex, 
 							t_philo *philo, 
 							t_param *param, 
 							int (*f)(t_philo *, t_param *));
-
 void					action_die(t_philo *philo, t_param *param);
 int						action_eat(t_philo *philo, t_param *param);
 int						action_sleep(t_philo *philo, t_param *param);

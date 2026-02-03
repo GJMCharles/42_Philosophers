@@ -15,7 +15,6 @@
 int	action_think(t_philo *philo, t_param *param)
 {
 	(void) param;
-	philo->state = THINKING;
-	display_message(philo, (char *) NULL);
+	display_message(THINKING, philo, (char *) NULL);
 	return (TRUE);
 }
