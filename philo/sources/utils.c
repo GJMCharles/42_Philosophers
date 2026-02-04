@@ -14,7 +14,7 @@
 
 unsigned long int	get_current_timestamp(void)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
 		display_error(ERROR_04);
@@ -23,7 +23,7 @@ unsigned long int	get_current_timestamp(void)
 
 int	ft_usleep(unsigned long int milliseconds)
 {
-	unsigned long int start;
+	unsigned long int	start;
 
 	start = get_current_timestamp();
 	while ((get_current_timestamp() - start) < milliseconds)

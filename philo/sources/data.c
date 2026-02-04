@@ -81,12 +81,13 @@ t_param	*init_parameters(int argc, char *argv[])
 	param = (t_param *) ft_calloc(sizeof(t_param), 1);
 	if (!param)
 		return ((t_param *) NULL);
-	param->forks = (pthread_mutex_t *) ft_calloc(
-		sizeof(pthread_mutex_t), (unsigned long int) (ft_atoi(argv[1]) + 1));
+	param->forks = (pthread_mutex_t *) ft_calloc(\
+		sizeof(pthread_mutex_t), (unsigned long int)(ft_atoi(argv[1]) + 1));
 	if (!param->forks)
 		return (free(param), (t_param *) NULL);
 	param->nb_philos = (unsigned int)ft_atoi(argv[1]);
-	param->array_eat_count = (unsigned int *) ft_calloc(sizeof(unsigned int), param->nb_philos);
+	param->array_eat_count = (unsigned int *) ft_calloc(\
+		sizeof(unsigned int), param->nb_philos);
 	if (!param->array_eat_count)
 		return (free(param->forks), free(param), (t_param *) NULL);
 	init_array_integer(&param->array_eat_count, param->nb_philos);

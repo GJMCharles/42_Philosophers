@@ -12,17 +12,6 @@
 
 #include "philo.h"
 
-// int	exec_pthread_mutex(pthread_mutex_t *mutex, t_philo *philo, t_param *param, int (*f)(t_philo *, t_param *))
-// {
-// 	int	status;
-// 	pthread_mutex_lock(mutex);
-// 	//param->abort_simulator = should_abort_simulator(philo, param);
-// 	//if (param->abort_simulator == TRUE)
-// 	//	return (pthread_mutex_unlock(&mutex), FALSE);
-// 	status = (*f)(philo, param);
-// 	return (pthread_mutex_unlock(mutex), status);
-// }
-
 void	destroy_forks_pthreads(t_data **data, unsigned int index)
 {
 	t_param	*param;
@@ -81,11 +70,10 @@ int	init_pthreads(t_data **data)
 	if (pthread_mutex_init(&param->mutex_dead, NULL) != 0)
 		return (destroy_param_pthreads(data, 7), FALSE);
 	index = 0;
-	while (index < param->nb_philos)
+	while (index++ < param->nb_philos)
 	{
-		if (pthread_mutex_init(&param->forks[index], NULL) != 0)
-			return (destroy_forks_pthreads(data, index), FALSE);
-		index += 1;
+		if (pthread_mutex_init(&param->forks[index - 1], NULL) != 0)
+			return (destroy_forks_pthreads(data, index - 1), FALSE);
 	}
 	return (TRUE);
 }

@@ -97,7 +97,6 @@ typedef struct s_data
 	struct s_philo		*philo;
 }	t_data;
 
-
 /**
  * validation.c
  */
