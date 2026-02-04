@@ -110,7 +110,6 @@ int					validate_arguments(int argc, char *argv[]);
 void				action_die(t_philo *philo, t_param *param);
 int					action_think(t_philo *philo, t_param *param);
 int					action_sleep(t_philo *philo, t_param *param);
-void				action_solo(t_philo *philo, t_param *param);
 int					action_eat(t_philo *philo, t_param *param);
 
 /**

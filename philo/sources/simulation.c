@@ -53,7 +53,7 @@ void	*simulation(void *arg)
 	philo->last_eaten = param->start_timestamp;
 	pthread_mutex_unlock(&param->mutex_start);
 	if ((philo->id % 2) != 0)
-		ft_usleep(param->time_to_eat);
+		ft_usleep(100);
 	while (1)
 	{
 		if (param->abort_simulation || !action_eat(philo, param))
