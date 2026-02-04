@@ -93,7 +93,7 @@ runtest: all
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME) 4 210 100 100 7
+	-s ./$(NAME) 5 599 200 200 7
 
 .PRECIOUS: $(OBJECTS_DIR)
 

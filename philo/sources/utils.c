@@ -17,7 +17,7 @@ unsigned long int	get_current_timestamp(void)
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
-		display_error(ERROR_04);
+		display_error(ERROR_03);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 

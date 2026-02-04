@@ -30,23 +30,15 @@
 # endif
 
 # ifndef ERROR_01
-#  define ERROR_01 "X"
+#  define ERROR_01 "Invalid arguments [values must be SUPERIOR than 0]"
 # endif
 
 # ifndef ERROR_02
-#  define ERROR_02 "X"
+#  define ERROR_02 "Denied allocation [memory RAM not accessable]"
 # endif
 
 # ifndef ERROR_03
-#  define ERROR_03 "X"
-# endif
-
-# ifndef ERROR_04
-#  define ERROR_04 "X"
-# endif
-
-# ifndef ERROR_05
-#  define ERROR_05 "X"
+#  define ERROR_03 "gettimeofday is invalid"
 # endif
 
 typedef enum e_action_code
