@@ -86,8 +86,7 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette -R -o includes/philo.h
-	norminette -R -o $(SOURCES)
+	norminette -R .
 
 runtest: all
 	-valgrind \
