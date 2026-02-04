@@ -40,7 +40,13 @@ LDLIBS := \
 SOURCES_DIR := sources
 
 SOURCES_FILES := \
-main.c
+main.c \
+utils.c \
+data.c \
+threads.c \
+simulation.c \
+actions.c \
+validation.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 

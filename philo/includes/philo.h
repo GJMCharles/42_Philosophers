@@ -13,10 +13,13 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
 
 # ifndef TRUE
 #  define TRUE 1
@@ -46,15 +49,15 @@
 #  define ERROR_05 "X"
 # endif
 
-//typedef enum e_status
-//{
-//	IDLE,
-//	FORK,
-//	EATING,
-//	SLEEPING,
-//	THINKING,
-//	DEAD
-//}	t_status;
+typedef enum e_action_code
+{
+	IDLE,
+	FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD
+}	t_action_code;
 
 typedef struct s_param
 {
@@ -63,11 +66,15 @@ typedef struct s_param
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
 	int					eating_limits;
-	unsigned int		minimum_eaten;
+	unsigned int		*array_eat_count;
 	unsigned long int	start_timestamp;
+	unsigned int		minimum_eaten;
 	unsigned char		abort_simulation;
+	pthread_mutex_t		*forks;
 	pthread_mutex_t		mutex_start;
-	pthread_mutex_t		mutex_wait;
+	pthread_mutex_t		mutex_eating;
+	pthread_mutex_t		mutex_sleeping;
+	pthread_mutex_t		mutex_thinking;
 	pthread_mutex_t		mutex_timestamp;
 	pthread_mutex_t		mutex_print;
 	pthread_mutex_t		mutex_dead;
@@ -78,12 +85,10 @@ typedef struct s_philo
 	unsigned int		id;
 	unsigned char		is_dead;
 	unsigned long int	last_eaten;
-	unsigned int		eating_counter;
 	struct s_param		*param;
-	struct s_philo		*prev;
-	struct s_philo		*next;
 	pthread_t			thread;
-	pthread_mutex_t		fork;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
 }	t_philo;
 
 typedef struct s_data
@@ -91,5 +96,60 @@ typedef struct s_data
 	struct s_param		*param;
 	struct s_philo		*philo;
 }	t_data;
+
+
+/**
+ * validation.c
+ */
+int					are_philosophers_satisfied(t_param *param);
+int					is_philosopher_alive(t_philo *philo, t_param *param);
+int					validate_arguments(int argc, char *argv[]);
+
+/**
+ * actions.c
+ */
+void				action_die(t_philo *philo, t_param *param);
+int					action_think(t_philo *philo, t_param *param);
+int					action_sleep(t_philo *philo, t_param *param);
+void				action_solo(t_philo *philo, t_param *param);
+int					action_eat(t_philo *philo, t_param *param);
+
+/**
+ * simulation.c
+ */
+char				*get_action_text(t_action_code code);
+void				display_log(t_action_code code, t_philo *philo);
+void				display_log(t_action_code code, t_philo *philo);
+void				*simulation(void *arg);
+void				start_simulation(t_data **data);
+
+/**
+ * threads.c
+ */
+void				destroy_forks_pthreads(t_data **data, unsigned int index);
+void				destroy_param_pthreads(t_data **data, unsigned int code);
+int					init_pthreads(t_data **data);
+
+/**
+ * data.c
+ */
+void				free_data(t_data **data);
+t_philo				*init_philosophers(t_param *param);
+t_param				*init_parameters(int argc, char *argv[]);
+t_data				*build_data(int argc, char *argv[]);
+
+/**
+ * utils.c
+ */
+unsigned long int	get_current_timestamp(void);
+int					ft_usleep(unsigned long int milliseconds);
+void				*ft_calloc(size_t nmemb, size_t size);
+int					ft_isdigit(int c);
+int					ft_atoi(const char *nptr);
+
+/**
+ * ,main.c
+ */
+void				display_error(const char *message);
 
 #endif // PHILO_H
