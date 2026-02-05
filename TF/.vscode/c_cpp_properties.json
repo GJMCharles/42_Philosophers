@@ -1,0 +1,19 @@
+{
+	"configurations": [
+		{
+			"name": "Linux",
+			"includePath": [
+				"${default}",
+				"${workspaceFolder}",
+				"${workspaceFolder}/philo",
+				"${workspaceFolder}/philo/includes",
+				"${workspaceFolder}/philo/sources"
+			],
+			"defines": [],
+			"cStandard": "c17",
+			"cppStandard": "c++14",
+			"intelliSenseMode": "linux-clang-x64"
+		}
+	],
+	"version": 4
+}

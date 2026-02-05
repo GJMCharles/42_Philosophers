@@ -1,5 +1,5 @@
 {
-	"C_Cpp.default.compilerPath": "/usr/bin/clang",
+	"C_Cpp.default.compilerPath": "/usr/bin/clang-12",
 	"editor.formatOnSave": true,
 	"editor.rulers": [
 		{
@@ -9,5 +9,5 @@
 	],
 	"workbench.colorCustomizations": {
 		"editorRuler.foreground": "#ff4081"
-	}
+	},
 }

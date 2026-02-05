@@ -5,37 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: grcharle <grcharle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:10:25 by grcharle          #+#    #+#             */
-/*   Updated: 2026/02/05 17:10:38 by grcharle         ###   ########.fr       */
+/*   Created: 2026/01/13 20:30:09 by grcharle          #+#    #+#             */
+/*   Updated: 2026/01/13 20:30:58 by grcharle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	display_message(const char *message, int type)
+void	display_error(const char *message)
 {
-	if (type == 0)
-	{
-		//ft_putstr(message, STDOUT_FILENO);
-		write(STDOUT_FILENO, "\n", 2);
-	}
-	else if (type == 1)
-	{
-		write(STDERR_FILENO, "Error :", 8);
-		//ft_putstr(message, STDERR_FILENO);
-		write(STDERR_FILENO, "\n", 2);
-	}
+	(void) printf("Error: %s\n", message);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_data	data;
+	t_data	*data;
 
-	if (!init_data(argc, argv, &data))
-		return (clear_data(&data), EXIT_FAILURE);
+	if (validate_arguments(argc, argv) == FALSE)
+		return (display_error(ERROR_01), EXIT_FAILURE);
+	data = build_data(argc, argv);
+	if (!data)
+		return (display_error(ERROR_02), EXIT_FAILURE);
 	if (!init_pthreads(&data))
-		return (clear_data(&data), EXIT_FAILURE);
+		return (free_data(&data), display_error(ERROR_02), EXIT_FAILURE);
 	start_simulation(&data);
-	clear_data(&data);
+	destroy_forks_pthreads(&data, 0);
+	destroy_param_pthreads(&data, 0);
+	free_data(&data);
 	return (EXIT_SUCCESS);
 }
