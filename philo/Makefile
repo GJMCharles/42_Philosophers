@@ -40,9 +40,7 @@ LDLIBS := \
 SOURCES_DIR := sources
 
 SOURCES_FILES := \
-main.c \
-init.c \
-utils.c
+	main.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
@@ -52,11 +50,11 @@ $(OBJECTS_DIR):
 	mkdir -p $@
 
 OBJECTS_FILES := \
-$(patsubst \
-	$(SOURCES_DIR)/%.c,\
-	$(OBJECTS_DIR)/%.o,\
-	$(SOURCES)\
-)
+	$(patsubst \
+		$(SOURCES_DIR)/%.c,\
+		$(OBJECTS_DIR)/%.o,\
+		$(SOURCES)\
+	)
 
 DEPENDANCIES := $(OBJECTS_FILES:.o=.d)
 -include $(DEPENDANCIES)
