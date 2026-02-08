@@ -31,13 +31,13 @@ int	main(int argc, char *argv[])
 {
 	(void) argc;
 	(void) argv;
-// 	t_data	data;
+	t_data	data;
 
 // 	if (!init_data(argc, argv, &data))
 // 		return (clear_data(&data), EXIT_FAILURE);
 // 	if (!init_pthreads(&data))
 // 		return (clear_data(&data), EXIT_FAILURE);
 // 	start_simulation(&data);
-// 	clear_data(&data);
+	clear_data(&data);
 	return (EXIT_SUCCESS);
 }
