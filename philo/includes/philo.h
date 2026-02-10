@@ -71,9 +71,10 @@ typedef struct				s_ph
 {
 	ui						id;
 	bool					is_dead;
+	struct s_pm				*params;
 	pthread_t				thread;
-	pthread_mutex_t			left_fork;
-	pthread_mutex_t			right_fork;
+	pthread_mutex_t			*left_fork;
+	pthread_mutex_t			*right_fork;
 }	t_ph;
 
 typedef struct				s_data
@@ -81,6 +82,12 @@ typedef struct				s_data
 	struct s_pm				*params;
 	struct s_ph				*philos;
 }	t_data;
+
+/**
+ * simulation.c
+ */
+void						*simulation(void *arg);
+void						start_simulation(t_data *data);
 
 /**
  * utils.c

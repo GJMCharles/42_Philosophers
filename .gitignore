@@ -54,6 +54,8 @@ dkms.conf
 # debug information files
 *.dwo
 
+vgcore.*
+
 .objects
 _old/*
 philo/philo

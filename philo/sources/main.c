@@ -42,6 +42,7 @@ int	main(int argc, char *argv[])
 		return (clear_data(&data), EXIT_FAILURE);
 	if (!init_mutex_philosophers(&data))
 		return (clear_data(&data), EXIT_FAILURE);
+	start_simulation(&data);
 	destroy_pthreads_philos(&data);
 	destroy_pthreads_parameters(&data, 0);
 	clear_data(&data);

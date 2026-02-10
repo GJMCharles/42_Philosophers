@@ -44,7 +44,8 @@ SOURCES_FILES := \
 	data.c \
 	verify.c \
 	mutex.c \
-	utils.c
+	utils.c \
+	simulation.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 

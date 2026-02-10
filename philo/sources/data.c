@@ -37,11 +37,13 @@ t_ph	*init_data_philosophers(t_pm *params)
 	index = 0;
 	while (index < params->total)
 	{
-		philos->id = index;
-		philos->is_dead = false;
-		philos->thread = (pthread_t) NULL;
-		philos->left_fork = (pthread_mutex_t){0};
-		philos->right_fork = (pthread_mutex_t){0};
+		philos[index].id = index;
+		philos[index].is_dead = false;
+		philos[index].thread = (pthread_t) NULL;
+		philos[index].left_fork = (pthread_mutex_t *) NULL;
+		philos[index].right_fork = (pthread_mutex_t *) NULL;
+		philos[index].thread = 0;
+		philos[index].params = params;
 		index += 1;
 	}
 	return (philos);

@@ -40,15 +40,15 @@ void	assign_fork_to_philosophers(t_data *data)
 	{
 		if ((index % 2) == 0)
 		{
-			philos[index].left_fork = params->forks[index];
-			philos[(index + 1) % params->total].right_fork
-				= params->forks[index];
+			philos[index].left_fork = &params->forks[index];
+			philos[index].right_fork =
+				&params->forks[(index + 1) % params->total];
 		}
 		else
 		{
-			philos[index].right_fork = params->forks[index];
-			philos[(index + 1) % params->total].left_fork
-				= params->forks[index];
+			philos[index].left_fork =
+				&params->forks[(index + 1) % params->total];
+			philos[index].right_fork = &params->forks[index];
 		}
 		index += 1;
 	}
