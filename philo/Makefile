@@ -40,7 +40,11 @@ LDLIBS := \
 SOURCES_DIR := sources
 
 SOURCES_FILES := \
-	main.c
+	main.c \
+	data.c \
+	verify.c \
+	mutex.c \
+	utils.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
@@ -80,14 +84,14 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette -R .
+	norminette -R --cfile $(shell find $(SOURCES) -name '*.c')
 
 runtest: all
 	-valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME) 5 599 200 200 7
+	-s ./$(NAME) 5 599 200 200 3
 
 .PRECIOUS: $(OBJECTS_DIR)
 

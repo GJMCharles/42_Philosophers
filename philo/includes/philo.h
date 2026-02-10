@@ -48,63 +48,74 @@ typedef unsigned int		ui;
 typedef unsigned char		uc;
 typedef unsigned short int	usi;
 
-typedef struct				s_params
+typedef struct				s_pm
 {
-	ui						nb_philos;
+	ui						total;
 	ui						time_to_die;
 	ui						time_to_eat;
 	ui						time_to_sleep;
 	int						eating_limit;
 	uli						time_of_death;
-	bool					abort_simulation;
+	bool					can_abort_simulation;
+	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
-	pthread_mutex_t			mutex_timestamp;
+	pthread_mutex_t			mutex_time;
 	pthread_mutex_t			mutex_print;
-	pthread_mutex_t			mutex_action_eating;
-	pthread_mutex_t			mutex_action_sleeping;
-	pthread_mutex_t			mutex_action_thinking;
-	pthread_mutex_t			mutex_action_dying;
-}	t_params;
+	pthread_mutex_t			mutex_eat;
+	pthread_mutex_t			mutex_sleep;
+	pthread_mutex_t			mutex_think;
+	pthread_mutex_t			mutex_die;
+}	t_pm;
 
-typedef struct				s_philos
+typedef struct				s_ph
 {
 	ui						id;
+	bool					is_dead;
 	pthread_t				thread;
 	pthread_mutex_t			left_fork;
 	pthread_mutex_t			right_fork;
-	bool					is_dead;
-}	t_philos;
+}	t_ph;
 
 typedef struct				s_data
 {
-	struct s_params			*params;
-	struct s_philos			*philo;
+	struct s_pm				*params;
+	struct s_ph				*philos;
 }	t_data;
-
-// void						start_simulation(t_data *data);
-void						clear_data(t_data *data);
 
 /**
  * utils.c
  */
-// int							ft_isdigit(int c);
-// long int					ft_atol(const char *nptr);
-// void						ft_putstr(const char *str, int fd);
-// void						*ft_calloc(long int nmemb, long int size);
+void						ft_putstr_fd(const char *s, int fd);
+int							ft_isdigit(int c);
+long int					ft_atol(const char *nptr);
+void						*ft_calloc(long int nmemb, long int size);
 
 /**
- * init.c
+ * mutex.c
  */
-// void						clear_data(t_data *data);
-// int							init_philos(t_data **data);
-// int							init_params(t_data **data, int argc, char *argv[]);
-// int							init_data(int argc, char *argv[], t_data *data);
+void						destroy_pthreads_philos(t_data *data);
+void						assign_fork_to_philosophers(t_data *data);
+bool						init_mutex_philosophers(t_data *data);
+void						destroy_pthreads_parameters(t_data *data, int pos);
+bool						init_mutex_parameters(t_data *data);
+
+/**
+ * verify.c
+ */
+bool						verify_parameters(int argc, char *argv[]);
+
+/**
+ * data.c
+ */
+void						clear_data(t_data *data);
+t_ph						*init_data_philosophers(t_pm *params);
+t_pm						*init_data_parameters(int argc, char *argv[]);
+bool						init_data(int argc, char *argv[], t_data *data);
 
 /**
  * main.c
  */
-// void						display_message(const char *message, int fd);
-/*  */
+void						display_message(const char *message, int fd);
 int							main(int argc, char *argv[]);
 
 #endif // PHILO_H

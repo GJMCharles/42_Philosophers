@@ -12,32 +12,38 @@
 
 #include "philo.h"
 
-// void	display_message(const char *message, int type)
-// {
-// 	if (type == 0)
-// 	{
-// 		//ft_putstr(message, STDOUT_FILENO);
-// 		write(STDOUT_FILENO, "\n", 2);
-// 	}
-// 	else if (type == 1)
-// 	{
-// 		write(STDERR_FILENO, "Error :", 8);
-// 		//ft_putstr(message, STDERR_FILENO);
-// 		write(STDERR_FILENO, "\n", 2);
-// 	}
-// }
+void	display_message(const char *message, int fd)
+{
+	char	nl;
+
+	nl = '\n';
+	if (fd == STDOUT_FILENO)
+	{
+		ft_putstr_fd(message, fd);
+		write(fd, &nl, 1);
+	}
+	else if (fd == STDERR_FILENO)
+	{
+		ft_putstr_fd("Error :", fd);
+		ft_putstr_fd(message, fd);
+		write(fd, &nl, 1);
+	}
+}
 
 int	main(int argc, char *argv[])
 {
-	(void) argc;
-	(void) argv;
 	t_data	data;
 
-// 	if (!init_data(argc, argv, &data))
-// 		return (clear_data(&data), EXIT_FAILURE);
-// 	if (!init_pthreads(&data))
-// 		return (clear_data(&data), EXIT_FAILURE);
-// 	start_simulation(&data);
+	data.params = (t_pm *) NULL;
+	data.philos = (t_ph *) NULL;
+	if (!init_data(argc, argv, &data))
+		return (clear_data(&data), EXIT_FAILURE);
+	if (!init_mutex_parameters(&data))
+		return (clear_data(&data), EXIT_FAILURE);
+	if (!init_mutex_philosophers(&data))
+		return (clear_data(&data), EXIT_FAILURE);
+	destroy_pthreads_philos(&data);
+	destroy_pthreads_parameters(&data, 0);
 	clear_data(&data);
 	return (EXIT_SUCCESS);
 }
