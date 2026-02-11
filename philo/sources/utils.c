@@ -12,6 +12,67 @@
 
 #include "philo.h"
 
+/**
+ * 
+ */
+long int	ft_atol(const char *np)
+{
+	ui			i;
+	long int	nb;
+	long int	neg;
+
+	i = 0;
+	nb = 0;
+	neg = 1;
+	if (!np)
+		return (0);
+	while (np[i] == ' ' || (np[i] >= 9 && np[i] <= 13))
+		i += 1;
+	if ((np[i] == '+' || np[i] == '-') && (np[i + 1] >= 48 && np[i + 1] <= 57))
+	{
+		if (np[i] == '-')
+			neg = -1;
+		i += 1;
+	}
+	while (np[i] >= 48 && np[i] <= 57)
+	{
+		if (INT_MAX < ((nb * 10) + (np[i] - 48)))
+			return (0);
+		nb = (nb * 10) + (np[i] - 48);
+		i += 1;
+	}
+	return (nb * neg);
+}
+
+/**
+ * 
+ */
+void	ft_putnbr(long long int l, int fd)
+{
+	char	nb[21];
+	ui		size;
+	ui		i;
+
+	(void) memset(nb, '\0', 21);
+	size = get_int_size(l);
+	i = 0;
+	if (l < 0)
+	{
+		nb[i] = '-';
+		l *= -1;
+		i += 1;
+	}
+	while (i < size--)
+	{
+		nb[size] = (char)((l % 10) + 48);
+		l /= 10;
+	}
+	ft_putstr_fd(nb, fd);
+}
+
+/**
+ * 
+ */
 void	ft_putstr_fd(const char *s, int fd)
 {
 	ui	index;
@@ -22,47 +83,6 @@ void	ft_putstr_fd(const char *s, int fd)
 		(void) write(fd, &s[index], sizeof(s[index]));
 		index += 1;
 	}
-}
-
-/**
- * '0' = 48
- * '9' = 57
- */
-int	ft_isdigit(int c)
-{
-	return (c >= 48 && c <= 57);
-}
-
-/**
- * 
- */
-long int	ft_atol(const char *nptr)
-{
-	ui			i;
-	long int	nb;
-	long int	neg;
-
-	i = 0;
-	nb = 0;
-	neg = 1;
-	if (!nptr)
-		return (0);
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i += 1;
-	if ((nptr[i] == '+' || nptr[i] == '-') && ft_isdigit(nptr[i + 1]))
-	{
-		if (nptr[i] == '-')
-			neg = -1;
-		i += 1;
-	}
-	while (ft_isdigit(nptr[i]))
-	{
-		if (INT_MAX < ((nb * 10) + (nptr[i] - 48)))
-			return (0);
-		nb = (nb * 10) + (nptr[i] - 48);
-		i += 1;
-	}
-	return (nb * neg);
 }
 
 /**

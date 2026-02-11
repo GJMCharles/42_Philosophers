@@ -39,10 +39,11 @@ t_ph	*init_data_philosophers(t_pm *params)
 	{
 		philos[index].id = index;
 		philos[index].is_dead = false;
-		philos[index].thread = (pthread_t) NULL;
+		philos[index].eat_counter = 0;
+		philos[index].last_eaten = 0;
+		philos[index].thread = 0;
 		philos[index].left_fork = (pthread_mutex_t *) NULL;
 		philos[index].right_fork = (pthread_mutex_t *) NULL;
-		philos[index].thread = 0;
 		philos[index].params = params;
 		index += 1;
 	}
@@ -63,15 +64,12 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 	params->eating_limit = -1;
 	if (argc == 6)
 		params->eating_limit = (int) ft_atol(argv[5]);
+	params->time_of_start = 0;
 	params->time_of_death = 0;
 	params->can_abort_simulation = false;
 	params->mutex_start = (pthread_mutex_t){0};
 	params->mutex_time = (pthread_mutex_t){0};
 	params->mutex_print = (pthread_mutex_t){0};
-	params->mutex_eat = (pthread_mutex_t){0};
-	params->mutex_sleep = (pthread_mutex_t){0};
-	params->mutex_think = (pthread_mutex_t){0};
-	params->mutex_die = (pthread_mutex_t){0};
 	return (params);
 }
 
@@ -79,19 +77,19 @@ bool	init_data(int argc, char *argv[], t_data *data)
 {
 	if (!verify_parameters(argc, argv))
 	{
-		display_message(ERROR_01, STDERR_FILENO);
+		display_error(ERROR_01);
 		return (false);
 	}
 	data->params = init_data_parameters(argc, argv);
 	if (!data->params)
 	{
-		display_message(ERROR_01, STDERR_FILENO);
+		display_error(ERROR_01);
 		return (clear_data(data), false);
 	}
 	data->philos = init_data_philosophers(data->params);
 	if (!data->philos)
 	{
-		display_message(ERROR_01, STDERR_FILENO);
+		display_error(ERROR_01);
 		return (clear_data(data), false);
 	}
 	return (true);

@@ -34,14 +34,14 @@
 #  define ERROR_03 ""
 # endif
 
-typedef enum e_action_status
+typedef enum e_cd
 {
 	TAKING_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
 	DEAD
-}	t_action_status;
+}	t_cd;
 
 typedef unsigned long int	uli;
 typedef unsigned int		ui;
@@ -55,26 +55,25 @@ typedef struct				s_pm
 	ui						time_to_eat;
 	ui						time_to_sleep;
 	int						eating_limit;
+	uli						time_of_start;
 	uli						time_of_death;
 	bool					can_abort_simulation;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
 	pthread_mutex_t			mutex_time;
 	pthread_mutex_t			mutex_print;
-	pthread_mutex_t			mutex_eat;
-	pthread_mutex_t			mutex_sleep;
-	pthread_mutex_t			mutex_think;
-	pthread_mutex_t			mutex_die;
 }	t_pm;
 
 typedef struct				s_ph
 {
 	ui						id;
 	bool					is_dead;
-	struct s_pm				*params;
+	ui						eat_counter;
+	uli						last_eaten;
 	pthread_t				thread;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
+	struct s_pm				*params;
 }	t_ph;
 
 typedef struct				s_data
@@ -84,17 +83,39 @@ typedef struct				s_data
 }	t_data;
 
 /**
+ * log.c
+ */
+char						*get_code_status_text(t_cd code);
+void						display_error(const char *message);
+void						display_log(ui id, t_cd code, t_pm *params);
+
+/**
+ * actions.c
+ */
+bool						action_dying(t_ph *philos);
+bool						action_thinking(t_ph *philos);
+bool						action_sleeping(t_ph *philos);
+bool						action_eating(t_ph *philos);
+
+/**
+ * time.c
+ */
+int							execute_wait(uli milliseconds);
+uli							get_current_timestamp(void);
+
+/**
  * simulation.c
  */
+void						start_timestamp(t_pm *params, t_ph *philos);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
 
 /**
  * utils.c
  */
-void						ft_putstr_fd(const char *s, int fd);
-int							ft_isdigit(int c);
 long int					ft_atol(const char *nptr);
+void						ft_putnbr(long long int l, int fd);
+void						ft_putstr_fd(const char *s, int fd);
 void						*ft_calloc(long int nmemb, long int size);
 
 /**
@@ -109,6 +130,7 @@ bool						init_mutex_parameters(t_data *data);
 /**
  * verify.c
  */
+ui							get_int_size(long long int n);
 bool						verify_parameters(int argc, char *argv[]);
 
 /**
@@ -122,7 +144,6 @@ bool						init_data(int argc, char *argv[], t_data *data);
 /**
  * main.c
  */
-void						display_message(const char *message, int fd);
 int							main(int argc, char *argv[]);
 
 #endif // PHILO_H

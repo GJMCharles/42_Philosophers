@@ -12,24 +12,6 @@
 
 #include "philo.h"
 
-void	display_message(const char *message, int fd)
-{
-	char	nl;
-
-	nl = '\n';
-	if (fd == STDOUT_FILENO)
-	{
-		ft_putstr_fd(message, fd);
-		write(fd, &nl, 1);
-	}
-	else if (fd == STDERR_FILENO)
-	{
-		ft_putstr_fd("Error :", fd);
-		ft_putstr_fd(message, fd);
-		write(fd, &nl, 1);
-	}
-}
-
 int	main(int argc, char *argv[])
 {
 	t_data	data;

@@ -15,6 +15,29 @@
 /**
  * 
  */
+ui	get_int_size(long long int n)
+{
+	int	count;
+
+	count = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+	{
+		count += 1;
+		n *= -1;
+	}
+	while (n > 0)
+	{
+		n /= 10;
+		count += 1;
+	}
+	return (count);
+}
+
+/**
+ * 
+ */
 bool	verify_parameters(int argc, char *argv[])
 {
 	int			index;
@@ -32,7 +55,7 @@ bool	verify_parameters(int argc, char *argv[])
 		j = 0;
 		while (argv[index][j] != '\0')
 		{
-			if (!ft_isdigit(argv[index][j]))
+			if (!(argv[index][j] >= 48 && argv[index][j] <= 57))
 				return (false);
 			j += 1;
 		}

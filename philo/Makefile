@@ -45,7 +45,10 @@ SOURCES_FILES := \
 	verify.c \
 	mutex.c \
 	utils.c \
-	simulation.c
+	simulation.c \
+	time.c \
+	actions.c \
+	logs.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
@@ -97,5 +100,3 @@ runtest: all
 .PRECIOUS: $(OBJECTS_DIR)
 
 .PHONY: all clean fclean re norm runtest
-
-.DELETE_ON_ERROR:
