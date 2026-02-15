@@ -14,7 +14,7 @@
 
 void	destroy_pthreads_philos(t_data *data)
 {
-	ui		index;
+	t_ui	index;
 	t_pm	*params;
 
 	index = 0;
@@ -31,8 +31,8 @@ void	assign_fork_to_philosophers(t_data *data)
 {
 	t_pm	*params;
 	t_ph	*philos;
-	ui		index;
-	ui		index_plus;
+	t_ui	index;
+	t_ui	index_plus;
 
 	params = data->params;
 	philos = data->philos;
@@ -56,8 +56,8 @@ void	assign_fork_to_philosophers(t_data *data)
 
 bool	init_mutex_philosophers(t_data *data)
 {
-	t_pm			*params;
-	ui				index;
+	t_pm	*params;
+	t_ui	index;
 
 	params = data->params;
 	params->forks = (pthread_mutex_t *)

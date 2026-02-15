@@ -48,7 +48,7 @@ void	start_simulation(t_data *data)
 {
 	t_ph	*ph;
 	t_pm	*params;
-	ui		index;
+	t_ui	index;
 
 	ph = data->philos;
 	params = data->params;

@@ -29,7 +29,7 @@ void	clear_data(t_data *data)
 t_ph	*init_data_philosophers(t_pm *params)
 {
 	t_ph	*philos;
-	ui		index;
+	t_ui	index;
 
 	philos = (t_ph *) ft_calloc(sizeof(t_ph), params->total + 1);
 	if (!philos)
@@ -57,10 +57,10 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 	params = (t_pm *) ft_calloc(sizeof(t_pm), 1);
 	if (!params)
 		return ((t_pm *) NULL);
-	params->total = (ui) ft_atol(argv[1]);
-	params->time_to_die = (ui) ft_atol(argv[2]);
-	params->time_to_eat = (ui) ft_atol(argv[3]);
-	params->time_to_sleep = (ui) ft_atol(argv[4]);
+	params->total = (t_ui) ft_atol(argv[1]);
+	params->time_to_die = (t_ui) ft_atol(argv[2]);
+	params->time_to_eat = (t_ui) ft_atol(argv[3]);
+	params->time_to_sleep = (t_ui) ft_atol(argv[4]);
 	params->eating_limit = -1;
 	if (argc == 6)
 		params->eating_limit = (int) ft_atol(argv[5]);

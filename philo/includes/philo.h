@@ -43,20 +43,20 @@ typedef enum e_cd
 	DEAD
 }	t_cd;
 
-typedef unsigned long int	uli;
-typedef unsigned int		ui;
-typedef unsigned char		uc;
-typedef unsigned short int	usi;
+typedef unsigned long int	t_uli;
+typedef unsigned int		t_ui;
+typedef unsigned char		t_uc;
+typedef unsigned short int	t_usi;
 
-typedef struct				s_pm
+typedef struct s_pm
 {
-	ui						total;
-	ui						time_to_die;
-	ui						time_to_eat;
-	ui						time_to_sleep;
+	t_ui					total;
+	t_ui					time_to_die;
+	t_ui					time_to_eat;
+	t_ui					time_to_sleep;
 	int						eating_limit;
-	uli						time_of_start;
-	uli						time_of_death;
+	t_uli					time_of_start;
+	t_uli					time_of_death;
 	bool					can_abort_simulation;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
@@ -64,19 +64,19 @@ typedef struct				s_pm
 	pthread_mutex_t			mutex_print;
 }	t_pm;
 
-typedef struct				s_ph
+typedef struct s_ph
 {
-	ui						id;
+	t_ui					id;
 	bool					is_dead;
-	ui						eat_counter;
-	uli						last_eaten;
+	t_ui					eat_counter;
+	t_uli					last_eaten;
 	pthread_t				thread;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
 	struct s_pm				*params;
 }	t_ph;
 
-typedef struct				s_data
+typedef struct s_data
 {
 	struct s_pm				*params;
 	struct s_ph				*philos;
@@ -87,7 +87,7 @@ typedef struct				s_data
  */
 char						*get_code_status_text(t_cd code);
 void						display_error(const char *message);
-void						display_log(ui id, t_cd code, t_pm *params);
+void						display_log(t_ui id, t_cd code, t_pm *params);
 
 /**
  * actions.c
@@ -100,8 +100,8 @@ bool						action_eating(t_ph *philos);
 /**
  * time.c
  */
-int							execute_wait(uli milliseconds);
-uli							get_current_timestamp(void);
+int							execute_wait(t_uli milliseconds);
+t_uli						get_current_timestamp(void);
 
 /**
  * simulation.c
@@ -130,7 +130,7 @@ bool						init_mutex_parameters(t_data *data);
 /**
  * verify.c
  */
-ui							get_int_size(long long int n);
+t_ui						get_int_size(long long int n);
 bool						verify_parameters(int argc, char *argv[]);
 
 /**

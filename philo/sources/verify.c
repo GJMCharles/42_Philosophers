@@ -15,7 +15,7 @@
 /**
  * 
  */
-ui	get_int_size(long long int n)
+t_ui	get_int_size(long long int n)
 {
 	int	count;
 
@@ -42,7 +42,7 @@ bool	verify_parameters(int argc, char *argv[])
 {
 	int			index;
 	long int	value;
-	ui			j;
+	t_ui		j;
 
 	if (argc < 5 || argc > 6)
 		return (false);

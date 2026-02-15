@@ -37,7 +37,7 @@ void	display_error(const char *message)
 	write(STDERR_FILENO, &nl, 1);
 }
 
-void	display_log(ui id, t_cd code, t_pm *params)
+void	display_log(t_ui id, t_cd code, t_pm *params)
 {
 	(void) pthread_mutex_lock(&params->mutex_print);
 	printf(

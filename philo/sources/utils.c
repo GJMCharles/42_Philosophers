@@ -17,7 +17,7 @@
  */
 long int	ft_atol(const char *np)
 {
-	ui			i;
+	t_ui		i;
 	long int	nb;
 	long int	neg;
 
@@ -50,8 +50,8 @@ long int	ft_atol(const char *np)
 void	ft_putnbr(long long int l, int fd)
 {
 	char	nb[21];
-	ui		size;
-	ui		i;
+	t_ui	size;
+	t_ui	i;
 
 	(void) memset(nb, '\0', 21);
 	size = get_int_size(l);
@@ -75,7 +75,7 @@ void	ft_putnbr(long long int l, int fd)
  */
 void	ft_putstr_fd(const char *s, int fd)
 {
-	ui	index;
+	t_ui	index;
 
 	index = 0;
 	while (s[index] != '\0')

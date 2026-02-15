@@ -12,9 +12,9 @@
 
 #include "philo.h"
 
-int	execute_wait(uli milliseconds)
+int	execute_wait(t_uli milliseconds)
 {
-	uli	start;
+	t_uli	start;
 
 	start = get_current_timestamp();
 	while ((get_current_timestamp() - start) < milliseconds)
@@ -24,7 +24,7 @@ int	execute_wait(uli milliseconds)
 	return (0);
 }
 
-uli	get_current_timestamp(void)
+t_uli	get_current_timestamp(void)
 {
 	struct timeval	time;
 
