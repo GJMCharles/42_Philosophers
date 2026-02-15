@@ -88,7 +88,7 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette -R --cfile $(shell find $(SOURCES) -name '*.c')
+	norminette . -R 2
 
 runtest: all
 	-valgrind \
