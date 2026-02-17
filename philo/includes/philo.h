@@ -95,17 +95,19 @@ void						display_log(t_ui id, t_cd code, t_pm *params);
 bool						action_dying(t_ph *philos);
 bool						action_thinking(t_ph *philos);
 bool						action_sleeping(t_ph *philos);
+void						solo(t_ph *philo);
 bool						action_eating(t_ph *philos);
 
 /**
  * time.c
  */
-int							execute_wait(t_uli milliseconds);
-t_uli						get_current_timestamp(void);
+t_uli						get_timestamp(void);
+int							execute_wait(t_uli milliseconds, t_ph *philos);
 
 /**
  * simulation.c
  */
+int							cannot_move(t_ph *philos);
 void						start_timestamp(t_pm *params, t_ph *philos);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
