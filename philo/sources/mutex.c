@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * 
+ */
 void	destroy_pthreads_philos(t_data *data)
 {
 	t_ui	index;
@@ -27,6 +30,9 @@ void	destroy_pthreads_philos(t_data *data)
 	free(params->forks);
 }
 
+/**
+ * 
+ */
 void	assign_fork_to_philosophers(t_data *data)
 {
 	t_pm	*params;
@@ -54,6 +60,9 @@ void	assign_fork_to_philosophers(t_data *data)
 	}
 }
 
+/**
+ * 
+ */
 bool	init_mutex_philosophers(t_data *data)
 {
 	t_pm	*params;
@@ -79,6 +88,9 @@ bool	init_mutex_philosophers(t_data *data)
 	return (true);
 }
 
+/**
+ * 
+ */
 void	destroy_pthreads_parameters(t_data *data, int pos)
 {
 	t_pm	*params;
@@ -94,6 +106,9 @@ void	destroy_pthreads_parameters(t_data *data, int pos)
 		(void) pthread_mutex_destroy(&params->mutex_print);
 }
 
+/**
+ * 
+ */
 bool	init_mutex_parameters(t_data *data)
 {
 	t_pm	*params;

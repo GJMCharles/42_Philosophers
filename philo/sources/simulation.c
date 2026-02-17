@@ -12,15 +12,27 @@
 
 #include "philo.h"
 
+int	cannot_move(t_ph *philos)
+{
+	(void) philos;
+	return (false);
+}
+
+/**
+ * 
+ */
 void	start_timestamp(t_pm *params, t_ph *philos)
 {
 	(void) pthread_mutex_lock(&params->mutex_start);
 	if (params->time_of_start == 0)
-		params->time_of_start = get_current_timestamp();
+		params->time_of_start = get_timestamp();
 	philos->last_eaten = params->time_of_start;
 	(void) pthread_mutex_unlock(&params->mutex_start);
 }
 
+/**
+ * 
+ */
 void	*simulation(void *arg)
 {
 	t_ph	*philos;
@@ -37,13 +49,15 @@ void	*simulation(void *arg)
 			break ;
 		if (action_thinking(philos) == false)
 			break ;
-		break ;
 	}
 	if (philos->is_dead == true)
 		action_dying(philos);
 	return (NULL);
 }
 
+/**
+ * 
+ */
 void	start_simulation(t_data *data)
 {
 	t_ph	*ph;

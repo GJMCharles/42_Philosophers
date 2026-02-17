@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * 
+ */
 void	clear_data(t_data *data)
 {
 	if (data->params)
@@ -26,6 +29,9 @@ void	clear_data(t_data *data)
 	}
 }
 
+/**
+ * 
+ */
 t_ph	*init_data_philosophers(t_pm *params)
 {
 	t_ph	*philos;
@@ -50,6 +56,9 @@ t_ph	*init_data_philosophers(t_pm *params)
 	return (philos);
 }
 
+/**
+ * 
+ */
 t_pm	*init_data_parameters(int argc, char *argv[])
 {
 	t_pm	*params;
@@ -73,6 +82,9 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 	return (params);
 }
 
+/**
+ * 
+ */
 bool	init_data(int argc, char *argv[], t_data *data)
 {
 	if (!verify_parameters(argc, argv))

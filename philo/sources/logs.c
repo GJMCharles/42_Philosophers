@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * 
+ */
 char	*get_code_status_text(t_cd code)
 {
 	if (code == TAKING_FORK)
@@ -27,6 +30,9 @@ char	*get_code_status_text(t_cd code)
 	return ((char *) NULL);
 }
 
+/**
+ * 
+ */
 void	display_error(const char *message)
 {
 	char	nl;
@@ -37,12 +43,15 @@ void	display_error(const char *message)
 	write(STDERR_FILENO, &nl, 1);
 }
 
+/**
+ * 
+ */
 void	display_log(t_ui id, t_cd code, t_pm *params)
 {
 	(void) pthread_mutex_lock(&params->mutex_print);
 	printf(
 		"%lu %u %s\n",
-		(get_current_timestamp() - params->time_of_start),
+		(get_timestamp() - params->time_of_start),
 		(id + 1),
 		get_code_status_text(code));
 	(void) pthread_mutex_unlock(&params->mutex_print);

@@ -12,48 +12,82 @@
 
 #include "philo.h"
 
-bool	action_dying(t_ph *philos)
+/**
+ * 
+ */
+bool	action_dying(t_ph *philo)
 {
 	t_pm	*params;
 
-	params = philos->params;
-	display_log(philos->id, DEAD, params);
+	params = philo->params;
+	display_log(philo->id, DEAD, params);
 	return (true);
 }
 
-bool	action_thinking(t_ph *philos)
+/**
+ * 
+ */
+bool	action_thinking(t_ph *philo)
 {
 	t_pm	*params;
 
-	params = philos->params;
-	display_log(philos->id, THINKING, params);
+	params = philo->params;
+	if (cannot_move(philo))
+		return (false);
+	display_log(philo->id, THINKING, params);
 	return (true);
 }
 
-bool	action_sleeping(t_ph *philos)
+/**
+ * 
+ */
+bool	action_sleeping(t_ph *philo)
 {
 	t_pm	*params;
 
-	params = philos->params;
-	display_log(philos->id, SLEEPING, params);
-	execute_wait(params->time_to_sleep);
+	params = philo->params;
+	if (cannot_move(philo))
+		return (false);
+	display_log(philo->id, SLEEPING, params);
+	if (execute_wait(params->time_to_sleep, philo))
+		return (false);
 	return (true);
 }
 
-bool	action_eating(t_ph *philos)
+void	solo(t_ph *philo)
 {
 	t_pm	*params;
 
-	params = philos->params;
-	pthread_mutex_lock(philos->left_fork);
-	display_log(philos->id, TAKING_FORK, params);
-	pthread_mutex_lock(philos->right_fork);
-	display_log(philos->id, TAKING_FORK, params);
-	display_log(philos->id, EATING, params);
-	execute_wait(params->time_to_eat);
-	philos->last_eaten = get_current_timestamp();
-	philos->eat_counter += 1;
-	pthread_mutex_unlock(philos->right_fork);
-	pthread_mutex_unlock(philos->left_fork);
+	params = philo->params;
+	philo->is_dead = true;
+	params->can_abort_simulation = true;
+	(void) execute_wait(params->time_to_die, philo);
+}
+
+/**
+ * 
+ */
+bool	action_eating(t_ph *philo)
+{
+	t_pm	*params;
+
+	params = philo->params;
+	if (cannot_move(philo))
+		return (false);
+	pthread_mutex_lock(philo->left_fork);
+	display_log(philo->id, TAKING_FORK, params);
+	if (params->total == 1)
+		return (solo(philo), pthread_mutex_unlock(philo->left_fork), false);
+	if (cannot_move(philo))
+		return (pthread_mutex_unlock(philo->left_fork), false);
+	pthread_mutex_lock(philo->right_fork);
+	display_log(philo->id, TAKING_FORK, params);
+	display_log(philo->id, EATING, params);
+	if(execute_wait(params->time_to_eat, philo))
+		return (false);
+	philo->last_eaten = get_timestamp();
+	philo->eat_counter += 1;
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	return (true);
 }
