@@ -17,7 +17,7 @@
 MAKEFLAGS += --no-print-directory
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -pedantic
+CFLAGS := -Wall -Wextra -Werror -pedantic -g3 -fsanitize=thread
 
 # Delete files & empty directories
 RM := rm -f -v
