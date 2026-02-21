@@ -19,15 +19,21 @@ t_uli	get_timestamp(void)
 {
 	struct timeval	time;
 
-	if (gettimeofday(&time, NULL) == -1)
-		display_error("'gettimeofday' failed to load");
+	time.tv_sec = 0;
+	time.tv_usec = 0;
+	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+t_uli	get_delay_from_last_meal(t_ph *philo)
+{
+	return (get_timestamp() - philo->last_eaten);
 }
 
 /**
  * 
  */
-int	execute_wait(t_uli milliseconds, t_ph *philo)
+bool	waiting(t_uli milliseconds, t_ph *philo)
 {
 	t_uli	start;
 	t_pm	*params;
@@ -36,16 +42,14 @@ int	execute_wait(t_uli milliseconds, t_ph *philo)
 	start = get_timestamp();
 	while ((get_timestamp() - start) < milliseconds)
 	{
-		pthread_mutex_lock(&params->mutex_time);
-		if (params->can_abort_simulation)
-			return (pthread_mutex_unlock(&params->mutex_time), 1);
-		if ((get_timestamp() - philo->last_eaten) >= params->time_to_die)
+		(void) pthread_mutex_lock(&params->mutex_time);
+		if (should_abort(philo))
 		{
-			params->can_abort_simulation= true;
-			return (pthread_mutex_unlock(&params->mutex_time), 1);
+			(void) pthread_mutex_unlock(&params->mutex_time);
+			return (false);
 		}
+		(void) pthread_mutex_unlock(&params->mutex_time);
 		usleep(100);
-		pthread_mutex_unlock(&params->mutex_time);
 	}
-	return (0);
+	return (true);
 }

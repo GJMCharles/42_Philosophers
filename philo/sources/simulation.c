@@ -12,21 +12,44 @@
 
 #include "philo.h"
 
-int	cannot_move(t_ph *philos)
+void	everyone_should_be_satiated(t_ph *philo)
 {
-	(void) philos;
-	return (false);
+	t_pm	*params;
+
+	params = philo->params;
+	if (params->eating_limit > 0
+		&& (philo->eat_counter == (t_ui) params->eating_limit))
+	{
+		params->reached_eating_limit += 1;
+		if (params->reached_eating_limit == params->total)
+		{
+			params->can_abort_simulation = true;
+		}
+	}
+}
+
+bool	should_abort(t_ph *philo)
+{
+	t_pm	*params;
+
+	params = philo->params;
+	if (get_delay_from_last_meal(philo) >= params->time_to_die)
+	{
+		philo->is_dead = true;
+		params->can_abort_simulation = true;
+	}
+	return (params->can_abort_simulation);
 }
 
 /**
  * 
  */
-void	start_timestamp(t_pm *params, t_ph *philos)
+void	start_timestamp(t_pm *params, t_ph *philo)
 {
 	(void) pthread_mutex_lock(&params->mutex_start);
 	if (params->time_of_start == 0)
 		params->time_of_start = get_timestamp();
-	philos->last_eaten = params->time_of_start;
+	philo->last_eaten = params->time_of_start;
 	(void) pthread_mutex_unlock(&params->mutex_start);
 }
 
@@ -35,23 +58,23 @@ void	start_timestamp(t_pm *params, t_ph *philos)
  */
 void	*simulation(void *arg)
 {
-	t_ph	*philos;
+	t_ph	*philo;
 	t_pm	*params;
 
-	philos = (t_ph *) arg;
-	params = philos->params;
-	start_timestamp(params, philos);
+	philo = (t_ph *) arg;
+	params = philo->params;
+	start_timestamp(params, philo);
 	while (1)
 	{
-		if (action_eating(philos) == false)
+		if (params->can_abort_simulation || !action_eating(philo))
 			break ;
-		if (action_sleeping(philos) == false)
+		if (params->can_abort_simulation || !action_sleeping(philo))
 			break ;
-		if (action_thinking(philos) == false)
+		if (params->can_abort_simulation || !action_thinking(philo))
 			break ;
 	}
-	if (philos->is_dead == true)
-		action_dying(philos);
+	if (philo->is_dead == true)
+		action_dying(philo);
 	return (NULL);
 }
 
@@ -69,14 +92,14 @@ void	start_simulation(t_data *data)
 	index = 0;
 	while (index++ < params->total)
 	{
-		if (((index - 1) % 2) != 0)
+		if (((index - 1) % 2) == 0)
 			pthread_create(
 				&ph[index - 1].thread, NULL, simulation, &ph[index - 1]);
 	}
 	index = 0;
 	while (index++ < params->total)
 	{
-		if (((index - 1) % 2) == 0)
+		if (((index - 1) % 2) != 0)
 			pthread_create(
 				&ph[index - 1].thread, NULL, simulation, &ph[index - 1]);
 	}

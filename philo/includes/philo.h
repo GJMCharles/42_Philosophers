@@ -55,6 +55,7 @@ typedef struct s_pm
 	t_ui					time_to_eat;
 	t_ui					time_to_sleep;
 	int						eating_limit;
+	t_ui					reached_eating_limit;
 	t_uli					time_of_start;
 	t_uli					time_of_death;
 	bool					can_abort_simulation;
@@ -95,20 +96,21 @@ void						display_log(t_ui id, t_cd code, t_pm *params);
 bool						action_dying(t_ph *philos);
 bool						action_thinking(t_ph *philos);
 bool						action_sleeping(t_ph *philos);
-void						solo(t_ph *philo);
 bool						action_eating(t_ph *philos);
 
 /**
  * time.c
  */
 t_uli						get_timestamp(void);
-int							execute_wait(t_uli milliseconds, t_ph *philos);
+t_uli						get_delay_from_last_meal(t_ph *philo);
+bool						waiting(t_uli milliseconds, t_ph *philo);
 
 /**
  * simulation.c
  */
-int							cannot_move(t_ph *philos);
-void						start_timestamp(t_pm *params, t_ph *philos);
+void						everyone_should_be_satiated(t_ph *philo);
+bool						should_abort(t_ph *philo);
+void						start_timestamp(t_pm *params, t_ph *philo);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
 
@@ -116,7 +118,7 @@ void						start_simulation(t_data *data);
  * utils.c
  */
 long int					ft_atol(const char *nptr);
-void						ft_putnbr(long long int l, int fd);
+void						ft_putnbr_fd(long long int l, int fd);
 void						ft_putstr_fd(const char *s, int fd);
 void						*ft_calloc(long int nmemb, long int size);
 
@@ -142,10 +144,5 @@ void						clear_data(t_data *data);
 t_ph						*init_data_philosophers(t_pm *params);
 t_pm						*init_data_parameters(int argc, char *argv[]);
 bool						init_data(int argc, char *argv[], t_data *data);
-
-/**
- * main.c
- */
-int							main(int argc, char *argv[]);
 
 #endif // PHILO_H

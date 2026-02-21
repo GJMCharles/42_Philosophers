@@ -27,7 +27,6 @@ void	destroy_pthreads_philos(t_data *data)
 		(void) pthread_mutex_destroy(&params->forks[index]);
 		index += 1;
 	}
-	free(params->forks);
 }
 
 /**
@@ -72,14 +71,18 @@ bool	init_mutex_philosophers(t_data *data)
 	params->forks = (pthread_mutex_t *)
 		ft_calloc(sizeof(pthread_mutex_t), params->total);
 	if (!params->forks)
-		return (false);
+		return (destroy_pthreads_parameters(data, 0), false);
 	index = 0;
 	while (index < params->total)
 	{
 		if (pthread_mutex_init(&params->forks[index], NULL))
 		{
-			while (index--)
-				(void) pthread_mutex_destroy(&params->forks[index]);
+			destroy_pthreads_parameters(data, 0);
+			while (index)
+			{
+				(void) pthread_mutex_destroy(&params->forks[index - 1]);
+				index -= 1;
+			}
 			return (free(params->forks), false);
 		}
 		index += 1;

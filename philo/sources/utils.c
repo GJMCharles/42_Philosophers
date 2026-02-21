@@ -47,7 +47,7 @@ long int	ft_atol(const char *np)
 /**
  * 
  */
-void	ft_putnbr(long long int l, int fd)
+void	ft_putnbr_fd(long long int l, int fd)
 {
 	char	nb[21];
 	t_ui	size;
