@@ -17,6 +17,7 @@ void	everyone_should_be_satiated(t_ph *philo)
 	t_pm	*params;
 
 	params = philo->params;
+	pthread_mutex_lock(&params->mutex_abort);
 	if (params->eating_limit > 0
 		&& (philo->eat_counter == (t_ui) params->eating_limit))
 	{
@@ -26,6 +27,7 @@ void	everyone_should_be_satiated(t_ph *philo)
 			params->can_abort_simulation = true;
 		}
 	}
+	pthread_mutex_unlock(&params->mutex_abort);
 }
 
 bool	should_abort(t_ph *philo)
@@ -33,11 +35,13 @@ bool	should_abort(t_ph *philo)
 	t_pm	*params;
 
 	params = philo->params;
+	pthread_mutex_lock(&params->mutex_abort);
 	if (get_delay_from_last_meal(philo) >= params->time_to_die)
 	{
 		philo->is_dead = true;
 		params->can_abort_simulation = true;
 	}
+	pthread_mutex_unlock(&params->mutex_abort);
 	return (params->can_abort_simulation);
 }
 
@@ -66,12 +70,13 @@ void	*simulation(void *arg)
 	start_timestamp(params, philo);
 	while (1)
 	{
-		if (params->can_abort_simulation || !action_eating(philo))
+		if (!action_eating(philo))
 			break ;
-		if (params->can_abort_simulation || !action_sleeping(philo))
+		if (!action_sleeping(philo))
 			break ;
-		if (params->can_abort_simulation || !action_thinking(philo))
+		if (!action_thinking(philo))
 			break ;
+		break;
 	}
 	if (philo->is_dead == true)
 		action_dying(philo);

@@ -62,6 +62,7 @@ typedef struct s_pm
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
 	pthread_mutex_t			mutex_time;
+	pthread_mutex_t			mutex_abort;
 	pthread_mutex_t			mutex_print;
 }	t_pm;
 

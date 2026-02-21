@@ -106,6 +106,8 @@ void	destroy_pthreads_parameters(t_data *data, int pos)
 	if (pos >= 2)
 		(void) pthread_mutex_destroy(&params->mutex_time);
 	if (pos >= 3)
+		(void) pthread_mutex_destroy(&params->mutex_abort);
+	if (pos >= 4)
 		(void) pthread_mutex_destroy(&params->mutex_print);
 }
 
@@ -121,7 +123,9 @@ bool	init_mutex_parameters(t_data *data)
 		return (destroy_pthreads_parameters(data, 1), false);
 	if (pthread_mutex_init(&params->mutex_time, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 2), false);
-	if (pthread_mutex_init(&params->mutex_print, (pthread_mutexattr_t *) NULL))
+	if (pthread_mutex_init(&params->mutex_abort, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 3), false);
+	if (pthread_mutex_init(&params->mutex_print, (pthread_mutexattr_t *) NULL))
+		return (destroy_pthreads_parameters(data, 4), false);
 	return (true);
 }

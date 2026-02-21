@@ -85,6 +85,7 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 	params->forks = (pthread_mutex_t *) NULL;
 	params->mutex_start = (pthread_mutex_t) {0};
 	params->mutex_time = (pthread_mutex_t) {0};
+	params->mutex_abort = (pthread_mutex_t) {0};
 	params->mutex_print = (pthread_mutex_t) {0};
 	return (params);
 }
