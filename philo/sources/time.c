@@ -53,3 +53,15 @@ bool	waiting(t_uli milliseconds, t_ph *philo)
 	}
 	return (true);
 }
+
+/**
+ * 
+ */
+void	start_timestamp(t_pm *params, t_ph *philo)
+{
+	(void) pthread_mutex_lock(&params->mutex_start);
+	if (params->time_of_start == 0)
+		params->time_of_start = get_timestamp();
+	philo->last_eaten = params->time_of_start;
+	(void) pthread_mutex_unlock(&params->mutex_start);
+}

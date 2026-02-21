@@ -17,17 +17,16 @@ void	everyone_should_be_satiated(t_ph *philo)
 	t_pm	*params;
 
 	params = philo->params;
-	pthread_mutex_lock(&params->mutex_abort);
+
 	if (params->eating_limit > 0
 		&& (philo->eat_counter == (t_ui) params->eating_limit))
 	{
 		params->reached_eating_limit += 1;
 		if (params->reached_eating_limit == params->total)
 		{
-			params->can_abort_simulation = true;
+			set_abort_simulation(params, true);
 		}
 	}
-	pthread_mutex_unlock(&params->mutex_abort);
 }
 
 bool	should_abort(t_ph *philo)
@@ -35,26 +34,12 @@ bool	should_abort(t_ph *philo)
 	t_pm	*params;
 
 	params = philo->params;
-	pthread_mutex_lock(&params->mutex_abort);
 	if (get_delay_from_last_meal(philo) >= params->time_to_die)
 	{
 		philo->is_dead = true;
-		params->can_abort_simulation = true;
+		set_abort_simulation(params, true);
 	}
-	pthread_mutex_unlock(&params->mutex_abort);
-	return (params->can_abort_simulation);
-}
-
-/**
- * 
- */
-void	start_timestamp(t_pm *params, t_ph *philo)
-{
-	(void) pthread_mutex_lock(&params->mutex_start);
-	if (params->time_of_start == 0)
-		params->time_of_start = get_timestamp();
-	philo->last_eaten = params->time_of_start;
-	(void) pthread_mutex_unlock(&params->mutex_start);
+	return (get_abort_simulation(params));
 }
 
 /**

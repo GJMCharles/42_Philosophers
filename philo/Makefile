@@ -48,7 +48,8 @@ SOURCES_FILES := \
 	simulation.c \
 	time.c \
 	actions.c \
-	logs.c
+	logs.c \
+	abort.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 

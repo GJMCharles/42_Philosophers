@@ -85,6 +85,12 @@ typedef struct s_data
 }	t_data;
 
 /**
+ * abort.c
+ */
+bool						get_abort_simulation(t_pm *params);
+void						set_abort_simulation(t_pm *params, bool value);
+
+/**
  * log.c
  */
 char						*get_code_status_text(t_cd code);
@@ -105,13 +111,13 @@ bool						action_eating(t_ph *philos);
 t_uli						get_timestamp(void);
 t_uli						get_delay_from_last_meal(t_ph *philo);
 bool						waiting(t_uli milliseconds, t_ph *philo);
+void						start_timestamp(t_pm *params, t_ph *philo);
 
 /**
  * simulation.c
  */
 void						everyone_should_be_satiated(t_ph *philo);
 bool						should_abort(t_ph *philo);
-void						start_timestamp(t_pm *params, t_ph *philo);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
 

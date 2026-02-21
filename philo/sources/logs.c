@@ -54,7 +54,7 @@ void	display_log(t_ui id, t_cd code, t_pm *params)
 	nl = '\n';
 	sp = ' ';
 	(void) pthread_mutex_lock(&params->mutex_print);
-	if (params->can_abort_simulation && code != DEAD)
+	if (get_abort_simulation(params) && code != DEAD)
 	{
 		(void) pthread_mutex_unlock(&params->mutex_print);
 		return ;
