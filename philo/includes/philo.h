@@ -59,6 +59,7 @@ typedef struct s_pm
 	t_uli					time_of_start;
 	t_uli					time_of_death;
 	bool					can_abort_simulation;
+	int						*test_tab;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
 	pthread_mutex_t			mutex_time;
@@ -103,6 +104,7 @@ void						display_log(t_ui id, t_cd code, t_pm *params);
 bool						action_dying(t_ph *philos);
 bool						action_thinking(t_ph *philos);
 bool						action_sleeping(t_ph *philos);
+bool						secure_fork_lock(t_ph *p, pthread_mutex_t *m, int s);
 bool						action_eating(t_ph *philos);
 
 /**

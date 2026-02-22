@@ -57,20 +57,34 @@ bool	action_sleeping(t_ph *philo)
 /**
  * 
  */
+bool	secure_fork_lock(t_ph *p, pthread_mutex_t *m, int s)
+{
+	t_pm	*params;
+
+	(void) s;
+	params = p->params;
+	if (get_abort_simulation(params))
+		return (false);
+	pthread_mutex_lock(m);
+	//pthread_mutex_unlock(m);
+	return (true);
+}
+
+/**
+ * 
+ */
 bool	action_eating(t_ph *philo)
 {
 	t_pm	*params;
 
 	params = philo->params;
-	if (should_abort(philo))
+	if (!secure_fork_lock(philo, philo->left_fork, 0))
 		return (false);
-	(void) pthread_mutex_lock(philo->left_fork);
 	display_log(philo->id, TAKING_FORK, params);
 	if (params->total == 1)
 		(void) waiting(params->time_to_die, philo);
-	if (should_abort(philo))
+	if (params->total == 1 || !secure_fork_lock(philo, philo->right_fork, 0))
 		return (pthread_mutex_unlock(philo->left_fork), false);
-	(void) pthread_mutex_lock(philo->right_fork);
 	display_log(philo->id, TAKING_FORK, params);
 	display_log(philo->id, EATING, params);
 	philo->last_eaten = get_timestamp();
@@ -78,10 +92,12 @@ bool	action_eating(t_ph *philo)
 	everyone_should_be_satiated(philo);
 	if(!waiting(params->time_to_eat, philo))
 	{
-		return (pthread_mutex_unlock(philo->right_fork),
-			pthread_mutex_unlock(philo->left_fork), false);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+		return (false);
 	}
 	philo->last_eaten = get_timestamp();
-	return (pthread_mutex_unlock(philo->right_fork),
-		pthread_mutex_unlock(philo->left_fork), true);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	return (true);
 }

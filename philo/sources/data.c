@@ -19,6 +19,11 @@ void	clear_data(t_data *data)
 {
 	if (data->params)
 	{
+		if (data->params->test_tab)
+		{
+			free(data->params->test_tab);
+			data->params->test_tab = 0;
+		}
 		if (data->params->forks)
 		{
 			free(data->params->forks);
@@ -82,6 +87,7 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 	params->time_of_start = 0;
 	params->time_of_death = 0;
 	params->can_abort_simulation = false;
+	params->test_tab = NULL;
 	params->forks = (pthread_mutex_t *) NULL;
 	params->mutex_start = (pthread_mutex_t) {0};
 	params->mutex_time = (pthread_mutex_t) {0};

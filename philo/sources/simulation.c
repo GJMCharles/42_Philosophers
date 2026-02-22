@@ -23,9 +23,7 @@ void	everyone_should_be_satiated(t_ph *philo)
 	{
 		params->reached_eating_limit += 1;
 		if (params->reached_eating_limit == params->total)
-		{
 			set_abort_simulation(params, true);
-		}
 	}
 }
 
@@ -34,7 +32,7 @@ bool	should_abort(t_ph *philo)
 	t_pm	*params;
 
 	params = philo->params;
-	if (get_delay_from_last_meal(philo) >= params->time_to_die)
+	if (get_delay_from_last_meal(philo) >= (t_uli) params->time_to_die)
 	{
 		philo->is_dead = true;
 		set_abort_simulation(params, true);
@@ -61,7 +59,6 @@ void	*simulation(void *arg)
 			break ;
 		if (!action_thinking(philo))
 			break ;
-		break;
 	}
 	if (philo->is_dead == true)
 		action_dying(philo);

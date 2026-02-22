@@ -40,7 +40,7 @@ bool	waiting(t_uli milliseconds, t_ph *philo)
 
 	params = philo->params;
 	start = get_timestamp();
-	while ((get_timestamp() - start) < milliseconds)
+	while ((get_timestamp() - start) <= milliseconds)
 	{
 		(void) pthread_mutex_lock(&params->mutex_time);
 		if (should_abort(philo))
