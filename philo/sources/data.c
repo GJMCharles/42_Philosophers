@@ -19,39 +19,36 @@ void	clear_data(t_data *data)
 {
 	if (data->params)
 	{
-		if (data->params->test_tab)
-		{
-			free(data->params->test_tab);
-			data->params->test_tab = 0;
-		}
+		if (data->params->fork_box)
+			free(data->params->fork_box);
 		if (data->params->forks)
 		{
 			free(data->params->forks);
 			data->params->forks = (pthread_mutex_t *) NULL;
 		}
 		free(data->params);
-		data->params = (t_pm *) NULL;
+		data->params = (t_params *) NULL;
 	}
 	if (data->philos)
 	{
 		free(data->philos);
-		data->philos = (t_ph *) NULL;
+		data->philos = (t_philo *) NULL;
 	}
 }
 
 /**
  * 
  */
-t_ph	*init_data_philosophers(t_pm *params)
+t_philo	*init_data_philosophers(t_params *params)
 {
-	t_ph	*philos;
+	t_philo	*philos;
 	t_ui	index;
 
-	philos = (t_ph *) ft_calloc(sizeof(t_ph), params->total + 1);
+	philos = (t_philo *) ft_calloc(sizeof(t_philo), params->nb_philos + 1);
 	if (!philos)
-		return ((t_ph *) NULL);
+		return ((t_philo *) NULL);
 	index = 0;
-	while (index < params->total)
+	while (index < params->nb_philos)
 	{
 		philos[index].id = index + 1;
 		philos[index].is_dead = false;
@@ -69,28 +66,45 @@ t_ph	*init_data_philosophers(t_pm *params)
 /**
  * 
  */
-t_pm	*init_data_parameters(int argc, char *argv[])
+void	reset_fork_boxes(t_ui **fork_boxes, t_ui len)
 {
-	t_pm	*params;
+	t_ui		index;
 
-	params = (t_pm *) ft_calloc(sizeof(t_pm), 1);
+	index = 0;
+	while (index < len)
+	{
+		*fork_boxes[index] = 1;
+		index += 1;
+	}
+}
+
+/**
+ * 
+ */
+t_params	*init_data_parameters(int argc, char *argv[])
+{
+	t_params	*params;
+
+	params = (t_params *) ft_calloc(sizeof(t_params), 1);
 	if (!params)
-		return ((t_pm *) NULL);
-	params->total = (t_ui) ft_atol(argv[1]);
+		return ((t_params *) NULL);
+	params->nb_philos = (t_ui) ft_atol(argv[1]);
+	params->fork_box = (t_ui *) ft_calloc(sizeof(t_ui), params->nb_philos);
+	if (!params->fork_box)
+		return (free(params), (t_params *) NULL);
+	reset_fork_boxes(&params->fork_box, params->nb_philos);
 	params->time_to_die = (t_ui) ft_atol(argv[2]);
 	params->time_to_eat = (t_ui) ft_atol(argv[3]);
 	params->time_to_sleep = (t_ui) ft_atol(argv[4]);
 	params->eating_limit = -1;
 	if (argc == 6)
 		params->eating_limit = (int) ft_atol(argv[5]);
-	params->reached_eating_limit = 0;
 	params->time_of_start = 0;
-	params->time_of_death = 0;
 	params->can_abort_simulation = false;
-	params->test_tab = NULL;
 	params->forks = (pthread_mutex_t *) NULL;
 	params->mutex_start = (pthread_mutex_t) {0};
-	params->mutex_time = (pthread_mutex_t) {0};
+	params->mutex_pick = (pthread_mutex_t) {0};
+	params->mutex_wait = (pthread_mutex_t) {0};
 	params->mutex_abort = (pthread_mutex_t) {0};
 	params->mutex_print = (pthread_mutex_t) {0};
 	return (params);
@@ -102,12 +116,12 @@ t_pm	*init_data_parameters(int argc, char *argv[])
 bool	init_data(int argc, char *argv[], t_data *data)
 {
 	if (!verify_parameters(argc, argv))
-		return (display_error(ERROR_01), false);
+		return (display_error(ERROR_AG), false);
 	data->params = init_data_parameters(argc, argv);
 	if (!data->params)
-		return (display_error(ERROR_01), clear_data(data), false);
+		return (display_error(ERROR_AM), clear_data(data), false);
 	data->philos = init_data_philosophers(data->params);
 	if (!data->philos)
-		return (display_error(ERROR_01), clear_data(data), false);
+		return (display_error(ERROR_AM), clear_data(data), false);
 	return (true);
 }

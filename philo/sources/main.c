@@ -19,15 +19,15 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
-	data.params = (t_pm *) NULL;
-	data.philos = (t_ph *) NULL;
+	data.params = (t_params *) NULL;
+	data.philos = (t_philo *) NULL;
 	if (!init_data(argc, argv, &data))
 		return (clear_data(&data), EXIT_FAILURE);
 	if (!init_mutex_parameters(&data))
 		return (clear_data(&data), EXIT_FAILURE);
 	if (!init_mutex_philosophers(&data))
 		return (clear_data(&data), EXIT_FAILURE);
-	start_simulation(&data);
+	// start_simulation(&data);
 	destroy_pthreads_philos(&data);
 	destroy_pthreads_parameters(&data, 0);
 	clear_data(&data);

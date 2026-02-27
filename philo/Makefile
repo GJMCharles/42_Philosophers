@@ -17,8 +17,9 @@
 MAKEFLAGS += --no-print-directory
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -pedantic -g3 -fsanitize=thread
+CFLAGS := -Wall -Wextra -Werror -pedantic -g3 -pthread
 
+# -fsanitize=thread
 # Delete files & empty directories
 RM := rm -f -v
 RM_DIR := rmdir -v
@@ -91,12 +92,12 @@ re: fclean all
 norm:
 	norminette . -R 2
 
-runtest: all
+runtest: re
 	-valgrind \
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME) 5 599 200 200 3
+	-s ./$(NAME) 1 300 200 100 3
 
 .PRECIOUS: $(OBJECTS_DIR)
 

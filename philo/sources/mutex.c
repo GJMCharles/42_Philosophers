@@ -17,12 +17,12 @@
  */
 void	destroy_pthreads_philos(t_data *data)
 {
-	t_ui	index;
-	t_pm	*params;
+	t_ui		index;
+	t_params	*params;
 
 	index = 0;
 	params = data->params;
-	while (index < params->total)
+	while (index < params->nb_philos)
 	{
 		(void) pthread_mutex_destroy(&params->forks[index]);
 		index += 1;
@@ -34,24 +34,30 @@ void	destroy_pthreads_philos(t_data *data)
  */
 void	assign_fork_to_philosophers(t_data *data)
 {
-	t_pm	*params;
-	t_ph	*philos;
-	t_ui	index;
-	t_ui	index_plus;
+	t_params	*params;
+	t_philo		*philos;
+	t_ui		index;
+	t_ui		index_plus;
 
 	params = data->params;
 	philos = data->philos;
 	index = 0;
-	while (index < params->total)
+	while (index < params->nb_philos)
 	{
-		index_plus = (index + 1) % params->total;
+		index_plus = (index + 1) % params->nb_philos;
 		if ((index % 2) == 0)
 		{
+			/**
+			 * PAIR
+			*/
 			philos[index].left_fork = &params->forks[index];
 			philos[index].right_fork = &params->forks[index_plus];
 		}
 		else
 		{
+			/**
+			 * IMPAIR
+			 */
 			philos[index].left_fork = &params->forks[index_plus];
 			philos[index].right_fork = &params->forks[index];
 		}
@@ -64,16 +70,16 @@ void	assign_fork_to_philosophers(t_data *data)
  */
 bool	init_mutex_philosophers(t_data *data)
 {
-	t_pm	*params;
-	t_ui	index;
+	t_params	*params;
+	t_ui		index;
 
 	params = data->params;
 	params->forks = (pthread_mutex_t *)
-		ft_calloc(sizeof(pthread_mutex_t), params->total);
+		ft_calloc(sizeof(pthread_mutex_t), params->nb_philos);
 	if (!params->forks)
 		return (destroy_pthreads_parameters(data, 0), false);
 	index = 0;
-	while (index < params->total)
+	while (index < params->nb_philos)
 	{
 		if (pthread_mutex_init(&params->forks[index], NULL))
 		{
@@ -96,7 +102,7 @@ bool	init_mutex_philosophers(t_data *data)
  */
 void	destroy_pthreads_parameters(t_data *data, int pos)
 {
-	t_pm	*params;
+	t_params	*params;
 
 	params = data->params;
 	if (pos == 0)
@@ -104,10 +110,12 @@ void	destroy_pthreads_parameters(t_data *data, int pos)
 	if (pos >= 1)
 		(void) pthread_mutex_destroy(&params->mutex_start);
 	if (pos >= 2)
-		(void) pthread_mutex_destroy(&params->mutex_time);
+		(void) pthread_mutex_destroy(&params->mutex_pick);
 	if (pos >= 3)
-		(void) pthread_mutex_destroy(&params->mutex_abort);
+		(void) pthread_mutex_destroy(&params->mutex_wait);
 	if (pos >= 4)
+		(void) pthread_mutex_destroy(&params->mutex_abort);
+	if (pos >= 5)
 		(void) pthread_mutex_destroy(&params->mutex_print);
 }
 
@@ -116,16 +124,18 @@ void	destroy_pthreads_parameters(t_data *data, int pos)
  */
 bool	init_mutex_parameters(t_data *data)
 {
-	t_pm	*params;
+	t_params	*params;
 
 	params = data->params;
 	if (pthread_mutex_init(&params->mutex_start, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 1), false);
-	if (pthread_mutex_init(&params->mutex_time, (pthread_mutexattr_t *) NULL))
+	if (pthread_mutex_init(&params->mutex_pick, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 2), false);
-	if (pthread_mutex_init(&params->mutex_abort, (pthread_mutexattr_t *) NULL))
+	if (pthread_mutex_init(&params->mutex_wait, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 3), false);
-	if (pthread_mutex_init(&params->mutex_print, (pthread_mutexattr_t *) NULL))
+	if (pthread_mutex_init(&params->mutex_abort, (pthread_mutexattr_t *) NULL))
 		return (destroy_pthreads_parameters(data, 4), false);
+	if (pthread_mutex_init(&params->mutex_print, (pthread_mutexattr_t *) NULL))
+		return (destroy_pthreads_parameters(data, 5), false);
 	return (true);
 }

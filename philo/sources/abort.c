@@ -12,19 +12,19 @@
 
 #include "philo.h"
 
-bool	get_abort_simulation(t_pm *params)
-{
-	bool	value;
+//bool	get_abort_simulation(t_params *params)
+//{
+//	bool	value;
 
-	pthread_mutex_lock(&params->mutex_abort);
-	value = params->can_abort_simulation;
-	pthread_mutex_unlock(&params->mutex_abort);
-	return (value);
-}
+//	pthread_mutex_lock(&params->mutex_abort);
+//	value = params->can_abort_simulation;
+//	pthread_mutex_unlock(&params->mutex_abort);
+//	return (value);
+//}
 
-void	set_abort_simulation(t_pm *params, bool value)
-{
-	pthread_mutex_lock(&params->mutex_abort);
-	params->can_abort_simulation = value;
-	pthread_mutex_unlock(&params->mutex_abort);
-}
+//void	set_abort_simulation(t_params *params, bool value)
+//{
+//	pthread_mutex_lock(&params->mutex_abort);
+//	params->can_abort_simulation = value;
+//	pthread_mutex_unlock(&params->mutex_abort);
+//}

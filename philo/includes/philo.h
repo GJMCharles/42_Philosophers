@@ -22,52 +22,46 @@
 # include <string.h>
 # include <stdbool.h>
 
-# ifndef ERROR_01
-#  define ERROR_01 ""
+# ifndef ERROR_AG
+#  define ERROR_AG "Invalid arguments"
 # endif
 
-# ifndef ERROR_02
-#  define ERROR_02 ""
+# ifndef ERROR_AM
+#  define ERROR_AM "Failed to allocate memory"
 # endif
 
-# ifndef ERROR_03
-#  define ERROR_03 ""
-# endif
-
-typedef enum e_cd
+typedef enum e_status
 {
 	TAKING_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
 	DEAD
-}	t_cd;
+}	t_status;
 
-typedef unsigned long int	t_uli;
-typedef unsigned int		t_ui;
 typedef unsigned char		t_uc;
-typedef unsigned short int	t_usi;
+typedef unsigned int		t_ui;
+typedef unsigned long int	t_uli;
 
-typedef struct s_pm
+typedef struct s_params
 {
-	t_ui					total;
+	t_ui					nb_philos;
 	t_ui					time_to_die;
 	t_ui					time_to_eat;
 	t_ui					time_to_sleep;
 	int						eating_limit;
-	t_ui					reached_eating_limit;
 	t_uli					time_of_start;
-	t_uli					time_of_death;
 	bool					can_abort_simulation;
-	int						*test_tab;
+	t_ui					*fork_box;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
-	pthread_mutex_t			mutex_time;
+	pthread_mutex_t			mutex_pick;
+	pthread_mutex_t			mutex_wait;
 	pthread_mutex_t			mutex_abort;
 	pthread_mutex_t			mutex_print;
-}	t_pm;
+}	t_params;
 
-typedef struct s_ph
+typedef struct s_philo
 {
 	t_ui					id;
 	bool					is_dead;
@@ -76,50 +70,50 @@ typedef struct s_ph
 	pthread_t				thread;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
-	struct s_pm				*params;
-}	t_ph;
+	struct s_params			*params;
+}	t_philo;
 
 typedef struct s_data
 {
-	struct s_pm				*params;
-	struct s_ph				*philos;
+	struct s_params				*params;
+	struct s_philo				*philos;
 }	t_data;
 
 /**
  * abort.c
  */
-bool						get_abort_simulation(t_pm *params);
-void						set_abort_simulation(t_pm *params, bool value);
+//bool						get_abort_simulation(t_params *params);
+//void						set_abort_simulation(t_params *params, bool value);
 
 /**
  * log.c
  */
-char						*get_code_status_text(t_cd code);
+//char						*get_code_status_text(t_status code);
 void						display_error(const char *message);
-void						display_log(t_ui id, t_cd code, t_pm *params);
+//void						display_log(t_ui id, t_cd code, t_params *params);
 
 /**
  * actions.c
  */
-bool						action_dying(t_ph *philos);
-bool						action_thinking(t_ph *philos);
-bool						action_sleeping(t_ph *philos);
-bool						secure_fork_lock(t_ph *p, pthread_mutex_t *m, int s);
-bool						action_eating(t_ph *philos);
+//bool						action_dying(t_philo *philos);
+//bool						action_thinking(t_philo *philos);
+//bool						action_sleeping(t_philo *philos);
+//bool						secure_fork_lock(t_philo *p, pthread_mutex_t *m, int s);
+//bool						action_eating(t_philo *philos);
 
 /**
  * time.c
  */
 t_uli						get_timestamp(void);
-t_uli						get_delay_from_last_meal(t_ph *philo);
-bool						waiting(t_uli milliseconds, t_ph *philo);
-void						start_timestamp(t_pm *params, t_ph *philo);
+//t_uli						get_delay_from_last_meal(t_philo *philo);
+//bool						waiting(t_uli milliseconds, t_philo *philo);
+void						start_timestamp(t_params *params, t_philo *philo);
 
 /**
  * simulation.c
  */
-void						everyone_should_be_satiated(t_ph *philo);
-bool						should_abort(t_ph *philo);
+//void						everyone_should_be_satiated(t_philo *philo);
+//bool						should_abort(t_philo *philo);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
 
@@ -150,8 +144,9 @@ bool						verify_parameters(int argc, char *argv[]);
  * data.c
  */
 void						clear_data(t_data *data);
-t_ph						*init_data_philosophers(t_pm *params);
-t_pm						*init_data_parameters(int argc, char *argv[]);
+t_philo						*init_data_philosophers(t_params *params);
+void						reset_fork_boxes(t_ui **fork_boxes, t_ui len);
+t_params					*init_data_parameters(int argc, char *argv[]);
 bool						init_data(int argc, char *argv[], t_data *data);
 
 #endif // PHILO_H

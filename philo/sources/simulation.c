@@ -12,56 +12,57 @@
 
 #include "philo.h"
 
-void	everyone_should_be_satiated(t_ph *philo)
-{
-	t_pm	*params;
+//void	everyone_should_be_satiated(t_philo *philo)
+//{
+//	t_params	*params;
 
-	params = philo->params;
+//	params = philo->params;
 
-	if (params->eating_limit > 0
-		&& (philo->eat_counter == (t_ui) params->eating_limit))
-	{
-		params->reached_eating_limit += 1;
-		if (params->reached_eating_limit == params->total)
-			set_abort_simulation(params, true);
-	}
-}
+//	if (params->eating_limit > 0
+//		&& (philo->eat_counter == (t_ui) params->eating_limit))
+//	{
+//		params->reached_eating_limit += 1;
+//		if (params->reached_eating_limit == params->nb_philos)
+//			set_abort_simulation(params, true);
+//	}
+//}
 
-bool	should_abort(t_ph *philo)
-{
-	t_pm	*params;
+//bool	should_abort(t_philo *philo)
+//{
+//	t_params	*params;
 
-	params = philo->params;
-	if (get_delay_from_last_meal(philo) >= (t_uli) params->time_to_die)
-	{
-		philo->is_dead = true;
-		set_abort_simulation(params, true);
-	}
-	return (get_abort_simulation(params));
-}
+//	params = philo->params;
+//	if (get_delay_from_last_meal(philo) >= (t_uli) params->time_to_die)
+//	{
+//		philo->is_dead = true;
+//		set_abort_simulation(params, true);
+//	}
+//	return (get_abort_simulation(params));
+//}
 
 /**
  * 
  */
 void	*simulation(void *arg)
 {
-	t_ph	*philo;
-	t_pm	*params;
+	t_philo		*philo;
+	//t_params	*params;
 
-	philo = (t_ph *) arg;
-	params = philo->params;
-	start_timestamp(params, philo);
-	while (1)
-	{
-		if (!action_eating(philo))
-			break ;
-		if (!action_sleeping(philo))
-			break ;
-		if (!action_thinking(philo))
-			break ;
-	}
-	if (philo->is_dead == true)
-		action_dying(philo);
+	philo = (t_philo *) arg;
+	(void) philo;
+	// params = philo->params;
+	//start_timestamp(params, philo);
+	//while (1)
+	//{
+	//	if (!action_eating(philo))
+	//		break ;
+	//	if (!action_sleeping(philo))
+	//		break ;
+	//	if (!action_thinking(philo))
+	//		break ;
+	//}
+	//if (philo->is_dead == true)
+	//	action_dying(philo);
 	return (NULL);
 }
 
@@ -70,27 +71,29 @@ void	*simulation(void *arg)
  */
 void	start_simulation(t_data *data)
 {
-	t_ph	*ph;
-	t_pm	*params;
-	t_ui	index;
+	t_philo		*philo;
+	t_params	*params;
+	t_ui		i;
 
-	ph = data->philos;
+	philo = data->philos;
 	params = data->params;
-	index = 0;
-	while (index++ < params->total)
+	i = 0;
+	while (i < params->nb_philos)
 	{
-		if (((index - 1) % 2) == 0)
-			pthread_create(
-				&ph[index - 1].thread, NULL, simulation, &ph[index - 1]);
+		if (((i) % 2) == 0)
+			pthread_create(&philo[i].thread, NULL, simulation, &philo[i]);
+		i += 1;
 	}
-	index = 0;
-	while (index++ < params->total)
+	i = 0;
+	while (i < params->nb_philos)
 	{
-		if (((index - 1) % 2) != 0)
-			pthread_create(
-				&ph[index - 1].thread, NULL, simulation, &ph[index - 1]);
+		if (((i) % 2) != 0)
+			pthread_create(&philo[i].thread, NULL, simulation, &philo[i]);
+		i += 1;
 	}
-	index = 0;
-	while (index++ < params->total)
-		pthread_join(ph[index - 1].thread, (void **) NULL);
+	i = 0;
+	while (i++ < params->nb_philos)
+	{
+		pthread_join(philo[i - 1].thread, (void **) NULL);
+	}
 }
