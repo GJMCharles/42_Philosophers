@@ -96,9 +96,9 @@ void						set_abort_simulation(t_params *params, bool value);
 /**
  * log.c
  */
-char						*get_code_status_text(t_status code);
+char						*get_code_status_text(t_status x);
+void						display_log(t_ui id, t_status x, t_params *params);
 void						display_error(const char *message);
-void						display_log(t_ui id, t_status code, t_params *params);
 
 /**
  * actions.c
@@ -121,7 +121,6 @@ void						start_timestamp(t_params *params, t_philo *philo);
 /**
  * simulation.c
  */
-//void						everyone_should_be_satiated(t_philo *philo);
 bool						should_abort(t_philo *philo);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);

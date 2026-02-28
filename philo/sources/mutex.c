@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /**
- * 
+ * void	destroy_pthreads_philos(t_data *data);
  */
 void	destroy_pthreads_philos(t_data *data)
 {
@@ -30,7 +30,7 @@ void	destroy_pthreads_philos(t_data *data)
 }
 
 /**
- * 
+ * void	assign_fork_to_philosophers(t_data *data);
  */
 void	assign_fork_to_philosophers(t_data *data)
 {
@@ -60,7 +60,7 @@ void	assign_fork_to_philosophers(t_data *data)
 }
 
 /**
- * 
+ * bool	init_mutex_philosophers(t_data *data);
  */
 bool	init_mutex_philosophers(t_data *data)
 {
@@ -92,7 +92,7 @@ bool	init_mutex_philosophers(t_data *data)
 }
 
 /**
- * 
+ * void	destroy_pthreads_parameters(t_data *data, int pos);
  */
 void	destroy_pthreads_parameters(t_data *data, int pos)
 {
@@ -114,7 +114,7 @@ void	destroy_pthreads_parameters(t_data *data, int pos)
 }
 
 /**
- * 
+ * bool	init_mutex_parameters(t_data *data);
  */
 bool	init_mutex_parameters(t_data *data)
 {

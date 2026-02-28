@@ -12,21 +12,9 @@
 
 #include "philo.h"
 
-//void	everyone_should_be_satiated(t_philo *philo)
-//{
-//	t_params	*params;
-
-//	params = philo->params;
-
-//	if (params->eating_limit > 0
-//		&& (philo->eat_count == (t_ui) params->eating_limit))
-//	{
-//		params->reached_eating_limit += 1;
-//		if (params->reached_eating_limit == params->nb_philos)
-//			set_abort_simulation(params, true);
-//	}
-//}
-
+/**
+ * bool	should_abort(t_philo *philo);
+ */
 bool	should_abort(t_philo *philo)
 {
 	t_params	*params;
@@ -41,7 +29,7 @@ bool	should_abort(t_philo *philo)
 }
 
 /**
- * 
+ * void	*simulation(void *arg);
  */
 void	*simulation(void *arg)
 {
@@ -66,7 +54,7 @@ void	*simulation(void *arg)
 }
 
 /**
- * 
+ * void	start_simulation(t_data *data);
  */
 void	start_simulation(t_data *data)
 {

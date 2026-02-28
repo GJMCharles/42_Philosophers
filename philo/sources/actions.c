@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * void	action_dying(t_philo *philo);
+*/
 void	action_dying(t_philo *philo)
 {
 	t_params	*params;
@@ -20,6 +23,9 @@ void	action_dying(t_philo *philo)
 	display_log(philo->id, DEAD, params);
 }
 
+/**
+ * bool	action_thinking(t_philo *philo);
+ */
 bool	action_thinking(t_philo *philo)
 {
 	t_params	*params;
@@ -31,6 +37,9 @@ bool	action_thinking(t_philo *philo)
 	return (true);
 }
 
+/**
+ * bool	action_sleeping(t_philo *philo);
+*/
 bool	action_sleeping(t_philo *philo)
 {
 	t_params	*params;
@@ -44,6 +53,9 @@ bool	action_sleeping(t_philo *philo)
 	return (true);
 }
 
+/**
+ * void	start_eating(bool *status, t_philo *philo, t_params *params);
+ */
 void	start_eating(bool *status, t_philo *philo, t_params *params)
 {
 	philo->last_eaten = get_timestamp();
@@ -58,6 +70,9 @@ void	start_eating(bool *status, t_philo *philo, t_params *params)
 	}
 }
 
+/**
+ * bool	action_eating(t_philo *philo);
+ */
 bool	action_eating(t_philo *philo)
 {
 	t_params	*params;

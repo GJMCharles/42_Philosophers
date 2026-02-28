@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /**
- * 
+ * t_uli	get_timestamp(void);
  */
 t_uli	get_timestamp(void)
 {
@@ -26,7 +26,7 @@ t_uli	get_timestamp(void)
 }
 
 /**
- * 
+ * t_uli	get_delay_from_last_meal(t_philo *philo);
  */
 t_uli	get_delay_from_last_meal(t_philo *philo)
 {
@@ -34,7 +34,7 @@ t_uli	get_delay_from_last_meal(t_philo *philo)
 }
 
 /**
- * 
+ * bool	waiting(t_uli milliseconds, t_philo *philo);
  */
 bool	waiting(t_uli milliseconds, t_philo *philo)
 {
@@ -58,7 +58,7 @@ bool	waiting(t_uli milliseconds, t_philo *philo)
 }
 
 /**
- * 
+ * void	start_timestamp(t_params *params, t_philo *philo);
  */
 void	start_timestamp(t_params *params, t_philo *philo)
 {

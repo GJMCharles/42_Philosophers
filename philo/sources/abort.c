@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * bool	get_abort_simulation(t_params *params);
+ */
 bool	get_abort_simulation(t_params *params)
 {
 	bool	value;
@@ -22,6 +25,9 @@ bool	get_abort_simulation(t_params *params)
 	return (value);
 }
 
+/**
+ * void	set_abort_simulation(t_params *params, bool value);
+ */
 void	set_abort_simulation(t_params *params, bool value)
 {
 	pthread_mutex_lock(&params->mutex_abort);

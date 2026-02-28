@@ -13,19 +13,19 @@
 #include "philo.h"
 
 /**
-* 
+* char	*get_code_status_text(t_status code);
 */
-char	*get_code_status_text(t_status code)
+char	*get_code_status_text(t_status x)
 {
-	if (code == TAKING_FORK)
+	if (x == TAKING_FORK)
 		return ("has taken a fork");
-	else if (code == EATING)
+	else if (x == EATING)
 		return ("is eating");
-	else if (code == SLEEPING)
+	else if (x == SLEEPING)
 		return ("is sleeping");
-	else if (code == THINKING)
+	else if (x == THINKING)
 		return ("is thinking");
-	else if (code == DEAD)
+	else if (x == DEAD)
 		return ("died");
 	return ((char *) NULL);
 }
@@ -33,10 +33,10 @@ char	*get_code_status_text(t_status code)
 /**
 * 
 */
-void	display_log(t_ui id, t_status code, t_params *params)
+void	display_log(t_ui id, t_status x, t_params *params)
 {
 	(void) pthread_mutex_lock(&params->mutex_print);
-	if (get_abort_simulation(params) && code != DEAD)
+	if (get_abort_simulation(params) && x != DEAD)
 	{
 		(void) pthread_mutex_unlock(&params->mutex_print);
 		return ;
@@ -45,20 +45,17 @@ void	display_log(t_ui id, t_status code, t_params *params)
 	(void) write(STDOUT_FILENO, " ", 1);
 	ft_putnbr_fd(id + 1, STDOUT_FILENO);
 	(void) write(STDOUT_FILENO, " ", 1);
-	ft_putstr_fd(get_code_status_text(code), STDOUT_FILENO);
+	ft_putstr_fd(get_code_status_text(x), STDOUT_FILENO);
 	(void) write(STDOUT_FILENO, "\n", 1);
 	(void) pthread_mutex_unlock(&params->mutex_print);
 }
 
 /**
- * 
+ * void	display_error(const char *message);
  */
 void	display_error(const char *message)
 {
-	t_uc	nl;
-
-	nl = '\n';
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
-	(void) write(STDERR_FILENO, &nl, 1);
+	(void) write(STDERR_FILENO, "\n", 1);
 }

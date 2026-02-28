@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /**
- * 
+ * t_ui	get_int_size(long long int n)
  */
 t_ui	get_int_size(long long int n)
 {
@@ -36,7 +36,7 @@ t_ui	get_int_size(long long int n)
 }
 
 /**
- * 
+ * bool	verify_parameters(int argc, char *argv[]);
  */
 bool	verify_parameters(int argc, char *argv[])
 {

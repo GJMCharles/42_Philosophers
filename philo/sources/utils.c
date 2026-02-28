@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /**
- * 
+ * long int	ft_atol(const char *np);
  */
 long int	ft_atol(const char *np)
 {
@@ -45,7 +45,7 @@ long int	ft_atol(const char *np)
 }
 
 /**
- * 
+ * void	ft_putnbr_fd(long long int l, int fd);
  */
 void	ft_putnbr_fd(long long int l, int fd)
 {
@@ -71,7 +71,7 @@ void	ft_putnbr_fd(long long int l, int fd)
 }
 
 /**
- * 
+ * void	ft_putstr_fd(const char *s, int fd);
  */
 void	ft_putstr_fd(const char *s, int fd)
 {
@@ -86,7 +86,7 @@ void	ft_putstr_fd(const char *s, int fd)
 }
 
 /**
- * 
+ * void	*ft_calloc(long int nmemb, long int size);
  */
 void	*ft_calloc(long int nmemb, long int size)
 {

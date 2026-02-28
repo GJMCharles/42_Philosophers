@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /**
- * 
+ * void	clear_data(t_data *data);
  */
 void	clear_data(t_data *data)
 {
@@ -37,7 +37,7 @@ void	clear_data(t_data *data)
 }
 
 /**
- * 
+ * t_philo	*init_data_philosophers(t_params *params);
  */
 t_philo	*init_data_philosophers(t_params *params)
 {
@@ -64,7 +64,7 @@ t_philo	*init_data_philosophers(t_params *params)
 }
 
 /**
- * 
+ * void	reset_fork_boxes(t_ui **fork_boxes, t_ui len);
  */
 void	reset_fork_boxes(t_ui **fork_boxes, t_ui len)
 {
@@ -81,7 +81,7 @@ void	reset_fork_boxes(t_ui **fork_boxes, t_ui len)
 }
 
 /**
- * 
+ * t_params	*init_data_parameters(int argc, char *argv[]);
  */
 t_params	*init_data_parameters(int argc, char *argv[])
 {
@@ -113,7 +113,7 @@ t_params	*init_data_parameters(int argc, char *argv[])
 }
 
 /**
- * 
+ * bool	init_data(int argc, char *argv[], t_data *data);
  */
 bool	init_data(int argc, char *argv[], t_data *data)
 {

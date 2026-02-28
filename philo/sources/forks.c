@@ -12,6 +12,9 @@
 
 #include "philo.h"
 
+/**
+ * bool	search_left_fork(t_philo *philo);
+ */
 bool	search_left_fork(t_philo *philo)
 {
 	t_params	*p;
@@ -41,6 +44,9 @@ bool	search_left_fork(t_philo *philo)
 	return (true);
 }
 
+/**
+ * bool	search_right_fork(t_philo *philo);
+ */
 bool	search_right_fork(t_philo *philo)
 {
 	t_params	*p;
@@ -70,6 +76,9 @@ bool	search_right_fork(t_philo *philo)
 	return (true);
 }
 
+/**
+ * void	return_left_fork(t_philo *philo);
+ */
 void	return_left_fork(t_philo *philo)
 {
 	t_params	*params;
@@ -87,6 +96,9 @@ void	return_left_fork(t_philo *philo)
 	pthread_mutex_unlock(&params->mutex_pick);
 }
 
+/**
+ * void	return_right_fork(t_philo *philo);
+ */
 void	return_right_fork(t_philo *philo)
 {
 	t_params	*params;
