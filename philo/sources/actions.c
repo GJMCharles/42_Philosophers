@@ -92,9 +92,9 @@ bool	action_eating(t_philo *philo)
 	start_eating(&status, philo, params);
 	if (params->eating_limit > 0 && params->eating_limit == philo->eat_count)
 		status = false;
-	return_right_fork(philo);
 	(void) pthread_mutex_unlock(philo->right_fork);
-	return_left_fork(philo);
+	return_right_fork(philo);
 	(void) pthread_mutex_unlock(philo->left_fork);
+	return_left_fork(philo);
 	return (status);
 }

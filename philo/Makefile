@@ -98,7 +98,7 @@ runtest: re
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME) 4 300 200 100 3 | ./42philogramm/philogramm
+	-s ./$(NAME) 6 430 200 100 6
 
 .PRECIOUS: $(OBJECTS_DIR)
 

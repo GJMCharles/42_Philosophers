@@ -80,25 +80,10 @@ typedef struct s_data
 }	t_data;
 
 /**
- * forks.c
- */
-bool						search_left_fork(t_philo *philo);
-bool						search_right_fork(t_philo *philo);
-void						return_left_fork(t_philo *philo);
-void						return_right_fork(t_philo *philo);
-
-/**
  * abort.c
  */
 bool						get_abort_simulation(t_params *params);
 void						set_abort_simulation(t_params *params, bool value);
-
-/**
- * log.c
- */
-char						*get_code_status_text(t_status x);
-void						display_log(t_ui id, t_status x, t_params *params);
-void						display_error(const char *message);
 
 /**
  * actions.c
@@ -111,27 +96,28 @@ void						start_eating(bool *status,
 bool						action_eating(t_philo *philo);
 
 /**
- * time.c
+ * data.c
  */
-t_uli						get_timestamp(void);
-t_uli						get_delay_from_last_meal(t_philo *philo);
-bool						waiting(t_uli milliseconds, t_philo *philo);
-void						start_timestamp(t_params *params, t_philo *philo);
+void						clear_data(t_data *data);
+t_philo						*init_data_philosophers(t_params *params);
+void						reset_fork_boxes(t_ui **fork_boxes, t_ui len);
+t_params					*init_data_parameters(int argc, char *argv[]);
+bool						init_data(int argc, char *argv[], t_data *data);
 
 /**
- * simulation.c
+ * forks.c
  */
-bool						should_abort(t_philo *philo);
-void						*simulation(void *arg);
-void						start_simulation(t_data *data);
+bool						search_left_fork(t_philo *philo);
+bool						search_right_fork(t_philo *philo);
+void						return_left_fork(t_philo *philo);
+void						return_right_fork(t_philo *philo);
 
 /**
- * utils.c
+ * log.c
  */
-long int					ft_atol(const char *nptr);
-void						ft_putnbr_fd(long long int l, int fd);
-void						ft_putstr_fd(const char *s, int fd);
-void						*ft_calloc(long int nmemb, long int size);
+char						*get_code_status_text(t_status x);
+void						display_log(t_ui id, t_status x, t_params *params);
+void						display_error(const char *message);
 
 /**
  * mutex.c
@@ -143,18 +129,32 @@ void						destroy_pthreads_parameters(t_data *data, int pos);
 bool						init_mutex_parameters(t_data *data);
 
 /**
+ * simulation.c
+ */
+bool						should_abort(t_philo *philo);
+void						*simulation(void *arg);
+void						start_simulation(t_data *data);
+
+/**
+ * time.c
+ */
+t_uli						get_timestamp(void);
+t_uli						get_delay_from_last_meal(t_philo *philo);
+bool						waiting(t_uli milliseconds, t_philo *philo);
+void						start_timestamp(t_params *params, t_philo *philo);
+
+/**
+ * utils.c
+ */
+long int					ft_atol(const char *nptr);
+void						ft_putnbr_fd(long long int l, int fd);
+void						ft_putstr_fd(const char *s, int fd);
+void						*ft_calloc(long int nmemb, long int size);
+
+/**
  * verify.c
  */
 t_ui						get_int_size(long long int n);
 bool						verify_parameters(int argc, char *argv[]);
-
-/**
- * data.c
- */
-void						clear_data(t_data *data);
-t_philo						*init_data_philosophers(t_params *params);
-void						reset_fork_boxes(t_ui **fork_boxes, t_ui len);
-t_params					*init_data_parameters(int argc, char *argv[]);
-bool						init_data(int argc, char *argv[], t_data *data);
 
 #endif // PHILO_H
