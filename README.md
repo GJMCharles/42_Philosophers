@@ -12,6 +12,18 @@ And also, in order to eat, one must use **(2) two forks**, meaning that another 
 This increases the probability that one philospher could **die** of starvation.
 Likewise, if a **minimum number of feeding** is provided, then the program must stop once every single philosopher has hearched that goal.
 
+> Example:
+> **`./philo 1 800 100 100 3`**
+> Philosopher **1** should die at *800 ms*
+
+> Example:
+> **`./philo 5 300 200 100 2`**
+> Philosopher **4** should die at *300 ms*
+
+> Example:
+> **`./philo 4 300 200 100 10`**
+> All philosopher should have eaten *10 times*
+
 # **Instructions**
 
 The programm takes the following arguments :
