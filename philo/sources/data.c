@@ -104,11 +104,11 @@ t_params	*init_data_parameters(int argc, char *argv[])
 	params->time_of_start = 0;
 	params->can_abort_simulation = false;
 	params->forks = (pthread_mutex_t *) NULL;
-	params->mutex_start = (pthread_mutex_t) {0};
-	params->mutex_pick = (pthread_mutex_t) {0};
-	params->mutex_wait = (pthread_mutex_t) {0};
-	params->mutex_abort = (pthread_mutex_t) {0};
-	params->mutex_print = (pthread_mutex_t) {0};
+	params->mutex_start = (pthread_mutex_t){0};
+	params->mutex_pick = (pthread_mutex_t){0};
+	params->mutex_wait = (pthread_mutex_t){0};
+	params->mutex_abort = (pthread_mutex_t){0};
+	params->mutex_print = (pthread_mutex_t){0};
 	return (params);
 }
 

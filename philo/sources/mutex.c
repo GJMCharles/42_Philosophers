@@ -47,17 +47,11 @@ void	assign_fork_to_philosophers(t_data *data)
 		index_plus = (index + 1) % params->nb_philos;
 		if ((index % 2) == 0)
 		{
-			/**
-			 * PAIR
-			*/
 			philos[index].left_fork = &params->forks[index];
 			philos[index].right_fork = &params->forks[index_plus];
 		}
 		else
 		{
-			/**
-			 * IMPAIR
-			 */
 			philos[index].left_fork = &params->forks[index_plus];
 			philos[index].right_fork = &params->forks[index];
 		}

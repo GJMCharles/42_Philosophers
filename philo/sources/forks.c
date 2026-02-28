@@ -79,7 +79,6 @@ void	return_left_fork(t_philo *philo)
 	params = philo->params;
 	id_plus = (philo->id + 1) % params->nb_philos;
 	is_valid = (philo->id % 2) == 0;
-
 	pthread_mutex_lock(&params->mutex_pick);
 	if (is_valid && params->fork_box[philo->id] == 0)
 		params->fork_box[philo->id] = 1;
@@ -97,7 +96,6 @@ void	return_right_fork(t_philo *philo)
 	params = philo->params;
 	id_plus = (philo->id + 1) % params->nb_philos;
 	is_valid = (philo->id % 2) == 0;
-
 	pthread_mutex_lock(&params->mutex_pick);
 	if (is_valid && params->fork_box[id_plus] == 0)
 		params->fork_box[id_plus] = 1;

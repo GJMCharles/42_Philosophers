@@ -36,11 +36,11 @@ char	*get_code_status_text(t_status code)
 void	display_log(t_ui id, t_status code, t_params *params)
 {
 	(void) pthread_mutex_lock(&params->mutex_print);
-	// if (get_abort_simulation(params) && code != DEAD)
-	// {
-	// 	(void) pthread_mutex_unlock(&params->mutex_print);
-	// 	return ;
-	// }
+	if (get_abort_simulation(params) && code != DEAD)
+	{
+		(void) pthread_mutex_unlock(&params->mutex_print);
+		return ;
+	}
 	ft_putnbr_fd(get_timestamp() - params->time_of_start, STDOUT_FILENO);
 	(void) write(STDOUT_FILENO, " ", 1);
 	ft_putnbr_fd(id + 1, STDOUT_FILENO);
