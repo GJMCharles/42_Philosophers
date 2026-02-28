@@ -19,7 +19,7 @@
 //	params = philo->params;
 
 //	if (params->eating_limit > 0
-//		&& (philo->eat_counter == (t_ui) params->eating_limit))
+//		&& (philo->eat_count == (t_ui) params->eating_limit))
 //	{
 //		params->reached_eating_limit += 1;
 //		if (params->reached_eating_limit == params->nb_philos)
@@ -27,18 +27,18 @@
 //	}
 //}
 
-//bool	should_abort(t_philo *philo)
-//{
-//	t_params	*params;
+bool	should_abort(t_philo *philo)
+{
+	t_params	*params;
 
-//	params = philo->params;
-//	if (get_delay_from_last_meal(philo) >= (t_uli) params->time_to_die)
-//	{
-//		philo->is_dead = true;
-//		set_abort_simulation(params, true);
-//	}
-//	return (get_abort_simulation(params));
-//}
+	params = philo->params;
+	if (get_delay_from_last_meal(philo) >= (t_uli) params->time_to_die)
+	{
+		philo->is_dead = true;
+		set_abort_simulation(params, true);
+	}
+	return (get_abort_simulation(params));
+}
 
 /**
  * 
@@ -46,23 +46,22 @@
 void	*simulation(void *arg)
 {
 	t_philo		*philo;
-	//t_params	*params;
+	t_params	*params;
 
 	philo = (t_philo *) arg;
-	(void) philo;
-	// params = philo->params;
-	//start_timestamp(params, philo);
-	//while (1)
-	//{
-	//	if (!action_eating(philo))
-	//		break ;
-	//	if (!action_sleeping(philo))
-	//		break ;
-	//	if (!action_thinking(philo))
-	//		break ;
-	//}
-	//if (philo->is_dead == true)
-	//	action_dying(philo);
+	params = philo->params;
+	start_timestamp(params, philo);
+	while (1)
+	{
+		if (!action_eating(philo))
+			break ;
+		if (!action_sleeping(philo))
+			break ;
+		if (!action_thinking(philo))
+			break ;
+	}
+	if (philo->is_dead == true)
+		action_dying(philo);
 	return (NULL);
 }
 

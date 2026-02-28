@@ -12,77 +12,74 @@
 
 #include "philo.h"
 
-///**
-// * 
-// */
-//bool	action_dying(t_philo *philo)
-//{
-//	t_params	*params;
+void	action_dying(t_philo *philo)
+{
+	t_params	*params;
 
-//	params = philo->params;
-//	display_log(philo->id, DEAD, params);
-//	return (true);
-//}
+	params = philo->params;
+	display_log(philo->id, DEAD, params);
+}
 
-///**
-// * 
-// */
-//bool	action_thinking(t_philo *philo)
-//{
-//	t_params	*params;
+bool	action_thinking(t_philo *philo)
+{
+	t_params	*params;
 
-//	params = philo->params;
-//	if (should_abort(philo))
-//		return (false);
-//	display_log(philo->id, THINKING, params);
-//	return (true);
-//}
+	params = philo->params;
+	if (should_abort(philo))
+		return (false);
+	display_log(philo->id, THINKING, params);
+	return (true);
+}
 
-///**
-// * 
-// */
-//bool	action_sleeping(t_philo *philo)
-//{
-//	t_params	*params;
+bool	action_sleeping(t_philo *philo)
+{
+	t_params	*params;
 
-//	params = philo->params;
-//	if (should_abort(philo))
-//		return (false);
-//	display_log(philo->id, SLEEPING, params);
-//	if (!waiting(params->time_to_sleep, philo))
-//		return (false);
-//	return (true);
-//}
+	params = philo->params;
+	if (should_abort(philo))
+		return (false);
+	display_log(philo->id, SLEEPING, params);
+	if (!waiting(params->time_to_sleep, philo))
+		return (false);
+	return (true);
+}
 
-///**
-// * 
-// */
-//bool	action_eating(t_philo *philo)
-//{
-//	t_params	*params;
+void	start_eating(bool *status, t_philo *philo, t_params *params)
+{
+	philo->last_eaten = get_timestamp();
+	if (!waiting(params->time_to_eat, philo))
+	{
+		*status = false;
+	}
+	if (*status == true)
+	{
+		philo->last_eaten = get_timestamp();
+		philo->eat_count += 1;
+	}
+}
 
-//	params = philo->params;
-//	pthread_mutex_lock(philo->left_fork);
-//	display_log(philo->id, TAKING_FORK, params);
-//	if (params->nb_philos == 1)
-//	{
-//		(void) waiting(params->time_to_die, philo);
-//		return (pthread_mutex_unlock(philo->left_fork), false);
-//	}
-//	pthread_mutex_lock(philo->right_fork);
-//	display_log(philo->id, TAKING_FORK, params);
-//	display_log(philo->id, EATING, params);
-//	philo->last_eaten = get_timestamp();
-//	philo->eat_counter += 1;
-//	everyone_should_be_satiated(philo);
-//	if(!waiting(params->time_to_eat, philo))
-//	{
-//		pthread_mutex_unlock(philo->right_fork);
-//		pthread_mutex_unlock(philo->left_fork);
-//		return (false);
-//	}
-//	philo->last_eaten = get_timestamp();
-//	pthread_mutex_unlock(philo->right_fork);
-//	pthread_mutex_unlock(philo->left_fork);
-//	return (true);
-//}
+bool	action_eating(t_philo *philo)
+{
+	t_params	*params;
+	bool		status;
+
+	status = true;
+	params = philo->params;
+	if (!search_left_fork(philo))
+		return (false);
+	(void) pthread_mutex_lock(philo->left_fork);
+	display_log(philo->id, TAKING_FORK, params);
+	if (!search_right_fork(philo))
+		return (pthread_mutex_unlock(philo->left_fork), false);
+	(void) pthread_mutex_lock(philo->right_fork);
+	display_log(philo->id, TAKING_FORK, params);
+	display_log(philo->id, EATING, params);
+	start_eating(&status, philo, params);
+	if (params->eating_limit > 0 && params->eating_limit == philo->eat_count)
+		status = false;
+	return_right_fork(philo);
+	(void) pthread_mutex_unlock(philo->right_fork);
+	return_left_fork(philo);
+	(void) pthread_mutex_unlock(philo->left_fork);
+	return (status);
+}

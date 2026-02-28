@@ -50,9 +50,9 @@ t_philo	*init_data_philosophers(t_params *params)
 	index = 0;
 	while (index < params->nb_philos)
 	{
-		philos[index].id = index + 1;
+		philos[index].id = index;
 		philos[index].is_dead = false;
-		philos[index].eat_counter = 0;
+		philos[index].eat_count = 0;
 		philos[index].last_eaten = 0;
 		philos[index].thread = 0;
 		philos[index].left_fork = (pthread_mutex_t *) NULL;
@@ -69,11 +69,13 @@ t_philo	*init_data_philosophers(t_params *params)
 void	reset_fork_boxes(t_ui **fork_boxes, t_ui len)
 {
 	t_ui		index;
+	t_ui		*boxes;
 
 	index = 0;
+	boxes = *fork_boxes;
 	while (index < len)
 	{
-		*fork_boxes[index] = 1;
+		boxes[index] = 1;
 		index += 1;
 	}
 }

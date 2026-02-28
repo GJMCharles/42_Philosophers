@@ -50,7 +50,8 @@ SOURCES_FILES := \
 	time.c \
 	actions.c \
 	logs.c \
-	abort.c
+	abort.c \
+	forks.c
 
 SOURCES := $(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
 
@@ -97,7 +98,7 @@ runtest: re
 	--leak-check=full \
 	--show-leak-kinds=all \
 	--track-origins=yes \
-	-s ./$(NAME) 1 300 200 100 3
+	-s ./$(NAME) 4 300 200 100 3 | ./42philogramm/philogramm
 
 .PRECIOUS: $(OBJECTS_DIR)
 

@@ -65,7 +65,7 @@ typedef struct s_philo
 {
 	t_ui					id;
 	bool					is_dead;
-	t_ui					eat_counter;
+	int						eat_count;
 	t_uli					last_eaten;
 	pthread_t				thread;
 	pthread_mutex_t			*left_fork;
@@ -80,40 +80,49 @@ typedef struct s_data
 }	t_data;
 
 /**
+ * forks.c
+ */
+bool						search_left_fork(t_philo *philo);
+bool						search_right_fork(t_philo *philo);
+void						return_left_fork(t_philo *philo);
+void						return_right_fork(t_philo *philo);
+
+/**
  * abort.c
  */
-//bool						get_abort_simulation(t_params *params);
-//void						set_abort_simulation(t_params *params, bool value);
+bool						get_abort_simulation(t_params *params);
+void						set_abort_simulation(t_params *params, bool value);
 
 /**
  * log.c
  */
-//char						*get_code_status_text(t_status code);
+char						*get_code_status_text(t_status code);
 void						display_error(const char *message);
-//void						display_log(t_ui id, t_cd code, t_params *params);
+void						display_log(t_ui id, t_status code, t_params *params);
 
 /**
  * actions.c
  */
-//bool						action_dying(t_philo *philos);
-//bool						action_thinking(t_philo *philos);
-//bool						action_sleeping(t_philo *philos);
-//bool						secure_fork_lock(t_philo *p, pthread_mutex_t *m, int s);
-//bool						action_eating(t_philo *philos);
+void						action_dying(t_philo *philo);
+bool						action_thinking(t_philo *philo);
+bool						action_sleeping(t_philo *philo);
+void						start_eating(bool *status,
+								t_philo *philo, t_params *params);
+bool						action_eating(t_philo *philo);
 
 /**
  * time.c
  */
 t_uli						get_timestamp(void);
-//t_uli						get_delay_from_last_meal(t_philo *philo);
-//bool						waiting(t_uli milliseconds, t_philo *philo);
+t_uli						get_delay_from_last_meal(t_philo *philo);
+bool						waiting(t_uli milliseconds, t_philo *philo);
 void						start_timestamp(t_params *params, t_philo *philo);
 
 /**
  * simulation.c
  */
 //void						everyone_should_be_satiated(t_philo *philo);
-//bool						should_abort(t_philo *philo);
+bool						should_abort(t_philo *philo);
 void						*simulation(void *arg);
 void						start_simulation(t_data *data);
 

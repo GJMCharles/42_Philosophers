@@ -25,34 +25,37 @@ t_uli	get_timestamp(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-//t_uli	get_delay_from_last_meal(t_philo *philo)
-//{
-//	return (get_timestamp() - philo->last_eaten);
-//}
+/**
+ * 
+ */
+t_uli	get_delay_from_last_meal(t_philo *philo)
+{
+	return (get_timestamp() - philo->last_eaten);
+}
 
-///**
-// * 
-// */
-//bool	waiting(t_uli milliseconds, t_philo *philo)
-//{
-//	t_uli	start;
-//	t_params	*params;
+/**
+ * 
+ */
+bool	waiting(t_uli milliseconds, t_philo *philo)
+{
+	t_uli		start;
+	t_params	*params;
 
-//	params = philo->params;
-//	start = get_timestamp();
-//	while ((get_timestamp() - start) <= milliseconds)
-//	{
-//		(void) pthread_mutex_lock(&params->mutex_wait);
-//		if (should_abort(philo))
-//		{
-//			(void) pthread_mutex_unlock(&params->mutex_wait);
-//			return (false);
-//		}
-//		(void) pthread_mutex_unlock(&params->mutex_wait);
-//		usleep(100);
-//	}
-//	return (true);
-//}
+	params = philo->params;
+	start = get_timestamp();
+	while (get_timestamp() - start < milliseconds)
+	{
+		(void) pthread_mutex_lock(&params->mutex_wait);
+		if (should_abort(philo))
+		{
+			(void) pthread_mutex_unlock(&params->mutex_wait);
+			return (false);
+		}
+		(void) pthread_mutex_unlock(&params->mutex_wait);
+		usleep(100);
+	}
+	return (true);
+}
 
 /**
  * 
