@@ -2,8 +2,15 @@
 
 # **Description**
 
-> [!NOTE]
-> Section that clearly presents the project, including its goal and a brief overview.
+The project consists of simulating a round table in which special *users*, called philosophers are given 3 simple tasks:
+- To eat
+- To sleep
+- To think
+
+These tasks are never to be done simultaniously.
+And also, in order to eat, one must use **(2) two forks**, meaning that another philosopher will be forced to wait until the previous one, returns its assigned fork to the table.
+This increases the probability that one philospher could **die** of starvation.
+Likewise, if a **minimum number of feeding** is provided, then the program must stop once every single philosopher has hearched that goal.
 
 # **Instructions**
 
@@ -20,5 +27,8 @@ The programm takes the following arguments :
 
 # **Ressources**
 
-> [!NOTE]
-> Section listing classic references related to the topic (documentation, articles, tutorials, etc.), as well as a description of how AI was used — specifying for which tasks and which parts of the project.
+- [(VIDEO) Introduction To Threads (pthreads)](https://www.youtube.com/watch?v=ldJ8WGZVXZk)
+- [(DOC) pthread_create(3) - Linux man page](https://linux.die.net/man/3/pthread_create)
+- [(VIDEO) Mutex Introduction (pthreads)](https://www.youtube.com/watch?v=raLCgPK-Igc)
+- [(DOC) pthread_mutex_lock(3p) - Linux manual page](https://www.man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
+- [(VIDEO) Deadlocks in C](https://www.youtube.com/watch?v=LjWug2tvSBU)
