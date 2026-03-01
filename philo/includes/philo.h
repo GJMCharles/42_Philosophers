@@ -91,8 +91,7 @@ void						set_abort_simulation(t_params *params, bool value);
 void						action_dying(t_philo *philo);
 bool						action_thinking(t_philo *philo);
 bool						action_sleeping(t_philo *philo);
-void						start_eating(bool *status,
-								t_philo *philo, t_params *params);
+void						start_eating(bool *s, t_philo *ph, t_params *pm);
 bool						action_eating(t_philo *philo);
 
 /**
@@ -107,8 +106,8 @@ bool						init_data(int argc, char *argv[], t_data *data);
 /**
  * forks.c
  */
-bool						search_left_fork(t_philo *philo);
-bool						search_right_fork(t_philo *philo);
+bool						pick_left_fork(t_philo *ph);
+bool						pick_right_fork(t_philo *ph);
 void						return_left_fork(t_philo *philo);
 void						return_right_fork(t_philo *philo);
 

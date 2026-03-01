@@ -13,64 +13,62 @@
 #include "philo.h"
 
 /**
- * bool	search_left_fork(t_philo *philo);
+ * bool	pick_left_fork(t_philo *ph);
  */
-bool	search_left_fork(t_philo *philo)
+bool	pick_left_fork(t_philo *ph)
 {
-	t_params	*p;
-	t_ui		d;
-	bool		t;
+	t_params	*params;
+	t_ui		id_plus;
 
-	p = philo->params;
-	d = (philo->id + 1) % p->nb_philos;
-	t = (philo->id % 2) == 0;
+	params = ph->params;
+	id_plus = (ph->id + 1) % params->nb_philos;
 	while (1)
 	{
-		if (should_abort(philo))
-			return (false);
-		(void) pthread_mutex_lock(&p->mutex_pick);
-		if ((t && p->fork_box[philo->id] == 1) || (!t && p->fork_box[d] == 1))
+		(void) pthread_mutex_lock(&params->mutex_pick);
+		if (should_abort(ph))
+			return (pthread_mutex_unlock(&params->mutex_pick), false);
+		if ((ph->id % 2) == 0 && params->fork_box[ph->id] == 1)
 		{
-			if (t)
-				p->fork_box[philo->id] = 0;
-			else
-				p->fork_box[d] = 0;
-			(void) pthread_mutex_unlock(&p->mutex_pick);
-			break ;
+			params->fork_box[ph->id] = 0;
+			return (pthread_mutex_unlock(&params->mutex_pick), true);
 		}
-		(void) pthread_mutex_unlock(&p->mutex_pick);
+		else if ((ph->id % 2) != 0 && params->fork_box[id_plus] == 1)
+		{
+			params->fork_box[id_plus] = 0;
+			return (pthread_mutex_unlock(&params->mutex_pick), true);
+		}
+		(void) pthread_mutex_unlock(&params->mutex_pick);
 		usleep(100);
 	}
 	return (true);
 }
 
 /**
- * bool	search_right_fork(t_philo *philo);
+ * bool	pick_right_fork(t_philo *ph);
  */
-bool	search_right_fork(t_philo *philo)
+bool	pick_right_fork(t_philo *ph)
 {
-	t_params	*p;
-	t_ui		d;
-	bool		t;
+	t_params	*params;
+	t_ui		id_plus;
 
-	p = philo->params;
-	d = (philo->id + 1) % p->nb_philos;
-	t = (philo->id % 2) == 0;
+	params = ph->params;
+	id_plus = (ph->id + 1) % params->nb_philos;
 	while (1)
 	{
-		if (should_abort(philo))
-			return (false);
-		(void) pthread_mutex_lock(&p->mutex_pick);
-		if ((t && p->fork_box[d] == 1) || (!t && p->fork_box[philo->id] == 1))
+		(void) pthread_mutex_lock(&params->mutex_pick);
+		if (should_abort(ph))
+			return (pthread_mutex_unlock(&params->mutex_pick), false);
+		if ((ph->id % 2) == 0 && params->fork_box[id_plus] == 1)
 		{
-			if (t)
-				p->fork_box[d] = 0;
-			else
-				p->fork_box[philo->id] = 0;
-			(void) pthread_mutex_unlock(&p->mutex_pick);
-			break ;
+			params->fork_box[id_plus] = 0;
+			return (pthread_mutex_unlock(&params->mutex_pick), true);
 		}
-		(void) pthread_mutex_unlock(&p->mutex_pick);
+		else if ((ph->id % 2) != 0 && params->fork_box[ph->id] == 1)
+		{
+			params->fork_box[ph->id] = 0;
+			return (pthread_mutex_unlock(&params->mutex_pick), true);
+		}
+		(void) pthread_mutex_unlock(&params->mutex_pick);
 		usleep(100);
 	}
 	return (true);
@@ -83,15 +81,13 @@ void	return_left_fork(t_philo *philo)
 {
 	t_params	*params;
 	t_ui		id_plus;
-	int			is_valid;
 
 	params = philo->params;
 	id_plus = (philo->id + 1) % params->nb_philos;
-	is_valid = (philo->id % 2) == 0;
 	pthread_mutex_lock(&params->mutex_pick);
-	if (is_valid && params->fork_box[philo->id] == 0)
+	if ((philo->id % 2) == 0)
 		params->fork_box[philo->id] = 1;
-	else if (!is_valid && params->fork_box[id_plus] == 0)
+	else if ((philo->id % 2) != 0)
 		params->fork_box[id_plus] = 1;
 	pthread_mutex_unlock(&params->mutex_pick);
 }
@@ -103,15 +99,13 @@ void	return_right_fork(t_philo *philo)
 {
 	t_params	*params;
 	t_ui		id_plus;
-	int			is_valid;
 
 	params = philo->params;
 	id_plus = (philo->id + 1) % params->nb_philos;
-	is_valid = (philo->id % 2) == 0;
 	pthread_mutex_lock(&params->mutex_pick);
-	if (is_valid && params->fork_box[id_plus] == 0)
+	if ((philo->id % 2) == 0)
 		params->fork_box[id_plus] = 1;
-	else if (!is_valid && params->fork_box[philo->id] == 0)
+	else if ((philo->id % 2) != 0)
 		params->fork_box[philo->id] = 1;
 	pthread_mutex_unlock(&params->mutex_pick);
 }

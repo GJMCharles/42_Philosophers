@@ -71,6 +71,7 @@ void	start_simulation(t_data *data)
 			pthread_create(&philo[i].thread, NULL, simulation, &philo[i]);
 		i += 1;
 	}
+	usleep(200);
 	i = 0;
 	while (i < params->nb_philos)
 	{
@@ -80,7 +81,5 @@ void	start_simulation(t_data *data)
 	}
 	i = 0;
 	while (i++ < params->nb_philos)
-	{
 		pthread_join(philo[i - 1].thread, (void **) NULL);
-	}
 }

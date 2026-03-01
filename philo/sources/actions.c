@@ -80,21 +80,21 @@ bool	action_eating(t_philo *philo)
 
 	status = true;
 	params = philo->params;
-	if (!search_left_fork(philo))
+	if (!pick_left_fork(philo))
 		return (false);
 	(void) pthread_mutex_lock(philo->left_fork);
 	display_log(philo->id, TAKING_FORK, params);
-	if (!search_right_fork(philo))
+	if (!pick_right_fork(philo))
 		return (pthread_mutex_unlock(philo->left_fork), false);
 	(void) pthread_mutex_lock(philo->right_fork);
 	display_log(philo->id, TAKING_FORK, params);
 	display_log(philo->id, EATING, params);
 	start_eating(&status, philo, params);
-	if (params->eating_limit > 0 && params->eating_limit == philo->eat_count)
+	if (params->eating_limit > 0 && philo->eat_count == params->eating_limit)
 		status = false;
-	(void) pthread_mutex_unlock(philo->right_fork);
 	return_right_fork(philo);
-	(void) pthread_mutex_unlock(philo->left_fork);
+	(void) pthread_mutex_unlock(philo->right_fork);
 	return_left_fork(philo);
+	(void) pthread_mutex_unlock(philo->left_fork);
 	return (status);
 }
