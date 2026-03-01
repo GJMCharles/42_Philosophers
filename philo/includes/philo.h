@@ -93,7 +93,7 @@ void						set_abort_simulation(t_params *params, bool value);
 void						action_dying(t_philo *philo);
 bool						action_thinking(t_philo *philo);
 bool						action_sleeping(t_philo *philo);
-void						start_eating(bool *s, t_philo *ph, t_params *pm);
+bool						start_eating(t_philo *philo, t_params *params);
 bool						action_eating(t_philo *philo);
 
 /**

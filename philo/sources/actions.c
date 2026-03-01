@@ -63,20 +63,15 @@ bool	action_sleeping(t_philo *philo)
 }
 
 /**
- * void	start_eating(bool *status, t_philo *philo, t_params *params);
+ * bool	start_eating(bool *status, t_philo *philo, t_params *params);
  */
-void	start_eating(bool *status, t_philo *philo, t_params *params)
+bool	start_eating(t_philo *philo, t_params *params)
 {
-	philo->last_eaten = get_timestamp();
 	if (!waiting(params->time_to_eat, philo))
-	{
-		*status = false;
-	}
-	if (*status == true)
-	{
-		philo->last_eaten = get_timestamp();
-		philo->eat_count += 1;
-	}
+		return (false);
+	philo->last_eaten = get_timestamp();
+	philo->eat_count += 1;
+	return (true);
 }
 
 /**
@@ -98,7 +93,9 @@ bool	action_eating(t_philo *philo)
 	(void) pthread_mutex_lock(philo->right_fork);
 	display_log(philo->id, TAKING_FORK, params);
 	display_log(philo->id, EATING, params);
-	start_eating(&status, philo, params);
+	if (!start_eating(philo, params))
+		return (pthread_mutex_unlock(philo->right_fork),
+			pthread_mutex_unlock(philo->left_fork), false);
 	if (params->eating_limit > 0 && philo->eat_count == params->eating_limit)
 		status = false;
 	return_right_fork(philo);
