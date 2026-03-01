@@ -44,3 +44,5 @@ The programm takes the following arguments :
 - [(VIDEO) Mutex Introduction (pthreads)](https://www.youtube.com/watch?v=raLCgPK-Igc)
 - [(DOC) pthread_mutex_lock(3p) - Linux manual page](https://www.man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
 - [(VIDEO) Deadlocks in C](https://www.youtube.com/watch?v=LjWug2tvSBU)
+- [(TEST) 42philogramm](https://github.com/sugoidesune/42philogramm)
+- [(TEST) philosophers_tester](https://github.com/AntonioSebastiaoPedro/philosophers_tester)

@@ -52,6 +52,7 @@ typedef struct s_params
 	int						eating_limit;
 	t_uli					time_of_start;
 	bool					can_abort_simulation;
+	bool					first_death_encountered;
 	t_ui					*fork_box;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			mutex_start;
@@ -59,6 +60,7 @@ typedef struct s_params
 	pthread_mutex_t			mutex_wait;
 	pthread_mutex_t			mutex_abort;
 	pthread_mutex_t			mutex_print;
+	pthread_mutex_t			mutex_dead;
 }	t_params;
 
 typedef struct s_philo

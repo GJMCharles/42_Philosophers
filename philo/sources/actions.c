@@ -20,7 +20,16 @@ void	action_dying(t_philo *philo)
 	t_params	*params;
 
 	params = philo->params;
+	pthread_mutex_lock(&params->mutex_dead);
+	if(params->first_death_encountered == true)
+	{
+		pthread_mutex_unlock(&params->mutex_dead);
+		return;
+	}
 	display_log(philo->id, DEAD, params);
+	if(params->first_death_encountered == false)
+		params->first_death_encountered = true;
+	pthread_mutex_unlock(&params->mutex_dead);
 }
 
 /**
