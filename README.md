@@ -13,16 +13,16 @@ This increases the probability that one philospher could **die** of starvation.
 Likewise, if a **minimum number of feeding** is provided, then the program must stop once every single philosopher has hearched that goal.
 
 > Example:
-> **`./philo 1 800 100 100 3`**
+> **`./philo 1 800 100 100`**
 > Philosopher **1** should die at *800 ms*
 
 > Example:
-> **`./philo 5 300 200 100 2`**
-> Philosopher **4** should die at *300 ms*
+> **`./philo 4 310 200 100`**
+> Philosopher **2** or **4** should die at *310 ms*
 
 > Example:
-> **`./philo 4 300 200 100 10`**
-> All philosopher should have eaten *10 times*
+> **`./philo 5 800 200 200 10`**
+> All Philosopher should **finish eating** at at *10 times*
 
 # **Instructions**
 

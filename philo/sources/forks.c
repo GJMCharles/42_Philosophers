@@ -21,7 +21,7 @@ bool	pick_left_fork(t_philo *ph)
 	t_ui		id_plus;
 
 	params = ph->params;
-	id_plus = (ph->id + 1) % params->nb_philos;
+	id_plus = ((ph->id - 1) + params->nb_philos ) % params->nb_philos;
 	while (1)
 	{
 		(void) pthread_mutex_lock(&params->mutex_pick);
@@ -52,7 +52,7 @@ bool	pick_right_fork(t_philo *ph)
 	t_ui		id_plus;
 
 	params = ph->params;
-	id_plus = (ph->id + 1) % params->nb_philos;
+	id_plus = ((ph->id - 1) + params->nb_philos ) % params->nb_philos;
 	while (1)
 	{
 		(void) pthread_mutex_lock(&params->mutex_pick);
@@ -83,7 +83,7 @@ void	return_left_fork(t_philo *philo)
 	t_ui		id_plus;
 
 	params = philo->params;
-	id_plus = (philo->id + 1) % params->nb_philos;
+	id_plus = ((philo->id - 1) + params->nb_philos ) % params->nb_philos;
 	pthread_mutex_lock(&params->mutex_pick);
 	if ((philo->id % 2) == 0)
 		params->fork_box[philo->id] = 1;
@@ -101,7 +101,7 @@ void	return_right_fork(t_philo *philo)
 	t_ui		id_plus;
 
 	params = philo->params;
-	id_plus = (philo->id + 1) % params->nb_philos;
+	id_plus = ((philo->id - 1) + params->nb_philos ) % params->nb_philos;
 	pthread_mutex_lock(&params->mutex_pick);
 	if ((philo->id % 2) == 0)
 		params->fork_box[id_plus] = 1;

@@ -36,15 +36,15 @@ void	assign_fork_to_philosophers(t_data *data)
 {
 	t_params	*params;
 	t_philo		*philos;
-	t_ui		index;
-	t_ui		index_plus;
+	int		index;
+	int		index_plus;
 
 	params = data->params;
 	philos = data->philos;
 	index = 0;
-	while (index < params->nb_philos)
+	while (index < (int) params->nb_philos)
 	{
-		index_plus = (index + 1) % params->nb_philos;
+		index_plus = ((index - 1) + params->nb_philos ) % params->nb_philos;
 		if ((index % 2) == 0)
 		{
 			philos[index].left_fork = &params->forks[index];
